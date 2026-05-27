@@ -1,14 +1,13 @@
-
 \chapter{Đặc tả các use-case}
 
-Hệ thống "Chương trình hỗ trợ dạy và học Vật lý lớp 11" bao gồm các tác nhân (actors) chính: Người dùng (học sinh, giáo viên) và Quản trị viên (Admin). Hệ thống được chia thành bốn phân vùng chức năng chính: (1) Xác thực và Phân quyền, (2) Sách giáo khoa điện tử và Mô phỏng 3D, (3) Đề luyện tập, và (4) Quản trị hệ thống.
+Hệ thống "Chương trình hỗ trợ dạy và học Vật lý lớp 11" bao gồm các tác nhân (actors) chính: Học sinh (student), Giáo viên (teacher) và Quản trị viên (admin). Hệ thống được chia thành năm phân vùng chức năng chính: (1) Xác thực và Phân quyền, (2) Sách giáo khoa điện tử và Mô phỏng 3D, (3) Đề luyện tập, (4) Quản lý kiểm tra (giáo viên), và (5) Quản trị hệ thống.
 
 \section{Sơ đồ Use-case tổng quát}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,
-    height=0.8\textheight,
+    height=0.5\textheight,
     keepaspectratio]{Images/Phan_tich_Thiet_ke_he_thon/Usecase Physics Book.png}
     \vspace{0.5cm}
     \caption{Sơ đồ Use-case tổng quát của hệ thống}
@@ -23,20 +22,20 @@ Hệ thống "Chương trình hỗ trợ dạy và học Vật lý lớp 11" bao
 \hline
 \textbf{Tên Usecase} & \textbf{Đăng ký tài khoản} \\
 \hline
-\textbf{Actors} & Người dùng (Học sinh) \\
+\textbf{Actors} & Học sinh, Giáo viên \\
 \hline
-\textbf{Mô tả} & Cho phép người dùng tạo tài khoản mới để truy cập các chức năng của hệ thống: xem bài học, tương tác với mô phỏng 3D, làm bài tập, và theo dõi tiến độ học tập. \\
+\textbf{Mô tả} & Cho phép người dùng tạo tài khoản mới với vai trò học sinh (student) hoặc giáo viên (teacher). \\
 \hline
 \textbf{Trigger} & Người dùng nhấn nút "Đăng ký" tại Trang chủ hệ thống. \\
 \hline
 \textbf{Tiền điều kiện} & Dịch vụ xác thực và cơ sở dữ liệu sẵn sàng. \\
 \hline
-\textbf{Hậu điều kiện} & Tài khoản mới được lưu vào cơ sở dữ liệu với vai trò mặc định là \texttt{user}. \\
+\textbf{Hậu điều kiện} & Tài khoản mới được lưu vào cơ sở dữ liệu với vai trò \texttt{student} hoặc \texttt{teacher}. \\
 \hline
 \textbf{Luồng chính} &
 \vspace{-\baselineskip}
 \begin{enumerate}[topsep=2pt, itemsep=0pt]
-    \item Hệ thống hiển thị form Đăng ký với các trường: Họ tên, Email, Tên đăng nhập, Mật khẩu, Xác nhận mật khẩu.
+    \item Hệ thống hiển thị form Đăng ký với các trường: Họ tên, Email, Tên đăng nhập, Mật khẩu, Xác nhận mật khẩu, Vai trò (student/teacher).
     \item Người dùng nhập đầy đủ thông tin vào các trường.
     \item Người dùng nhấn nút "Đăng ký".
     \item Hệ thống kiểm tra tính hợp lệ của dữ liệu:
@@ -97,7 +96,7 @@ Hệ thống "Chương trình hỗ trợ dạy và học Vật lý lớp 11" bao
 \hline
 \textbf{Tên Usecase} & \textbf{Đăng nhập} \\
 \hline
-\textbf{Actors} & Người dùng (Học sinh), Giáo viên, Quản trị viên \\
+\textbf{Actors} & Học sinh, Giáo viên, Quản trị viên \\
 \hline
 \textbf{Mô tả} & Cho phép người dùng đăng nhập vào hệ thống để truy cập các chức năng tương ứng với vai trò được phân quyền. \\
 \hline
@@ -124,10 +123,11 @@ Hệ thống "Chương trình hỗ trợ dạy và học Vật lý lớp 11" bao
     \item Actor nhập Tên đăng nhập và Mật khẩu.
     \item Actor nhấn nút "Đăng nhập".
     \item Hệ thống xác thực thông tin đăng nhập: kiểm tra tên đăng nhập tồn tại, so sánh mật khẩu đã băm với mật khẩu trong cơ sở dữ liệu.
-    \item Hệ thống tạo JWT token (thời hạn 8 giờ) chứa thông tin: user ID, vai trò (\texttt{user}/\texttt{admin}).
+    \item Hệ thống tạo JWT token (thời hạn 8 giờ) chứa thông tin: user ID, vai trò (\texttt{student}, \texttt{teacher}, \texttt{admin}).
     \item Hệ thống chuyển hướng Actor đến trang tương ứng:
     \begin{itemize}[topsep=0pt, itemsep=0pt]
-        \item \texttt{user} → Trang chủ học tập (danh sách bài học và mô phỏng).
+        \item \texttt{student} → Trang chủ học tập (danh sách bài học và mô phỏng).
+        \item \texttt{teacher} → Trang quản lý kiểm tra (danh sách room, tạo room, xem kết quả).
         \item \texttt{admin} → Trang Dashboard quản trị.
     \end{itemize}
     \item Kết thúc Use-case.
@@ -170,10 +170,10 @@ Hệ thống "Chương trình hỗ trợ dạy và học Vật lý lớp 11" bao
 \hline
 \textbf{Tên Usecase} & \textbf{Xem nội dung bài học \& Tương tác với Mô phỏng 3D} \\
 \hline
-\textbf{Actors} & Người dùng (Học sinh), Giáo viên \\
+\textbf{Actors} & Học sinh, Giáo viên \\
 \hline
 \textbf{Mô tả} & 
-Cho phép người dùng xem nội dung bài học dưới dạng slide trình chiếu, tương tác với các mô phỏng đã được tích hợp, điều chỉnh tham số vật lý, xem đồ thị phân tích thời gian thực. \\
+Cho phép người dùng xem nội dung bài học dưới dạng slide trình chiếu, tương tác với các mô phỏng đã được tích hợp. Học sinh chỉ được xem mô phỏng sau khi hoàn thành bài học lý thuyết. Giáo viên được xem mô phỏng tự do. \\
 \hline
 \textbf{Trigger} & 
 Người dùng truy cập vào phân vùng \textit{Sách giáo khoa điện tử} từ menu chính. \\
@@ -188,7 +188,7 @@ Người dùng truy cập vào phân vùng \textit{Sách giáo khoa điện tử
 \textbf{Hậu điều kiện} & 
 \vspace{-\baselineskip}
 \begin{itemize}[topsep=2pt, itemsep=0pt]
-    \item Tiến độ xem bài học được ghi nhận vào hồ sơ người dùng.
+    \item Tiến độ xem bài học được ghi nhận vào hồ sơ học sinh (nếu là student).
     \item Các tham số mô phỏng được khôi phục về mặc định khi rời khỏi trang.
 \end{itemize} \\
 \hline
@@ -204,9 +204,11 @@ Người dùng truy cập vào phân vùng \textit{Sách giáo khoa điện tử
         \item Hình ảnh minh họa.
     \end{itemize}
     \item Người dùng điều hướng giữa các slide bằng chuột hoặc bàn phím (phím mũi tên).
-    \item Tại slide cuối, hệ thống hiển thị mô phỏng 3D tương tác liên quan. Người dùng có thể chọn \textit{Tương tác với mô phỏng} (bước 5a) hoặc đi tiếp đến bước 6.
-    \item Người dùng có thể chọn chức năng mở rộng: \textit{Làm bài tập mẫu} (bước 6).
-    \item Hệ thống đánh dấu bài học đã hoàn thành nếu người dùng đã thực hiện các thao tác cần thiết.
+    \item Nếu người dùng là \textbf{giáo viên}, hệ thống cho phép truy cập mô phỏng ngay lập tức.
+    \item Nếu người dùng là \textbf{học sinh}, hệ thống kiểm tra trong collection \texttt{theory\_progress} xem đã hoàn thành bài học chưa. Nếu chưa, hiển thị thông báo "Bạn cần hoàn thành bài học trước khi xem mô phỏng."
+    \item Tại slide cuối, hệ thống hiển thị mô phỏng 3D tương tác liên quan (nếu được phép).
+    \item Người dùng có thể chọn chức năng mở rộng: \textit{Làm bài tập mẫu} (bước 8).
+    \item Hệ thống đánh dấu bài học đã hoàn thành cho học sinh.
     \item Kết thúc Use-case.
 \end{enumerate} \\
 \hline
@@ -214,14 +216,17 @@ Người dùng truy cập vào phân vùng \textit{Sách giáo khoa điện tử
 
 \clearpage
 
-% === PHẦN TIẾP THEO CỦA BẢNG DÀI (LUỒNG THAY THẾ & NGOẠI LỆ) ===
-
 \begin{longtable}{|p{0.18\textwidth}|p{0.75\textwidth}|}
 \hline
 \textbf{Luồng thay thế} &
 \vspace{-\baselineskip}
 \begin{enumerate}[topsep=2pt, itemsep=0pt]
-    \item[5a.] Người dùng chọn \textit{Tương tác với mô phỏng}:
+    \item[5a.] Học sinh chưa hoàn thành bài học:
+    \begin{itemize}[topsep=0pt, itemsep=0pt]
+        \item Hiển thị thông báo: "Bạn cần hoàn thành bài học trước khi xem mô phỏng này."
+        \item Chuyển hướng về trang bài học.
+    \end{itemize}
+    \item[6a.] Người dùng chọn \textit{Tương tác với mô phỏng}:
     \begin{itemize}[topsep=0pt, itemsep=0pt]
         \item Hệ thống chuyển đến giao diện mô phỏng 3D tương ứng. Các mô phỏng có sẵn:
         \begin{enumerate}[label=\textbf{Sim \arabic*}, topsep=0pt, itemsep=0pt]
@@ -242,13 +247,13 @@ Người dùng truy cập vào phân vùng \textit{Sách giáo khoa điện tử
             \item Phát/Tạm dừng/Đặt lại mô phỏng.
             \item Chuyển đổi chế độ toàn màn hình.
         \end{itemize}
-        \item Quay lại bước 6.
+        \item Quay lại bước 8.
     \end{itemize}
-    \item[6a.] Người dùng chọn \textit{Làm bài tập mẫu}:
+    \item[8a.] Người dùng chọn \textit{Làm bài tập mẫu}:
     \begin{itemize}[topsep=0pt, itemsep=0pt]
         \item Hệ thống hiển thị bài tập mẫu kèm lời giải chi tiết dạng slide.
         \item Người dùng tự giải, sau đó đối chiếu với lời giải mẫu.
-        \item Quay lại bước 7.
+        \item Quay lại bước 9.
     \end{itemize}
 \end{enumerate} \\
 \hline
@@ -262,67 +267,245 @@ Người dùng truy cập vào phân vùng \textit{Sách giáo khoa điện tử
     \end{itemize}
 \end{enumerate} \\
 \hline
-\caption{Đặc tả chi tiết Use-case Xem nội dung bài học \& Tương tác với Mô phỏng 3D (tiếp theo)}
-\label{table:uc-view-lesson-cont}
+\caption{Đặc tả chi tiết Use-case Xem nội dung bài học \& Tương tác với Mô phỏng 3D}
+\label{table:uc-view-lesson}
 \end{longtable}
 
 \clearpage
 
-\subsection{Phân vùng Đề luyện tập}
+\subsection{Phân vùng Đề luyện tập (Học sinh)}
 
 \begin{longtable}{|p{0.18\textwidth}|p{0.75\textwidth}|}
 \hline
-\textbf{Tên Usecase} & \textbf{Luyện đề} \\
+\textbf{Tên Usecase} & \textbf{Làm bài tập} \\
 \hline
-\textbf{Actors} & Người dùng (Học sinh) \\
+\textbf{Actors} & Học sinh \\
 \hline
 \textbf{Mô tả} & 
-Cho phép người dùng thực hiện các đề luyện tập để củng cố và đánh giá kiến thức. Hỗ trợ hai chế độ: luyện đề tổng hợp (toàn chương) và luyện đề theo bài học. \\
+Cho phép học sinh làm bài tập từ ngân hàng câu hỏi hoặc tham gia vào room kiểm tra do giáo viên tạo (qua access code). \\
 \hline
-\textbf{Trigger} & Người dùng chọn \textit{Luyện đề} từ menu chính. \\
+\textbf{Trigger} & Học sinh truy cập URL dạng \texttt{/practice?accessCode=...} hoặc chọn "Làm bài tập" từ menu. \\
 \hline
-\textbf{Tiền điều kiện} & Người dùng đã đăng nhập. \\
+\textbf{Tiền điều kiện} & Học sinh đã đăng nhập. \\
 \hline
 \textbf{Hậu điều kiện} & 
 \vspace{-\baselineskip}
 \begin{itemize}[topsep=2pt, itemsep=0pt]
-    \item Kết quả làm bài được lưu vào MongoDB collection \texttt{test\_results}.
+    \item Kết quả làm bài được lưu vào collection \texttt{exam\_submissions}.
     \item Tiến độ học tập được cập nhật.
 \end{itemize} \\
 \hline
 \textbf{Luồng chính} &
 \vspace{-\baselineskip}
 \begin{enumerate}[topsep=2pt, itemsep=0pt]
-    \item Hệ thống hiển thị hai lựa chọn: Luyện đề tổng hợp và Luyện đề theo bài học.
-    \item Người dùng chọn loại đề.
-    \item Hệ thống hiển thị danh sách đề có sẵn + tùy chọn \textit{Làm đề mới}.
-    \item Người dùng chọn đề có sẵn hoặc \textit{Làm đề mới} (bước 3a).
-    \item Hệ thống hiển thị giao diện làm bài: bộ đếm thời gian, thanh tiến trình, câu hỏi, phím tắt \texttt{1--4}.
-    \item Người dùng trả lời và nhấn "Nộp bài".
-    \item Hệ thống chấm điểm, hiển thị: số câu đúng/tổng, điểm số, thời gian, đáp án đã chọn và đáp án đúng.
-    \item Người dùng có thể: \textit{Làm đề khác} (bước 7).
+    \item Học sinh truy cập URL có access code (ví dụ: \texttt{/practice?accessCode=VZA9JN2P}).
+    \item Hệ thống kiểm tra access code trong collection \texttt{exam\_rooms}.
+    \item Nếu access code hợp lệ, hệ thống hiển thị bài kiểm tra tương ứng.
+    \item Học sinh làm bài và nhấn "Nộp bài".
+    \item Hệ thống chấm điểm, lưu kết quả vào \texttt{exam\_submissions}.
+    \item Hệ thống hiển thị kết quả: điểm số, số câu đúng/sai, đáp án đúng (tùy theo cài đặt của room).
     \item Kết thúc Use-case.
 \end{enumerate} \\
 \hline
 \textbf{Luồng thay thế} &
 \vspace{-\baselineskip}
 \begin{enumerate}[topsep=2pt, itemsep=0pt]
-    \item[3a.] Người dùng chọn \textit{Làm đề mới}:
+    \item[2a.] Access code không tồn tại:
     \begin{itemize}[topsep=0pt, itemsep=0pt]
-        \item Hệ thống truy xuất blueprint từ ngân hàng, thế số ngẫu nhiên, tạo đề mới.
-        \item Lưu đề vào kho, chuyển đến giao diện làm bài (bước 5).
+        \item Hiển thị thông báo: "Mã truy cập không hợp lệ."
+        \item Kết thúc Use-case.
     \end{itemize}
-    \item[7] Người dùng chọn \textit{Làm đề khác}: Quay lại bước 3.
+    \item[2b.] Room đã đóng (status = "closed"):
+    \begin{itemize}[topsep=0pt, itemsep=0pt]
+        \item Hiển thị thông báo: "Room kiểm tra đã đóng."
+        \item Kết thúc Use-case.
+    \end{itemize}
 \end{enumerate} \\
 \hline
-\textbf{Ngoại lệ} &
+\caption{Đặc tả chi tiết Use-case Làm bài tập}
+\label{table:uc-do-exercise}
+\end{longtable}
+
+\clearpage
+
+\subsection{Phân vùng Quản lý kiểm tra (Giáo viên)}
+
+\begin{longtable}{|p{0.18\textwidth}|p{0.75\textwidth}|}
+\hline
+\textbf{Tên Usecase} & \textbf{Tạo room kiểm tra} \\
+\hline
+\textbf{Actors} & Giáo viên \\
+\hline
+\textbf{Mô tả} & 
+Giáo viên tạo một room kiểm tra với access code, chọn câu hỏi từ ngân hàng bài tập và đặt thời gian làm bài. Hệ thống sinh URL để học sinh truy cập. \\
+\hline
+\textbf{Trigger} & Giáo viên nhấn nút "Tạo room mới" trong trang quản lý kiểm tra. \\
+\hline
+\textbf{Tiền điều kiện} & Giáo viên đã đăng nhập thành công. \\
+\hline
+\textbf{Hậu điều kiện} & 
+\vspace{-\baselineskip}
+\begin{itemize}[topsep=2pt, itemsep=0pt]
+    \item Room kiểm tra được lưu vào collection \texttt{exam\_rooms}.
+    \item Access code được sinh (tự động hoặc nhập tùy chỉnh).
+\end{itemize} \\
+\hline
+\textbf{Luồng chính} &
 \vspace{-\baselineskip}
 \begin{enumerate}[topsep=2pt, itemsep=0pt]
-    \item[E.] Không còn blueprint khả dụng: Thông báo "Đã hết câu hỏi. Liên hệ admin."
+    \item Hệ thống hiển thị form tạo room với các trường:
+    \begin{itemize}[topsep=0pt, itemsep=0pt]
+        \item Tên room
+        \item Danh sách câu hỏi (chọn từ ngân hàng \texttt{exercises})
+        \item Thời gian làm bài (phút, 0 = không giới hạn)
+        \item Access code (tùy chọn: tự động sinh hoặc nhập thủ công)
+    \end{itemize}
+    \item Giáo viên nhập đầy đủ thông tin và nhấn "Tạo room".
+    \item Hệ thống kiểm tra access code (nếu nhập thủ công) chưa tồn tại.
+    \item Hệ thống lưu room vào collection \texttt{exam\_rooms} với status = "open".
+    \item Hệ thống hiển thị URL: \texttt{/practice?accessCode=\{code\}} để giáo viên chia sẻ cho học sinh.
+    \item Kết thúc Use-case.
 \end{enumerate} \\
 \hline
-\caption{Đặc tả chi tiết Use-case Luyện đề}
-\label{table:uc-practice}
+\textbf{Luồng thay thế} &
+\vspace{-\baselineskip}
+\begin{enumerate}[topsep=2pt, itemsep=0pt]
+    \item[2a.] Thiếu thông tin bắt buộc (tên room, danh sách câu hỏi):
+    \begin{itemize}[topsep=0pt, itemsep=0pt]
+        \item Hệ thống hiển thị thông báo lỗi: "Vui lòng nhập đầy đủ thông tin."
+        \item Giáo viên quay lại bước 2.
+    \end{itemize}
+    \item[3a.] Access code nhập thủ công đã tồn tại:
+    \begin{itemize}[topsep=0pt, itemsep=0pt]
+        \item Hệ thống hiển thị thông báo: "Access code đã được sử dụng. Vui lòng nhập code khác hoặc để hệ thống tự động sinh."
+        \item Giáo viên quay lại bước 2.
+    \end{itemize}
+\end{enumerate} \\
+\hline
+\caption{Đặc tả chi tiết Use-case Tạo room kiểm tra}
+\label{table:uc-create-room}
+\end{longtable}
+
+\clearpage
+
+\begin{longtable}{|p{0.18\textwidth}|p{0.75\textwidth}|}
+\hline
+\textbf{Tên Usecase} & \textbf{Xem kết quả học viên} \\
+\hline
+\textbf{Actors} & Giáo viên \\
+\hline
+\textbf{Mô tả} & 
+Giáo viên xem danh sách học viên đã tham gia room kiểm tra, trạng thái nộp bài, điểm số, và chi tiết câu trả lời đúng/sai của từng học viên. \\
+\hline
+\textbf{Trigger} & Giáo viên chọn một room từ danh sách và nhấn "Xem kết quả". \\
+\hline
+\textbf{Tiền điều kiện} & 
+\vspace{-\baselineskip}
+\begin{itemize}[topsep=2pt, itemsep=0pt]
+    \item Giáo viên đã đăng nhập.
+    \item Room kiểm tra đã có ít nhất một học viên tham gia.
+\end{itemize} \\
+\hline
+\textbf{Hậu điều kiện} & Không thay đổi dữ liệu. \\
+\hline
+\textbf{Luồng chính} &
+\vspace{-\baselineskip}
+\begin{enumerate}[topsep=2pt, itemsep=0pt]
+    \item Hệ thống hiển thị danh sách các room do giáo viên tạo.
+    \item Giáo viên chọn một room và nhấn "Xem kết quả".
+    \item Hệ thống truy vấn collection \texttt{exam\_submissions} với \texttt{roomId} tương ứng.
+    \item Hệ thống hiển thị bảng kết quả gồm các cột:
+    \begin{itemize}[topsep=0pt, itemsep=0pt]
+        \item Tên học viên
+        \item Trạng thái (Đã nộp/Chưa nộp)
+        \item Điểm số
+        \item Thời gian nộp
+        \item Thao tác (Xem chi tiết)
+    \end{itemize}
+    \item Giáo viên có thể lọc theo trạng thái hoặc tìm kiếm theo tên học viên.
+    \item Giáo viên chọn "Xem chi tiết" của một học viên:
+    \begin{itemize}[topsep=0pt, itemsep=0pt]
+        \item Hệ thống hiển thị từng câu hỏi, câu trả lời của học viên, đáp án đúng, và kết quả (đúng/sai).
+    \end{itemize}
+    \item Giáo viên có thể xuất báo cáo kết quả ra file CSV.
+    \item Kết thúc Use-case.
+\end{enumerate} \\
+\hline
+\textbf{Luồng thay thế} &
+\vspace{-\baselineskip}
+\begin{enumerate}[topsep=2pt, itemsep=0pt]
+    \item[3a.] Chưa có học viên nào làm bài trong room:
+    \begin{itemize}[topsep=0pt, itemsep=0pt]
+        \item Hệ thống hiển thị thông báo: "Chưa có học viên nào tham gia room này."
+        \item Kết thúc Use-case.
+    \end{itemize}
+    \item[5a.] Học viên chưa nộp bài (submittedAt = null):
+    \begin{itemize}[topsep=0pt, itemsep=0pt]
+        \item Hệ thống hiển thị thông báo: "Học viên chưa hoàn thành bài kiểm tra."
+        \item Không hiển thị chi tiết câu trả lời.
+    \end{itemize}
+\end{enumerate} \\
+\hline
+\caption{Đặc tả chi tiết Use-case Xem kết quả học viên}
+\label{table:uc-view-results}
+\end{longtable}
+
+\clearpage
+
+\begin{longtable}{|p{0.18\textwidth}|p{0.75\textwidth}|}
+\hline
+\textbf{Tên Usecase} & \textbf{Thêm câu hỏi vào ngân hàng bài tập} \\
+\hline
+\textbf{Actors} & Giáo viên \\
+\hline
+\textbf{Mô tả} & 
+Cho phép giáo viên tạo câu hỏi mới dựa trên blueprint có sẵn (mẫu câu hỏi). \\
+\hline
+\textbf{Trigger} & Giáo viên chọn "Thêm câu hỏi" trong phần Quản lý ngân hàng bài tập. \\
+\hline
+\textbf{Tiền điều kiện} & 
+\vspace{-\baselineskip}
+\begin{itemize}[topsep=2pt, itemsep=0pt]
+    \item Giáo viên đã đăng nhập.
+    \item Ngân hàng blueprint (collection \texttt{exercise\_blueprints}) đã có ít nhất một mẫu.
+\end{itemize} \\
+\hline
+\textbf{Hậu điều kiện} & Câu hỏi mới được lưu vào collection \texttt{exercises}, có thể được sử dụng trong các room kiểm tra sau. \\
+\hline
+\textbf{Luồng chính} &
+\vspace{-\baselineskip}
+\begin{enumerate}[topsep=2pt, itemsep=0pt]
+    \item Hệ thống hiển thị danh sách các blueprint (mẫu câu hỏi) có sẵn.
+    \item Giáo viên chọn một blueprint phù hợp.
+    \item Hệ thống hiển thị form nhập dữ liệu theo blueprint, bao gồm:
+    \begin{itemize}[topsep=0pt, itemsep=0pt]
+        \item Nội dung câu hỏi (có thể chứa placeholder)
+        \item Đáp án đúng
+        \item Lời giải chi tiết
+    \end{itemize}
+    \item Giáo viên nhập đầy đủ thông tin và nhấn "Lưu câu hỏi".
+    \item Hệ thống lưu câu hỏi mới vào collection \texttt{exercises}.
+    \item Hệ thống hiển thị thông báo "Thêm câu hỏi thành công".
+    \item Kết thúc Use-case.
+\end{enumerate} \\
+\hline
+\textbf{Luồng thay thế} &
+\vspace{-\baselineskip}
+\begin{enumerate}[topsep=2pt, itemsep=0pt]
+    \item[4a.] Thiếu thông tin bắt buộc:
+    \begin{itemize}[topsep=0pt, itemsep=0pt]
+        \item Hệ thống hiển thị thông báo lỗi, yêu cầu nhập đủ.
+        \item Giáo viên quay lại bước 4.
+    \end{itemize}
+    \item[4b.] Blueprint yêu cầu biến số nhưng giáo viên nhập sai định dạng:
+    \begin{itemize}[topsep=0pt, itemsep=0pt]
+        \item Hệ thống hiển thị lỗi và hướng dẫn nhập đúng.
+        \item Giáo viên quay lại bước 4.
+    \end{itemize}
+\end{enumerate} \\
+\hline
+\caption{Đặc tả chi tiết Use-case Thêm câu hỏi vào ngân hàng bài tập}
+\label{table:uc-add-question}
 \end{longtable}
 
 \clearpage
@@ -391,9 +574,16 @@ Chương này đã đặc tả chi tiết các use-case chính của hệ thốn
 \begin{itemize}
     \item \textbf{Phân vùng Xác thực và Phân quyền:} Đăng ký tài khoản và Đăng nhập – nền tảng để truy cập mọi chức năng khác của hệ thống.
     
-    \item \textbf{Phân vùng Sách giáo khoa điện tử và Mô phỏng 3D:} Use-case \textit{Xem nội dung bài học \& Tương tác với Mô phỏng 3D} là use-case trung tâm của hệ thống, tích hợp đầy đủ các mô phỏng 3D tương tác.
+    \item \textbf{Phân vùng Sách giáo khoa điện tử và Mô phỏng 3D:} Use-case \textit{Xem nội dung bài học \& Tương tác với Mô phỏng 3D} tích hợp điều kiện truy cập mô phỏng: học sinh chỉ được xem sau khi hoàn thành bài học, giáo viên được xem tự do.
     
-    \item \textbf{Phân vùng Đề luyện tập:} Use-case \textit{Luyện đề} hỗ trợ hai chế độ (tổng hợp và theo bài học), cơ chế tạo đề mới từ ngân hàng blueprint bằng thế số ngẫu nhiên, chấm điểm tự động.
+    \item \textbf{Phân vùng Đề luyện tập (Học sinh):} Use-case \textit{Làm bài tập} cho phép học sinh tham gia room kiểm tra qua access code.
     
-    \item \textbf{Phân vùng Quản trị hệ thống:} Use-case \textit{Quản lý ngân hàng bài tập (CRUD)} cho phép admin quản lý toàn bộ blueprint câu hỏi trong hệ thống.
+    \item \textbf{Phân vùng Quản lý kiểm tra (Giáo viên):} Ba use-case mới:
+    \begin{itemize}
+        \item \textit{Tạo room kiểm tra} – tạo room với access code, chọn câu hỏi, thời gian.
+        \item \textit{Xem kết quả học viên} – xem danh sách học viên, điểm số, câu đúng/sai.
+        \item \textit{Thêm câu hỏi vào ngân hàng bài tập} – tạo câu hỏi mới từ blueprint.
+    \end{itemize}
+    
+    \item \textbf{Phân vùng Quản trị hệ thống:} Use-case \textit{Quản lý ngân hàng bài tập (CRUD)} cho phép admin quản lý blueprint câu hỏi ở cấp cao nhất.
 \end{itemize}
