@@ -1,0 +1,15 @@
+# Ignore everything
+*
+
+# Nhưng vẫn giữ folder
+!*/
+
+# Cho phép file .tex
+!*.tex
+!*.png
+
+# Cho phép main.pdf
+!main.pdf
+
+# (khuyến nghị) giữ luôn .gitignore
+!.gitignore

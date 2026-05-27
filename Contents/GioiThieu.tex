@@ -1,0 +1,281 @@
+
+\chapter{Giới thiệu}
+
+\section{Tổng quan về đề tài}
+Sự phát triển mạnh mẽ của công nghệ số trong thế kỷ 21 đã tạo ra những thay đổi sâu rộng và mang tính cách mạng trong phương thức tổ chức và triển khai hoạt động giáo dục trên toàn cầu. Việc tích hợp công nghệ vào dạy học không còn chỉ dừng lại ở vai trò hỗ trợ trình chiếu hay lưu trữ tài liệu như những thập kỷ trước, mà đã mở rộng sang các hình thức học tập tương tác, mô phỏng động, thực tế ảo và cá nhân hóa quá trình tiếp thu kiến thức của người học. Trong xu hướng đó, các phần mềm học tập chuyên biệt theo từng môn học, được xây dựng dựa trên các công nghệ web hiện đại và có khả năng chạy trực tiếp trên trình duyệt mà không yêu cầu cài đặt phức tạp, ngày càng đóng vai trò quan trọng trong việc nâng cao chất lượng giảng dạy ở bậc trung học phổ thông.
+
+Môn Vật lý lớp 11, theo chương trình giáo dục phổ thông 2018 và sách giáo khoa \textit{Chân trời sáng tạo}, được cấu trúc thành hai chương lớn có mối liên hệ mật thiết với nhau: Chương 1 - Dao động và Chương 2 - Sóng. Đây là hai chương học có tính ứng dụng cao nhưng cũng chứa đựng nhiều nội dung mang tính trừu tượng, đòi hỏi học sinh phải có khả năng liên hệ giữa mô hình toán học, biểu diễn hình học và hiện tượng vật lý thực tế. 
+
+Chương Dao động bao gồm các nội dung về dao động điều hòa, con lắc đơn, con lắc lò xo, năng lượng trong dao động, dao động tắt dần và dao động cưỡng bức. Đây là những khái niệm nền tảng để hiểu về chuyển động tuần hoàn, sự chuyển hóa năng lượng và các đặc trưng cơ bản của một hệ dao động như chu kỳ, tần số, biên độ và pha. Tuy nhiên, việc hình dung một vật dao động qua lại theo thời gian, sự biến đổi liên tục giữa động năng và thế năng, hay ảnh hưởng của lực cản đến biên độ dao động thường gây khó khăn cho học sinh nếu chỉ được trình bày qua các phương trình toán học và hình vẽ tĩnh trên bảng.
+
+Chương Sóng mở rộng từ khái niệm dao động để nghiên cứu sự lan truyền dao động trong không gian, bao gồm các nội dung về sóng cơ học (sóng dọc, sóng ngang, sóng trên dây, sóng âm), các đặc trưng của sóng (bước sóng, tần số, vận tốc truyền sóng, năng lượng sóng), hiện tượng giao thoa sóng, sóng dừng, và sóng điện từ. Những khái niệm này thậm chí còn trừu tượng hơn vì liên quan đến sự biến thiên đồng thời theo cả không gian và thời gian. Học sinh không thể quan sát trực tiếp bằng mắt thường các hiện tượng như sự lan truyền của sóng âm trong không khí, sự hình thành các vân giao thoa từ hai nguồn sóng kết hợp, hay sự dao động vuông góc của vectơ điện trường và từ trường trong sóng điện từ.
+
+Nếu thiếu các công cụ trực quan hóa, quá trình học tập dễ trở nên thụ động, nặng về ghi nhớ công thức mà chưa hiểu rõ bản chất vật lý. Đặc biệt, với các hiện tượng sóng – nơi mà sự biến thiên theo không gian và thời gian diễn ra đồng thời – việc chỉ sử dụng hình ảnh tĩnh hoặc mô tả bằng lời là không đủ để học sinh hình dung được một cách trọn vẹn và chính xác. 
+
+Chính vì vậy, việc nghiên cứu và xây dựng một chương trình hỗ trợ dạy và học Vật lý 11 dựa trên công nghệ số, đặc biệt là công nghệ mô phỏng 3D tương tác, là một hướng tiếp cận phù hợp với yêu cầu đổi mới giáo dục hiện nay. Đề tài tập trung vào việc phát triển một hệ thống phần mềm có khả năng kết hợp giữa trình bày lý thuyết, mô phỏng hiện tượng vật lý động theo thời gian thực và hệ thống đồ thị phân tích dữ liệu, qua đó tạo ra một môi trường học tập tích hợp, giúp tăng cường sự tương tác giữa người học và nội dung kiến thức.
+
+Hệ thống được xây dựng dưới dạng ứng dụng web (Web Application), sử dụng các công nghệ đồ họa 3D tiên tiến như WebGL thông qua thư viện Three.js và React Three Fiber – một renderer cho phép tích hợp Three.js vào hệ sinh thái React một cách khai báo và hiệu quả. Các mô phỏng 3D được thiết kế có tính tương tác cao, cho phép người dùng thay đổi tham số vật lý (biên độ, tần số, bước sóng, khoảng cách nguồn, độ lệch pha...) thông qua các thanh trượt (slider controls) và quan sát kết quả ngay lập tức mà không cần cài đặt bất kỳ phần mềm bổ trợ nào ngoài trình duyệt web. Bên cạnh đó, hệ thống tích hợp các biểu đồ phân tích sử dụng thư viện Recharts, cho phép học sinh quan sát đồng thời cả biểu diễn không gian 3D và biểu diễn đồ thị 2D của cùng một hiện tượng, từ đó tăng cường khả năng hiểu sâu và kết nối giữa các hình thức biểu diễn khác nhau của kiến thức vật lý.
+
+\section{Lý do chọn đề tài}
+Mặc dù đã có nhiều phần mềm và tài nguyên học tập số phục vụ cho môn Vật lý, song phần lớn các công cụ này vẫn tồn tại một số hạn chế nhất định khi áp dụng vào bối cảnh giáo dục phổ thông Việt Nam. Có thể phân tích các hạn chế này theo ba khía cạnh chính: nội dung, công nghệ và phương pháp sư phạm.
+
+\textbf{Về mặt nội dung:} Các phần mềm mô phỏng vật lý quốc tế như \textit{PhET Interactive Simulations} của Đại học Colorado Boulder cung cấp các mô phỏng chất lượng cao, được nghiên cứu kỹ lưỡng về mặt sư phạm. Tuy nhiên, các mô phỏng này được thiết kế cho chương trình giáo dục quốc tế, không bám sát cấu trúc và tiến trình nội dung của sách giáo khoa Việt Nam. Giao diện và chú thích bằng tiếng Anh cũng tạo ra rào cản ngôn ngữ đối với một bộ phận không nhỏ học sinh. Các phần mềm thương mại như \textit{Crocodile Physics}, \textit{Yenka} hay \textit{Algodoo} tuy mạnh mẽ về tính năng nhưng yêu cầu mua bản quyền, cài đặt phức tạp và không tối ưu cho việc triển khai trên quy mô lớp học đông học sinh với cơ sở hạ tầng công nghệ thông tin hạn chế. Một số phần mềm trong nước đã được phát triển nhưng thường chỉ dừng lại ở mức trình chiếu hoặc mô phỏng 2D đơn giản, thiếu chiều sâu tương tác và khả năng khám phá.
+
+\textbf{Về mặt công nghệ:} Một điểm yếu nổi bật của nhiều giải pháp hiện có là chúng tập trung vào mô phỏng 2D hoặc các hoạt cảnh được tạo sẵn (pre-rendered animations). Điều này hạn chế khả năng tương tác và khám phá của người học. Học sinh không thể thay đổi góc nhìn, không thể bật/tắt từng thành phần của hiện tượng (ví dụ: chỉ xem riêng điện trường hoặc từ trường trong sóng điện từ, hoặc chỉ xem đường bao của sóng dừng mà không xem các hạt dao động), và không thể nhìn thấy mối liên hệ giữa biểu diễn không gian 3D với đồ thị 2D của cùng một hiện tượng. Hơn nữa, nhiều phần mềm yêu cầu cài đặt runtime (như Java, Flash đã lỗi thời) hoặc chỉ chạy trên một hệ điều hành cụ thể, gây khó khăn cho việc triển khai đồng bộ trong môi trường trường học đa dạng về thiết bị.
+
+\textbf{Về mặt phương pháp sư phạm:} Thực tế giảng dạy cho thấy nhiều học sinh gặp khó khăn trong việc tự học Vật lý do thiếu môi trường để thử nghiệm, quan sát và kiểm chứng các quy luật vật lý. Với chương Dao động, học sinh cần hình dung được sự biến đổi của li độ, vận tốc, gia tốc theo thời gian và mối quan hệ giữa chúng; sự chuyển hóa qua lại giữa động năng và thế năng; ảnh hưởng của biên độ ban đầu và lực cản đến quá trình dao động. Với chương Sóng, học sinh cần hiểu được cơ chế lan truyền dao động trong môi trường, sự khác biệt giữa sóng dọc và sóng ngang, cơ chế hình thành vân giao thoa và điều kiện để có sóng dừng. Giáo viên cũng gặp trở ngại trong việc lựa chọn và triển khai các công cụ công nghệ phù hợp, đặc biệt là những công cụ có thể tùy chỉnh theo nội dung bài giảng cụ thể, có giao diện tiếng Việt và bám sát chương trình sách giáo khoa hiện hành.
+
+Xuất phát từ những phân tích trên, đề tài được lựa chọn nhằm xây dựng một chương trình hỗ trợ dạy và học Vật lý lớp 11 có tính hệ thống, dễ tiếp cận và phù hợp với thực tiễn giáo dục phổ thông. Đề tài không đặt mục tiêu cạnh tranh với các phần mềm thương mại quy mô lớn, mà hướng đến việc tạo ra một giải pháp có mã nguồn mở, dễ triển khai, dễ tùy chỉnh và bám sát chương trình học của Việt Nam. Việc triển khai đề tài không chỉ nhằm giải quyết các khó khăn hiện tại trong quá trình dạy và học mà còn góp phần định hướng cho việc ứng dụng công nghệ một cách bền vững trong giáo dục.
+
+\section{Mục tiêu đề tài}
+
+\subsection{Mục tiêu tổng quát}
+Mục tiêu tổng quát của đề tài là thiết kế và xây dựng một chương trình phần mềm dưới dạng ứng dụng web (Web Application) hỗ trợ dạy và học môn Vật lý lớp 11, bao quát cả hai chương Dao động và Sóng theo sách giáo khoa \textit{Chân trời sáng tạo}. Trong đó, công nghệ đồ họa 3D thời gian thực (real-time 3D rendering) được sử dụng như một công cụ trung gian giúp kết nối lý thuyết với thực tiễn, nâng cao khả năng hiểu sâu bản chất hiện tượng vật lý của học sinh và hỗ trợ giáo viên trong việc đổi mới phương pháp giảng dạy theo hướng tích cực hóa người học.
+
+\subsection{Mục tiêu cụ thể}
+\begin{itemize}
+    \item \textbf{Phân tích nội dung chương Dao động và chương Sóng} thuộc chương trình Vật lý 11 theo sách giáo khoa \textit{Chân trời sáng tạo} nhằm xác định các chủ đề và hiện tượng vật lý cần được mô phỏng và trực quan hóa. Cụ thể:
+    \begin{itemize}
+        \item \textbf{Chương Dao động:} Dao động điều hòa, con lắc đơn, con lắc lò xo, năng lượng trong dao động (động năng, thế năng, cơ năng), dao động tắt dần, dao động cưỡng bức và hiện tượng cộng hưởng.
+        \item \textbf{Chương Sóng:} Sóng cơ học (sóng dọc, sóng ngang, sóng trên dây), các đặc trưng của sóng (biên độ, tần số, bước sóng, vận tốc truyền sóng), hiện tượng giao thoa sóng (điều kiện cực đại, cực tiểu, vân giao thoa), sóng dừng (điều kiện hình thành, bụng sóng, nút sóng), và sóng điện từ (phương trình sóng, mối quan hệ $\vec{E} \perp \vec{B} \perp \vec{v}$).
+    \end{itemize}
+    
+    \item \textbf{Thiết kế và xây dựng các mô hình mô phỏng 3D có tính tương tác cao}, cho phép người học thực hiện các thao tác khám phá chủ động:
+    \begin{itemize}
+        \item \textbf{Thay đổi tham số vật lý} thông qua hệ thống thanh trượt (slider controls) và quan sát sự biến đổi của hiện tượng theo thời gian thực. Các tham số bao gồm: biên độ, tần số, bước sóng, pha ban đầu, chiều dài dây/con lắc, độ cứng lò xo, khối lượng vật nặng, hệ số giảm chấn, khoảng cách giữa hai nguồn sóng, độ lệch pha giữa các nguồn.
+        \item \textbf{Tương tác trực tiếp với mô hình 3D:} Kéo thả vật nặng của con lắc để đặt góc ban đầu, xoay camera 360° để quan sát hiện tượng từ mọi góc độ, phóng to/thu nhỏ để xem chi tiết hoặc tổng quan.
+        \item \textbf{Bật/tắt có chọn lọc từng thành phần} của mô phỏng (đường sức điện, đường sức từ, vectơ cường độ trường, mặt sóng, vân giao thoa, vùng nén/giãn, sóng phản xạ, đường bao sóng dừng...) để tập trung quan sát vào từng khía cạnh cụ thể của hiện tượng.
+    \end{itemize}
+    
+    \item \textbf{Xây dựng hệ thống đồ thị phân tích tích hợp} (integrated analytical charts) sử dụng thư viện Recharts, cho phép hiển thị đồng bộ với mô phỏng 3D các dữ liệu như: li độ và vận tốc theo thời gian trong dao động điều hòa, sự chuyển hóa giữa động năng và thế năng, đồ thị không gian pha (phase space), cường độ điện trường và từ trường theo thời gian trong sóng điện từ, cường độ giao thoa theo vị trí, vị trí các vân cực đại/cực tiểu. Học sinh có thể quan sát đồng thời cả biểu diễn không gian 3D và biểu diễn đồ thị 2D của cùng một hiện tượng, từ đó tăng cường khả năng kết nối giữa các hình thức biểu diễn khác nhau của kiến thức vật lý.
+    
+    \item \textbf{Phát triển giao diện người dùng (UI) thân thiện và trực quan}, với các thành phần điều khiển được thiết kế rõ ràng, có chú thích tiếng Việt đầy đủ, phù hợp với đối tượng học sinh phổ thông. Giao diện bao gồm các tab chức năng (Bảng điều khiển, Hiển thị, Thông tin Vật lý, Đồ thị Phân tích, Lý thuyết) giúp tổ chức nội dung một cách logic và dễ tiếp cận.
+    
+    \item \textbf{Đề xuất và triển khai kiến trúc phần mềm linh hoạt, hiệu năng cao}, đảm bảo:
+    \begin{itemize}
+        \item Sử dụng React Three Fiber (@react-three/fiber) kết hợp với Three.js để xây dựng các cảnh 3D phức tạp với khả năng tích hợp mượt mà vào hệ sinh thái React (state management, hooks, component lifecycle).
+        \item Sử dụng các component tiện ích từ thư viện Drei (@react-three/drei) như OrbitControls (điều khiển camera), Line (vẽ đường thẳng và đường cong trong không gian 3D), Html (nhúng HTML vào cảnh 3D làm chú thích), Plane (mặt phẳng hình học).
+        \item Áp dụng kỹ thuật InstancedMesh của Three.js để tối ưu hóa hiệu năng trong mô phỏng giao thoa sóng, giảm số lượng draw calls từ hàng nghìn xuống chỉ còn một, cho phép hiển thị mượt mà các mẫu giao thoa với độ phân giải cao (lên đến 100×100 = 10.000 điểm ảnh).
+        \item Sử dụng Canvas 2D API cho mô phỏng sóng trên dây – một lựa chọn phù hợp cho bài toán hiển thị sóng một chiều với yêu cầu cập nhật nhanh và chi phí render thấp.
+        \item Kiến trúc module hóa (component-based architecture) của React giúp dễ dàng bảo trì, mở rộng và tái sử dụng các thành phần giao diện như ThanhTruot (slider), NutGradient (button), CardThongSo (parameter card) được dùng chung xuyên suốt các mô phỏng.
+    \end{itemize}
+\end{itemize}
+
+\section{Đối tượng và phạm vi nghiên cứu của đề tài}
+
+\subsection{Đối tượng nghiên cứu}
+Đề tài tập trung nghiên cứu vào hai nhóm đối tượng chính, phản ánh sự kết hợp giữa nội dung giáo dục và công nghệ hỗ trợ:
+
+\begin{itemize}
+    \item \textbf{Đối tượng khoa học:} Các hiện tượng, khái niệm và định luật Vật lý lớp 11 thuộc hai chương Dao động và Sóng, có tính trừu tượng cao, đòi hỏi khả năng hình dung không gian và tư duy mô hình hóa. Cụ thể:
+    \begin{itemize}
+        \item \textbf{Chương Dao động:}
+        \begin{itemize}
+            \item Dao động điều hòa: phương trình $x = A\cos(\omega t + \varphi)$, mối quan hệ giữa li độ, vận tốc $v = -A\omega\sin(\omega t + \varphi)$ và gia tốc $a = -\omega^2 x$, đồ thị dao động.
+            \item Con lắc đơn: phương trình dao động $\theta'' + (g/L)\sin\theta = 0$, công thức chu kỳ $T = 2\pi\sqrt{L/g}$ (với góc nhỏ), sự chuyển hóa giữa động năng $K = \frac{1}{2}mL^2\dot{\theta}^2$ và thế năng $U = mgL(1-\cos\theta)$.
+            \item Con lắc lò xo: phương trình $mx'' + bx' + kx = 0$, chu kỳ $T = 2\pi\sqrt{m/k}$, tần số góc $\omega_0 = \sqrt{k/m}$, các chế độ dao động (không cản, cản nhẹ, cản tới hạn, cản mạnh).
+            \item Năng lượng trong dao động: định luật bảo toàn cơ năng $E = K + U = \text{hằng số}$ (khi không có ma sát), sự giảm dần của cơ năng trong dao động tắt dần.
+        \end{itemize}
+        \item \textbf{Chương Sóng:}
+        \begin{itemize}
+            \item Sóng cơ học: phân biệt sóng dọc (phương dao động trùng phương truyền sóng, ví dụ: âm thanh) và sóng ngang (phương dao động vuông góc phương truyền sóng, ví dụ: sóng nước, sóng trên dây).
+            \item Các đặc trưng của sóng: phương trình sóng $u(x,t) = A\cos(\omega t - kx + \varphi)$, vận tốc truyền sóng $v = \lambda f = \omega/k$, năng lượng sóng tỉ lệ với $A^2f^2$.
+            \item Giao thoa sóng: nguyên lý chồng chất sóng $u = u_1 + u_2$, điều kiện cực đại $d_2 - d_1 = k\lambda$, điều kiện cực tiểu $d_2 - d_1 = (k+\frac{1}{2})\lambda$, hình dạng các vân giao thoa hyperbol.
+            \item Sóng dừng: điều kiện $L = n\lambda/2$ (hai đầu cố định), vị trí bụng và nút sóng, phương trình $u = 2A\cos(kx)\sin(\omega t)$.
+            \item Sóng điện từ: phương trình $E = E_0\cos(\omega t - kx)$, $B = B_0\cos(\omega t - kx)$, mối quan hệ $E_0 = cB_0$, tính chất sóng ngang ($\vec{E} \perp \vec{B} \perp \vec{v}$).
+        \end{itemize}
+    \end{itemize}
+    
+    \item \textbf{Đối tượng công nghệ:} Các công nghệ và kỹ thuật phát triển ứng dụng web tương tác để hỗ trợ học tập. Nhóm này bao gồm:
+    \begin{itemize}
+        \item \textbf{React Three Fiber (@react-three/fiber):} Thư viện React renderer cho Three.js, cho phép khai báo các đối tượng 3D dưới dạng JSX component, tích hợp mượt mà với hệ sinh thái React (state management, hooks như useState, useEffect, useMemo, useCallback, useRef) và tự động xử lý việc mount/unmount các đối tượng 3D khi component React thay đổi. Đây là công nghệ cốt lõi được sử dụng trong tất cả các mô phỏng 3D của đề tài: ElectromagneticWave3D, WaveInterference3D, PendulumSimulation, SpringPendulumSimulation, LongitudinalWave, SonarSimulation.
+        \item \textbf{Drei (@react-three/drei):} Bộ thư viện tiện ích cho React Three Fiber, cung cấp các component được xây dựng sẵn và tối ưu hóa. Các component chính được sử dụng trong đề tài bao gồm: \texttt{OrbitControls} (điều khiển camera xoay, pan, zoom), \texttt{Line} (vẽ đường thẳng và đường cong trong không gian 3D – dùng để vẽ dây treo con lắc, đường sóng, mặt sóng tròn, vân giao thoa, tia sonar), \texttt{Html} (nhúng HTML vào cảnh 3D để tạo chú thích, nhãn, bảng thông tin), \texttt{Plane} (mặt phẳng hình học làm nền), \texttt{Text} (hiển thị văn bản 3D), \texttt{Stars} (hiệu ứng sao cho môi trường nước trong Sonar).
+        \item \textbf{Three.js:} Thư viện đồ họa 3D cấp thấp cho nền web, cung cấp các API để tạo và điều khiển scene, camera, renderer, geometry (BoxGeometry, SphereGeometry, ConeGeometry, CylinderGeometry, PlaneGeometry, BufferGeometry...), material (MeshStandardMaterial, MeshBasicMaterial, PointsMaterial, LineBasicMaterial...), lighting (AmbientLight, PointLight, DirectionalLight). Three.js sử dụng WebGL để render đồ họa 3D trực tiếp trên GPU, đảm bảo hiệu năng cao. Các đối tượng Three.js như \texttt{THREE.Vector3}, \texttt{THREE.Color}, \texttt{THREE.MathUtils}, \texttt{THREE.BufferGeometry}, \texttt{THREE.Float32BufferAttribute} được sử dụng trực tiếp trong code.
+        \item \textbf{InstancedMesh (THREE.InstancedMesh):} Kỹ thuật render của Three.js cho phép vẽ hàng nghìn bản sao của cùng một hình học (geometry) chỉ với một lời gọi vẽ (draw call). Mỗi instance có thể có vị trí, tỉ lệ và màu sắc riêng thông qua \texttt{setMatrixAt()} và \texttt{setColorAt()}, nhưng chia sẻ chung một geometry và material. Kỹ thuật này được áp dụng trong mô phỏng giao thoa sóng (\texttt{InterferenceInstancedMesh}) để hiển thị $80 \times 80 = 6.400$ điểm giao thoa chỉ với 1 draw call, thay vì 6.400 draw calls nếu dùng mesh riêng lẻ.
+        \item \textbf{Canvas 2D API:} Sử dụng HTML5 Canvas với context 2D để vẽ mô phỏng sóng trên dây. Đây là lựa chọn phù hợp cho bài toán hiển thị sóng một chiều với yêu cầu vẽ lại nhanh (mỗi frame animation) và chi phí render thấp hơn so với việc sử dụng WebGL/Three.js cho một đường cong đơn giản.
+        \item \textbf{Recharts:} Thư viện vẽ đồ thị cho React, được sử dụng trong tất cả các component phân tích dữ liệu: \texttt{EMWaveChart}, \texttt{InterferenceChart} (trong WaveInterference3D), \texttt{DoThiConLac} (PendulumChart), \texttt{SoSanhSongChart} (LongitudinalWaveChart), \texttt{SonarWaveChart}. Các component Recharts được dùng: \texttt{LineChart}, \texttt{Line}, \texttt{AreaChart}, \texttt{Area}, \texttt{ScatterChart}, \texttt{Scatter}, \texttt{XAxis}, \texttt{YAxis}, \texttt{CartesianGrid}, \texttt{Tooltip}, \texttt{Legend}, \texttt{ResponsiveContainer}, \texttt{ReferenceLine}. Để tránh xung đột tên với component \texttt{Line} của Drei, import được alias thành \texttt{RechartsLine}.
+        \item \textbf{Tailwind CSS:} Framework CSS utility-first được sử dụng để thiết kế giao diện người dùng, đảm bảo tính nhất quán, responsive (hỗ trợ dark mode qua class \texttt{dark:}) và dễ dàng tùy chỉnh. Các class như \texttt{bg-gradient-to-br}, \texttt{backdrop-blur-sm}, \texttt{rounded-xl}, \texttt{shadow-lg}, \texttt{grid}, \texttt{flex} được sử dụng xuyên suốt.
+        \item \textbf{Lucide React:} Thư viện icon mã nguồn mở, cung cấp các biểu tượng vector chất lượng cao dùng trong giao diện (Play, Pause, Settings, Eye, Waves, Zap, Activity, Gauge, Ruler...).
+        \item \textbf{React Hook:} Các hook của React được sử dụng chuyên sâu: \texttt{useState} (quản lý trạng thái), \texttt{useEffect} (animation loop, cập nhật dữ liệu), \texttt{useMemo} (tính toán hình học sóng, tối ưu hiệu năng), \texttt{useCallback} (hàm xử lý sự kiện), \texttt{useRef} (tham chiếu đến mesh, canvas, animation frame), \texttt{useFrame} (từ @react-three/fiber, chạy code mỗi frame render).
+    \end{itemize}
+\end{itemize}
+
+\subsection{Phạm vi nghiên cứu}
+Để đảm bảo tính khả thi và chiều sâu của nghiên cứu trong khuôn khổ thời gian và nguồn lực hiện có, đề tài được giới hạn trong các phạm vi sau:
+
+\begin{itemize}
+    \item \textbf{Về nội dung kiến thức:} Đề tài giới hạn trong việc mô phỏng và trực quan hóa các nội dung thuộc Chương 1 – Dao động và Chương 2 – Sóng của chương trình Vật lý lớp 11 theo sách giáo khoa \textit{Chân trời sáng tạo} của Bộ Giáo dục và Đào tạo. Cụ thể, hệ thống bao gồm các mô phỏng chính:
+    \begin{enumerate}
+        \item \textbf{Con lắc đơn:} Mô phỏng 3D dao động của con lắc đơn với khả năng kéo thả quả nặng để đặt góc ban đầu, điều chỉnh chiều dài dây, hệ số giảm chấn, tốc độ mô phỏng. Tích hợp đồ thị phân tích góc, vận tốc, năng lượng và không gian pha.
+        \item \textbf{Con lắc lò xo:} Mô phỏng 3D dao động của con lắc lò xo thẳng đứng với lò xo dạng xoắn ốc, khả năng kéo thả vật nặng, điều chỉnh độ cứng lò xo, khối lượng, hệ số cản, tốc độ mô phỏng. Tích hợp đồ thị và hiển thị công thức LaTeX.
+        \item \textbf{Sóng dọc và sóng ngang:} So sánh trực quan song song hai loại sóng cơ bản: sóng dọc (âm thanh) với các phần tử dao động dọc theo phương truyền, vùng nén/giãn; sóng ngang (gợn sóng nước) với các vòng tròn đồng tâm và tia sóng tỏa ra từ tâm. Tích hợp đồ thị so sánh.
+        \item \textbf{Sóng trên dây:} Mô phỏng 2D sử dụng Canvas API về sự lan truyền của sóng trên dây, bao gồm các chế độ: sóng liên tục hình sin, xung đơn, với ba điều kiện biên (đầu cố định, đầu tự do, hấp thụ không phản xạ). Hiển thị trực quan sự truyền năng lượng và vận tốc sóng.
+        \item \textbf{Giao thoa sóng:} Mô phỏng 3D hiện tượng giao thoa từ hai nguồn sóng kết hợp. Sử dụng InstancedMesh để hiển thị mẫu giao thoa với 80×80 điểm ảnh (1 draw call), vẽ các vân cực đại/cực tiểu dạng đường hyperbol, và hiển thị sóng tròn lan truyền. Tích hợp đồ thị cường độ giao thoa theo vị trí và sơ đồ vị trí vân.
+        \item \textbf{Sóng điện từ:} Mô phỏng 3D sự lan truyền của sóng điện từ trong không gian, thể hiện vectơ điện trường $\vec{E}$ (dao động theo trục Y) và vectơ từ trường $\vec{B}$ (dao động theo trục Z) vuông góc với nhau và vuông góc với phương truyền sóng (trục X). Tích hợp đồ thị E(t), B(t), I(t) và so sánh chuẩn hóa.
+        \item \textbf{Sóng dừng:} Mô phỏng 3D sóng dừng trên dây với khả năng thay đổi họa âm bậc n, hiển thị đường bao, vị trí nút và bụng sóng.
+    \end{enumerate}
+    
+    \item \textbf{Về nền tảng công nghệ:} Ứng dụng được phát triển dưới dạng Single Page Application (SPA) chạy hoàn toàn trên trình duyệt web (client-side rendering), không yêu cầu máy chủ backend cho các chức năng mô phỏng. Các công nghệ chính bao gồm:
+    \begin{itemize}
+        \item \textbf{Frontend Framework:} React 18+ với TypeScript
+        \item \textbf{3D Rendering:} React Three Fiber (@react-three/fiber) + Drei (@react-three/drei) dựa trên Three.js/WebGL
+        \item \textbf{2D Rendering:} HTML5 Canvas API (cho mô phỏng sóng trên dây)
+        \item \textbf{Đồ thị:} Recharts (với alias \texttt{RechartsLine} để tránh xung đột với \texttt{Line} của Drei)
+        \item \textbf{Styling:} Tailwind CSS
+        \item \textbf{Icons:} Lucide React
+        \item \textbf{Toán học:} MathJax/KaTeX (cho hiển thị công thức LaTeX trong LatexPanel.tsx)
+    \end{itemize}
+    Ứng dụng được thiết kế để chạy trên các trình duyệt hiện đại hỗ trợ WebGL (Chrome 90+, Firefox 88+, Edge 90+, Safari 14+) mà không yêu cầu người dùng cài đặt thêm bất kỳ plugin hay phần mềm bổ trợ nào.
+    
+    \item \textbf{Về đối tượng sử dụng:} Hệ thống được thiết kế hướng đến hai nhóm người dùng chính trong bối cảnh giáo dục phổ thông: học sinh lớp 11 (người học chính, sử dụng để tự học, khám phá và kiểm chứng kiến thức) và giáo viên Vật lý (người hướng dẫn, sử dụng như công cụ minh họa trực quan trong giờ giảng). Giao diện và ngôn ngữ hiển thị đều bằng tiếng Việt để phù hợp với đối tượng người dùng mục tiêu, với các chú thích, nhãn, hướng dẫn và giải thích vật lý được viết rõ ràng.
+    
+    \item \textbf{Về quy mô và độ phức tạp của mô phỏng:} Các mô phỏng được thiết kế để cân bằng giữa độ chính xác vật lý và hiệu năng render, đảm bảo chạy mượt mà trên các thiết bị phổ thông:
+    \begin{itemize}
+        \item \textbf{Con lắc đơn/lò xo:} Sử dụng phép tích phân Euler để giải phương trình vi phân dao động, cập nhật mỗi frame qua \texttt{useFrame} (≈60 FPS). Lực cản được mô hình dưới dạng $-bv$ (cản nhớt tuyến tính).
+        \item \textbf{Sóng dọc/ngang:} Sử dụng 32 điểm lấy mẫu cho sóng dọc, 6 mặt sóng tròn × 48 điểm cho sóng ngang, tính toán lại mỗi khi phase thay đổi.
+        \item \textbf{Sóng trên dây:} Vẽ trực tiếp lên Canvas 2D với độ phân giải 2 pixel/điểm, tính toán li độ sóng dựa trên phương trình sóng tổng quát có xét đến phản xạ và tắt dần.
+        \item \textbf{Giao thoa sóng:} Sử dụng \texttt{InstancedMesh} với lưới điểm có độ phân giải $80 \times 80 = 6.400$ điểm, cập nhật màu sắc và vị trí mỗi điểm qua \texttt{useFrame} (≈60 FPS) chỉ với 1 draw call. Các đường vân giao thoa hyperbol được vẽ bằng component \texttt{Line} của Drei.
+        \item \textbf{Sóng điện từ:} Sử dụng 200 điểm lấy mẫu cho mỗi đường sóng E và B, kết hợp với 12 vectơ cường độ trường tại các điểm nút. Dữ liệu lịch sử được thu thập với tần suất 10 Hz và lưu trữ tối đa 500 mẫu.
+        \item \textbf{Sonar:} Mô phỏng địa hình đáy biển 3D với lưới $200 \times 200$ điểm (PlaneGeometry), kết hợp với các vòng tròn sóng phát và sóng echo, tia sonar được vẽ dưới dạng Line.
+    \end{itemize}
+\end{itemize}
+
+\section{Các nhiệm vụ đề ra}
+Để hiện thực hóa các mục tiêu đã đề xuất, đề tài được triển khai theo một chuỗi nhiệm vụ nghiên cứu có tính hệ thống và kế thừa, được sắp xếp theo trình tự từ khảo cứu lý luận đến thiết kế, phát triển và đánh giá.
+
+\begin{enumerate}
+    \item \textbf{Nghiên cứu cơ sở lý luận và thực tiễn.} \\
+    Tiến hành khảo sát, phân tích chi tiết chương trình Vật lý 11 theo sách giáo khoa \textit{Chân trời sáng tạo}, đặc biệt chú trọng hai chương Dao động và Sóng. Phân tích các yêu cầu cần đạt về kiến thức và năng lực được quy định trong chương trình giáo dục phổ thông 2018\footnote{Bộ Giáo dục và Đào tạo. (2018). \textit{Chương trình giáo dục phổ thông môn Vật lý.} Ban hành kèm Thông tư 32/2018/TT-BGDĐT.} đối với hai chương này. Đồng thời, tổng hợp và phân tích các xu hướng ứng dụng công nghệ thông tin trong dạy học Vật lý trên thế giới và tại Việt Nam, bao gồm mô phỏng số (computer simulations), học liệu tương tác (interactive learning objects), phòng thí nghiệm ảo (virtual labs) và nền tảng học tập trực tuyến (e-Learning platforms). Đặc biệt, nghiên cứu các công trình về hiệu quả của mô phỏng tương tác trong dạy học Vật lý, tiêu biểu là các nghiên cứu của Wieman và Perkins về PhET Interactive Simulations\footnote{Wieman, C. E., Adams, W. K., \& Perkins, K. K. (2008). PhET: Simulations that enhance learning. \textit{Science}, 322(5902), 682–683.}, và lý thuyết học tập đa phương tiện của Mayer\footnote{Mayer, R. E. (2009). \textit{Multimedia Learning} (2nd ed.). Cambridge University Press.}.
+
+    \item \textbf{Nghiên cứu và lựa chọn công nghệ.} \\
+    Đánh giá các công nghệ đồ họa web hiện đại để lựa chọn giải pháp phù hợp nhất với yêu cầu của đề tài:
+    \begin{itemize}
+        \item \textbf{WebGL/Three.js} được lựa chọn thay vì Canvas 2D cho hầu hết các mô phỏng do khả năng render 3D với hiệu năng GPU-accelerated, phù hợp với yêu cầu hiển thị các đối tượng 3D phức tạp và cập nhật theo thời gian thực ở tốc độ 60 FPS.
+        \item \textbf{React Three Fiber} được chọn thay vì sử dụng Three.js thuần do khả năng tích hợp với React state management, cho phép đồng bộ trạng thái giữa UI controls (thanh trượt, nút bấm) và cảnh 3D một cách tự nhiên thông qua React state. Cơ chế hook (\texttt{useFrame}, \texttt{useThree}) giúp việc quản lý animation loop trở nên đơn giản và nhất quán với vòng đời của React component.
+        \item \textbf{Drei} được chọn làm thư viện bổ trợ vì cung cấp sẵn các component thường dùng trong mô phỏng 3D giáo dục: OrbitControls (điều khiển camera), Line (vẽ đường cong), Html (chú thích).
+        \item \textbf{Recharts} được chọn cho phần đồ thị do API đơn giản, khả năng responsive và tích hợp tốt với React component tree. Các component như \texttt{LineChart}, \texttt{AreaChart}, \texttt{ScatterChart} cho phép biểu diễn đa dạng các loại dữ liệu vật lý.
+        \item \textbf{Tailwind CSS} được chọn cho styling để đảm bảo giao diện nhất quán, dễ tùy chỉnh và hỗ trợ dark mode thông qua các class tiền tố \texttt{dark:}.
+        \item \textbf{Canvas 2D API} được giữ lại cho mô phỏng sóng trên dây (\texttt{WaveOnString.tsx}), nơi một đường cong 2D đơn giản được vẽ lại mỗi frame, phù hợp hơn so với việc khởi tạo toàn bộ scene WebGL.
+    \end{itemize}
+
+    \item \textbf{Thiết kế kiến trúc hệ thống và giao diện người dùng.} \\
+    Thiết kế kiến trúc component tree cho từng mô phỏng, xác định cấu trúc state management (các state nào cần được quản lý ở cấp component cha, state nào có thể là local state), và thiết kế layout giao diện người dùng. Mỗi mô phỏng được tổ chức thành một cụm component độc lập. Giao diện chính được tổ chức theo layout: View 3D (trái/lớn) + Panel điều khiển (phải/nhỏ) + Tab navigation (dưới View 3D) để chuyển đổi giữa các nhóm chức năng: Bảng điều khiển, Hiển thị, Thông tin Vật lý, Đồ thị Phân tích, Lý thuyết.
+
+    \item \textbf{Triển khai lập trình các mô phỏng.} \\
+    Thực hiện lập trình các mô phỏng chính theo từng chương:
+    \begin{itemize}
+        \item \textbf{Con lắc đơn (Chương Dao động):} Hiển thị con lắc trong không gian 3D với dây treo, quả nặng có thể kéo thả, điểm treo, vòng cung đo góc. Hiển thị đồ thị góc/vận tốc, năng lượng và không gian pha.
+        \item \textbf{Con lắc lò xo (Chương Dao động):} Hiển thị lò xo dạng xoắn ốc, vật nặng có thể kéo thả, trần nhà, vị trí cân bằng. Tích hợp hiển thị công thức LaTeX qua \texttt{LatexPanel}.
+        \item \textbf{Sóng dọc và sóng ngang (Chương Sóng):} Hiển thị song song cả sóng dọc và sóng ngang trong cùng một giao diện so sánh.
+        \item \textbf{Sóng trên dây (Chương Sóng):} Sử dụng Canvas 2D API để vẽ sóng trên dây với các chế độ liên tục/xung và điều kiện biên cố định/tự do/hấp thụ.
+        \item \textbf{Giao thoa sóng (Chương Sóng):} Hiển thị 3D các điểm giao thoa cực đại, cực tiểu của giữa hai sóng. Ngoài ra, cho phép người dùng thay đổi khoảng cách giữa hai sóng.
+        \item \textbf{Sóng điện từ (Chương Sóng):} Hiển thị dao động của $\vec{E}$ và $\vec{B}$ trong không gian 3D, sử dụng \texttt{useMemo} để tính toán lại tọa độ các điểm sóng mỗi khi tham số thay đổi, và \texttt{useEffect} kết hợp với \texttt{requestAnimationFrame} để cập nhật thời gian liên tục. Tích hợp thang sóng điện từ (\texttt{ThangSongDienTu}).
+        \item \textbf{Sonar (Chương Sóng):} Mô phỏng 3D nguyên lý định vị bằng sóng âm dưới nước, bao gồm tàu nổi, địa hình đáy biển 3D, tia sonar, sóng phát và sóng echo, môi trường nước với hạt và bọt khí.
+    \end{itemize}
+
+    \item \textbf{Kiểm thử và tối ưu hóa.} \\
+    Tiến hành kiểm thử trên nhiều trình duyệt (Chrome, Firefox, Edge, Safari) và thiết bị (desktop, laptop, tablet) khác nhau để đảm bảo:
+    \begin{itemize}
+        \item Các mô phỏng chạy mượt mà với tốc độ khung hình ổn định (tối thiểu 30 FPS, mục tiêu 60 FPS trên desktop).
+        \item Kỹ thuật \texttt{InstancedMesh} hoạt động chính xác, giảm số lượng draw calls từ $n \times n$ xuống chỉ còn 1.
+        \item Các tham số vật lý được tính toán chính xác theo đúng công thức lý thuyết (so sánh với kết quả tính tay).
+        \item Giao diện responsive, hiển thị tốt trên các kích thước màn hình khác nhau (từ 1024px đến 1920px chiều rộng).
+        \item Không có memory leak trong quá trình chạy dài (kiểm tra qua Chrome DevTools Performance Monitor).
+    \end{itemize}
+\end{enumerate}
+
+\section{Ý nghĩa khoa học và thực tiễn}
+
+\subsection{Ý nghĩa khoa học}
+Đề tài mang lại những đóng góp có giá trị về mặt lý luận và phương pháp luận trong lĩnh vực công nghệ giáo dục và giáo dục học:
+
+\begin{itemize}
+    \item \textbf{Chứng minh tính khả thi của việc ứng dụng React Three Fiber trong mô phỏng giáo dục Vật lý:} Đề tài đưa ra một minh chứng cụ thể cho thấy React Three Fiber – một thư viện tương đối mới (ra đời khoảng 2019-2020) trong hệ sinh thái React – hoàn toàn có thể được sử dụng để xây dựng các mô phỏng vật lý 3D phức tạp, với ưu điểm vượt trội về khả năng tích hợp state management và component lifecycle của React. Điều này mở ra một hướng tiếp cận mới cho việc phát triển phần mềm giáo dục tại Việt Nam, nơi React đang là một trong những framework frontend phổ biến nhất.
+    
+    \item \textbf{Ghi nhận và ứng dụng kỹ thuật InstancedMesh cho bài toán hiển thị mẫu giao thoa:} Việc sử dụng \texttt{THREE.InstancedMesh} để hiển thị lượng lớn điểm ảnh giao thoa chỉ với 1 draw call là một giải pháp tối ưu hóa hiệu năng đáng chú ý. Thông thường, nếu mỗi điểm được render dưới dạng một mesh riêng biệt, số lượng draw calls sẽ lên đến 6.400 lần mỗi frame, gây ra tình trạng giật lag nghiêm trọng. Kỹ thuật này có thể áp dụng cho nhiều bài toán mô phỏng tương tự trong giáo dục STEM, nơi cần hiển thị số lượng lớn đối tượng được cập nhật liên tục theo thời gian.
+    
+    \item \textbf{Tích hợp đồng bộ 3D visualization và 2D data charts:} Đề tài đưa ra một mô hình kiến trúc cho phép đồng bộ hóa giữa mô phỏng 3D thời gian thực (render bởi React Three Fiber/Three.js) và đồ thị phân tích dữ liệu 2D (render bởi Recharts). Cả hai hệ thống cùng chia sẻ chung một nguồn dữ liệu (state), được cập nhật bởi cùng một animation loop. Điều này giúp người học có thể quan sát cùng một hiện tượng từ hai góc độ biểu diễn khác nhau (không gian và đồ thị), tăng cường khả năng hiểu sâu và kết nối giữa các hình thức biểu diễn kiến thức – một nguyên tắc quan trọng trong lý thuyết học tập đa phương tiện.
+    
+    \item \textbf{Hệ thống hóa quy trình phát triển ứng dụng mô phỏng giáo dục:} Đề tài đưa ra một quy trình có hệ thống từ phân tích nội dung chương trình học, lựa chọn công nghệ phù hợp, thiết kế kiến trúc component, đến triển khai lập trình và tối ưu hóa hiệu năng. Quy trình này có thể trở thành tài liệu tham khảo có giá trị cho các nghiên cứu và dự án tương tự trong lĩnh vực phát triển học liệu số cho Giáo dục STEM.
+\end{itemize}
+
+\subsection{Ý nghĩa thực tiễn}
+Bên cạnh giá trị học thuật, đề tài mang đến nhiều lợi ích thiết thực cho các bên liên quan trong hoạt động dạy và học:
+
+\begin{itemize}
+    \item \textbf{Đối với học sinh:}
+    \begin{itemize}
+        \item Cung cấp một bộ công cụ trực quan để quan sát các hiện tượng dao động và sóng vốn không thể nhìn thấy bằng mắt thường: sự biến đổi của li độ, vận tốc, gia tốc trong dao động điều hòa; sự chuyển hóa qua lại giữa động năng và thế năng; dao động của vectơ điện trường và từ trường trong sóng điện từ; sự hình thành các vân giao thoa từ hai nguồn sóng kết hợp; sự lan truyền của sóng trên dây và phản xạ tại các điều kiện biên khác nhau.
+        \item Cho phép tương tác trực tiếp với mô hình: kéo thả vật nặng con lắc để đặt điều kiện ban đầu, xoay camera 360° để quan sát hiện tượng từ mọi góc độ, thay đổi tham số bằng thanh trượt và quan sát kết quả ngay lập tức. Điều này tạo ra trải nghiệm học tập "học qua khám phá" (discovery learning) – một phương pháp đã được chứng minh là hiệu quả trong giáo dục STEM.
+        \item Tích hợp đồ thị phân tích giúp học sinh kết nối giữa biểu diễn hình học không gian (3D) và biểu diễn toán học (đồ thị 2D) của cùng một hiện tượng, từ đó phát triển năng lực mô hình hóa toán học – một trong những năng lực cốt lõi của môn Vật lý theo chương trình giáo dục phổ thông 2018.
+        \item Giao diện tiếng Việt với chú thích rõ ràng, giải thích vật lý đi kèm giúp giảm rào cản ngôn ngữ và tăng khả năng tự học.
+    \end{itemize}
+    
+    \item \textbf{Đối với giáo viên:}
+    \begin{itemize}
+        \item Cung cấp một bộ công cụ giảng dạy trực quan mạnh mẽ, giúp minh họa sinh động và chính xác các khái niệm khó trong chương Dao động và Sóng, tiết kiệm thời gian chuẩn bị đồ dùng dạy học truyền thống (vẽ hình trên bảng, chuẩn bị thí nghiệm thật với thiết bị hạn chế).
+        \item Khả năng tùy chỉnh hiển thị (bật/tắt từng thành phần của mô phỏng) giúp giáo viên dẫn dắt học sinh từng bước, từ đơn giản đến phức tạp, phù hợp với tiến trình dạy học trên lớp.
+        \item Ứng dụng chạy hoàn toàn trên web, không cần cài đặt, có thể sử dụng ngay trên máy tính của trường học hoặc thiết bị cá nhân của giáo viên, giảm thiểu rào cản kỹ thuật.
+    \end{itemize}
+    
+    \item \textbf{Đối với nhà trường và ngành giáo dục:}
+    \begin{itemize}
+        \item Phù hợp với định hướng chuyển đổi số trong giáo dục do Bộ Giáo dục và Đào tạo đề ra, tận dụng hạ tầng công nghệ thông tin sẵn có của các trường phổ thông (máy tính, máy chiếu, bảng tương tác, WiFi).
+        \item Giải pháp web-based với chi phí triển khai thấp (gần như bằng 0 ngoài chi phí hosting tĩnh), không yêu cầu mua bản quyền phần mềm, dễ dàng nhân rộng ra nhiều trường học trên cả nước, kể cả những nơi có điều kiện cơ sở vật chất hạn chế.
+        \item Mã nguồn có thể được mở rộng để bổ sung thêm các nội dung mô phỏng khác trong chương trình Vật lý phổ thông (các khối lớp 10, 12) cũng như các môn học khác trong lĩnh vực STEM (Hóa học, Sinh học, Công nghệ).
+    \end{itemize}
+    
+    \item \textbf{Khả năng mở rộng và phát triển:}
+    \begin{itemize}
+        \item Kiến trúc module hóa (mỗi mô phỏng là một component độc lập) cho phép dễ dàng bổ sung nội dung mới mà không ảnh hưởng đến các mô phỏng hiện có.
+        \item Với xu hướng AI phát triển, việc tích hợp AI chat cũng như phân tích bài làm của học sinh cũng có thể được mở rộng trong tương lai.
+        \item Nền tảng công nghệ mở, hiện đại tạo tiền đề cho việc tích hợp các công nghệ mới trong tương lai như Thực tế ảo (WebXR/VR), Thực tế tăng cường (WebAR), hay Trí tuệ nhân tạo (AI) để cá nhân hóa lộ trình học tập và cung cấp phản hồi thông minh cho người học.
+    \end{itemize}
+\end{itemize}
+
+\section{Cấu trúc báo cáo}
+Báo cáo được tổ chức thành 8 chương theo cấu trúc logic, phản ánh tiến trình nghiên cứu và phát triển của đề tài từ cơ sở lý luận đến triển khai và đánh giá:
+
+\begin{itemize}
+    \item \textbf{Chương 1 – Giới thiệu:} Trình bày tổng quan bối cảnh nghiên cứu, tính cấp thiết của đề tài, mục tiêu tổng quát và cụ thể, đối tượng và phạm vi nghiên cứu, các nhiệm vụ đề ra, và ý nghĩa khoa học – thực tiễn của đề tài.
+    
+    \item \textbf{Chương 2 – Tổng quan và các giải pháp hiện có:} Khảo sát các phần mềm và nền tảng mô phỏng vật lý hiện nay, các thư viện đồ họa web, và các framework phát triển ứng dụng web. So sánh ưu nhược điểm của từng giải pháp và xác định khoảng trống mà đề tài hướng đến.
+    
+    \item \textbf{Chương 3 – Cơ sở lý thuyết:} Trình bày hai nền tảng then chốt của đề tài:
+    \begin{itemize}
+        \item \textbf{Lý thuyết Vật lý:} Dao động điều hòa, con lắc đơn, con lắc lò xo, năng lượng trong dao động, sóng cơ học, phương trình sóng, giao thoa sóng, sóng dừng, sóng điện từ, nguyên lý sonar.
+        \item \textbf{Công nghệ mô phỏng:} Kiến trúc React Three Fiber, cơ chế render loop của Three.js (requestAnimationFrame, useFrame), hệ thống geometry và material, kỹ thuật InstancedMesh và lợi ích của nó trong việc giảm draw calls, sử dụng useMemo và useCallback để tối ưu hiệu năng React, Canvas 2D API, và Recharts cho đồ thị.
+    \end{itemize}
+    
+    \item \textbf{Chương 4 – Yêu cầu hệ thống:} Xác định các yêu cầu chức năng (functional requirements) cho từng mô phỏng và yêu cầu phi chức năng (non\-functional requirements) như hiệu năng render ( $\geq$ 30 FPS), khả năng responsive, hỗ trợ dark mode, khả năng chạy trên nhiều trình duyệt.
+    
+    \item \textbf{Chương 5 – Phân tích và thiết kế hệ thống:} Trình bày kiến trúc component tree cho từng mô phỏng, thiết kế state management, thiết kế giao diện người dùng (UI/UX design), và sơ đồ luồng dữ liệu giữa các component. Bao gồm các đặc tả chi tiết về cách dữ liệu được truyền từ UI controls đến 3D scene và ngược lại.
+    
+    \item \textbf{Chương 6 – Xây dựng hệ thống mô phỏng:} Mô tả chi tiết quá trình triển khai lập trình cho từng mô phỏng:
+    \begin{itemize}
+        \item Môi trường phát triển
+        \item Cấu trúc thư mục dự án
+        \item Triển khai từng component chính: code mẫu, giải thích thuật toán, cách sử dụng các API của Three.js/React Three Fiber
+        \item Các kỹ thuật tối ưu hóa: InstancedMesh, useMemo, React.memo, lazy loading
+        \item Các thuật toán vật lý: tích phân Euler cho dao động, tính toán đường hyperbol vân giao thoa, tính toán cường độ giao thoa
+    \end{itemize}
+    
+    \item \textbf{Chương 7 – Kiểm thử và đánh giá:} Báo cáo kết quả kiểm thử:
+    \begin{itemize}
+        \item Kiểm thử hiệu năng: FPS, số draw calls, thời gian render, mức sử dụng CPU/GPU
+        \item Kiểm thử chức năng: độ chính xác của công thức vật lý (so sánh với tính tay)
+        \item Kiểm thử tương thích: trên các trình duyệt Chrome, Firefox, Edge, Safari
+        \item Đánh giá sơ bộ từ người dùng thử nghiệm (học sinh, giáo viên) về tính dễ sử dụng, tính trực quan và hiệu quả hỗ trợ học tập
+    \end{itemize}
+    
+    \item \textbf{Chương 8 – Tổng kết:} Tóm tắt kết quả đạt được, so sánh với mục tiêu ban đầu, nêu những hạn chế còn tồn tại (ví dụ: chưa có phần quản lý người dùng và lưu trữ tiến độ học tập, một số mô phỏng chưa được tối ưu cho mobile), và đề xuất hướng phát triển trong tương lai (tích hợp thêm nội dung mới, phát triển mobile app, tích hợp AI/LLM để giải thích và hướng dẫn tự động, hỗ trợ WebXR cho trải nghiệm VR/AR).
+\end{itemize}
+
+\section{Tổng kết Chương 1}
+Chương 1 đã hoàn thành nhiệm vụ đặt nền móng và định hướng cho toàn bộ đề tài nghiên cứu. Từ việc phân tích bối cảnh chuyển đổi số trong giáo dục và những thách thức cụ thể trong dạy-học các khái niệm dao động và sóng thuộc chương trình Vật lý lớp 11, chương này đã xác lập rõ ràng tính cấp thiết của việc xây dựng một hệ thống mô phỏng 3D tương tác trên nền web, bao quát cả hai chương Dao động và Sóng.
+
+Chương đã xác định cụ thể các mục tiêu về cả ba phương diện: nội dung (Một số mô phỏng chính bao gồm con lắc đơn, con lắc lò xo, sóng dọc/ngang, sóng trên dây, giao thoa sóng, sóng điện từ, sonar), sư phạm (hỗ trợ học qua khám phá, kết nối 3D visualization với 2D data charts) và công nghệ (React Three Fiber, Three.js, InstancedMesh, Recharts, Canvas 2D API, Tailwind CSS). Phạm vi nghiên cứu được giới hạn hợp lý và được mô tả chi tiết về quy mô kỹ thuật của từng mô phỏng.
+
+Các nhiệm vụ nghiên cứu được đề xuất theo trình tự logic từ nghiên cứu lý luận, lựa chọn công nghệ, thiết kế hệ thống đến triển khai lập trình và kiểm thử. Đặc biệt, chương đã làm rõ vai trò của từng công nghệ cụ thể trong kiến trúc tổng thể của hệ thống, từ React Three Fiber làm cầu nối giữa React và Three.js, Drei cung cấp các component tiện ích, InstancedMesh tối ưu hóa hiệu năng render, đến Recharts cho đồ thị và Canvas 2D cho mô phỏng sóng trên dây.
+
+Cấu trúc báo cáo với 8 chương được thiết kế để dẫn dắt người đọc qua toàn bộ hành trình nghiên cứu một cách logic và mạch lạc: từ đặt vấn đề, khảo sát giải pháp hiện có, trình bày cơ sở lý thuyết, xác định yêu cầu, thiết kế hệ thống, triển khai xây dựng, đến kiểm thử và tổng kết. Chương 1 khép lại với tư cách là nền tảng vững chắc cho các phân tích chuyên sâu và triển khai cụ thể sẽ được trình bày trong các chương tiếp theo của báo cáo.

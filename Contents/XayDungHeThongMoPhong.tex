@@ -1,0 +1,658 @@
+
+\chapter{Xây dựng hệ thống}
+
+Chương này trình bày chi tiết quá trình hiện thực hóa các bản thiết kế thành sản phẩm phần mềm cụ thể. Nội dung bao gồm môi trường phát triển, cấu trúc thư mục dự án, kiến trúc component, và triển khai chi tiết từng module chức năng chính: hệ thống slide bài học, 7 mô phỏng 3D tương tác, hệ thống đồ thị phân tích, module luyện tập, và trang quản trị.
+
+\section{Môi trường và Công nghệ Phát triển}
+
+\subsection{Môi trường Phát triển}
+
+\begin{table}[H]
+\centering
+\caption{Môi trường và công cụ phát triển}
+\begin{tabular}{|p{0.25\textwidth}|p{0.7\textwidth}|}
+\hline
+\textbf{Thành phần} & \textbf{Mô tả} \\
+\hline
+Hệ điều hành & Windows 11 / macOS Ventura / Ubuntu 22.04 LTS \\
+\hline
+Runtime & Node.js 20.x LTS \\
+\hline
+Package Manager & npm 10.x / yarn 1.22.x \\
+\hline
+IDE & Visual Studio Code với các extension: ESLint, Prettier, Tailwind CSS IntelliSense, Thunder Client \\
+\hline
+Version Control & Git + GitHub \\
+\hline
+Database GUI & MongoDB Compass / MongoSH \\
+\hline
+Browser DevTools & Chrome DevTools (Performance, Memory, Network, React DevTools) \\
+\hline
+API Testing & Thunder Client (VS Code extension) / Postman \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Công nghệ Sử dụng (Technology Stack)}
+
+\begin{table}[H]
+\centering
+\caption{Công nghệ sử dụng trong dự án}
+\begin{tabular}{|p{0.2\textwidth}|p{0.35\textwidth}|p{0.35\textwidth}|}
+\hline
+\textbf{Tầng} & \textbf{Công nghệ} & \textbf{Phiên bản / Mục đích} \\
+\hline
+\multirow{4}{*}{Frontend} 
+& Next.js & 14.x – Full-stack React framework \\
+& React & 18.x – Thư viện UI \\
+& TypeScript & 5.x – Kiểu dữ liệu tĩnh \\
+& Tailwind CSS & 3.x – Utility-first CSS framework \\
+\hline
+\multirow{4}{*}{3D Rendering} 
+& React Three Fiber (@react-three/fiber) & 8.x – React renderer cho Three.js \\
+& Drei (@react-three/drei) & 9.x – Utility components cho R3F \\
+& Three.js & 0.160.x – Thư viện đồ họa 3D WebGL \\
+& Canvas 2D API & HTML5 – Mô phỏng sóng trên dây (2D) \\
+\hline
+\multirow{2}{*}{Charts} 
+& Recharts & 2.x – Thư viện đồ thị React \\
+& MathJax / KaTeX & Hiển thị công thức toán học \\
+\hline
+\multirow{2}{*}{Icons} 
+& Lucide React & 0.x – Bộ icon vector \\
+\hline
+\multirow{3}{*}{Backend} 
+& Next.js API Routes & RESTful API endpoints \\
+& Node.js & 20.x – JavaScript runtime \\
+& TypeScript & 5.x – Type safety cho backend \\
+\hline
+\multirow{2}{*}{Database} 
+& MongoDB & 7.x – NoSQL document database \\
+& Mongoose & 8.x – ODM cho MongoDB \\
+\hline
+\multirow{2}{*}{Authentication} 
+& JSON Web Token (JWT) & Xác thực không trạng thái \\
+& bcryptjs & 2.x – Mã hóa mật khẩu một chiều \\
+\hline
+\multirow{2}{*}{Deployment} 
+& Vercel & Hosting cho Next.js \\
+& MongoDB Atlas & Database cloud hosting \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Cấu trúc Thư mục Dự án}
+
+Dự án được tổ chức theo cấu trúc module hóa, tách biệt rõ ràng giữa các thành phần:
+
+\begin{verbatim}
+    physics-book/
+    |-- public/
+    |   `-- images/
+    |       |-- chapter_1
+    |           |-- chapter1_lesson1/    # Anh minh hoa cho Bai 1 - Chuong 1
+    |           |-- chapter1_lesson2/    # Anh minh hoa cho Bai 2 - Chuong 1
+    |           |-- chapter1_lesson3/    # Anh minh hoa cho Bai 3 - Chuong 1
+    |           |-- chapter1_lesson4/    # Anh minh hoa cho Bai 4 - Chuong 1
+    |           `-- ...
+    |-- src/
+    |   |-- app/                     # Next.js App Router
+    |   |   |-- api/                 # API Routes
+    |   |   |   |-- auth/            # Dang ky, dang nhap
+    |   |   |   |-- chapters/        # CRUD chapters
+    |   |   |   |-- exercises/       # CRUD exercises
+    |   |   |   |-- progress/        # User progress tracking
+    |   |   |   `-- admin/           # Admin dashboard
+    |   |   |-- (auth)/              # Trang xac thuc
+    |   |   |-- (dashboard)/         # Trang chinh sau dang nhap
+    |   |   |   |-- lessons/         # Slide bai hoc
+    |   |   |   |-- simulations/     # trang mo phong 3D
+    |   |   |   |-- practice/        # Luyen de
+    |   |   |   `-- admin/           # Quan tri
+    |   |   `-- layout.tsx
+    |   |-- components/
+    |   |   |-- ui/                  # Component UI dung chung
+    |   |   |   |-- ThanhTruot.tsx
+    |   |   |   |-- NutGradient.tsx
+    |   |   |   `-- CardThongSo.tsx
+    |   |   |-- slides/
+    |   |   |   |-- SlideRenderer.tsx
+    |   |   |   |-- SlideNavigation.tsx
+    |   |   |   `-- SlideProgress.tsx
+    |   |   |-- simulations/
+    |   |   |   |-- PendulumSimulation/
+    |   |   |   |   |-- PendulumSimulation.tsx
+    |   |   |   |   `-- PendulumChart.tsx
+    |   |   |   |-- SpringPendulumSimulation/
+    |   |   |   |   |-- SpringPendulumSimulation.tsx
+    |   |   |   |   `-- LatexPanel.tsx
+    |   |   |   |-- LongitudinalWave/
+    |   |   |   |   |-- LongitudinalWave.tsx
+    |   |   |   |   `-- LongitudinalWaveChart.tsx
+    |   |   |   |-- WaveOnString/
+    |   |   |   |   `-- WaveOnString.tsx
+    |   |   |   |-- WaveInterference/
+    |   |   |   |   |-- WaveInterference3D.tsx
+    |   |   |   |   `-- WaveInterferencePattern.tsx
+    |   |   |   |-- ElectromagneticWave/
+    |   |   |   |   |-- ElectromagneticWave3D.tsx
+    |   |   |   |   `-- EMWaveChart.tsx
+    |   |   |   `-- Sonar/
+    |   |   |       |-- SonarSimulation.tsx
+    |   |   |       `-- SonarWaveChart.tsx
+    |   |   |-- practice/
+    |   |   |   |-- QuizInterface.tsx
+    |   |   |   |-- QuizResult.tsx
+    |   |-- lib/
+    |   |   |-- db.ts
+    |   |   |-- auth.ts
+    |   |-- models/
+    |   |   |-- User.ts
+    |   |   |-- Chapter.ts
+    |   |   |-- Exercise.ts
+    |   |   |-- ExerciseBlueprint.ts
+    |   |   |-- Simulation.ts
+    |   |   `-- UserProgress.ts
+    |   `-- types/
+    |       `-- index.ts
+    |-- .env.local
+    |-- tailwind.config.ts
+    |-- tsconfig.json
+    `-- package.json
+    \end{verbatim}
+
+\section{Xây dựng Hệ thống Slide Bài học}
+
+\subsection{Kiến trúc Slide Renderer}
+
+Hệ thống slide bài học được xây dựng dựa trên dữ liệu từ collection \texttt{lessons}, trong đó mỗi lesson chứa một mảng \texttt{slides}. Mỗi slide có trường \texttt{content} chứa HTML được định dạng sẵn với các class Tailwind CSS.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[node distance=2cm, auto]
+    \node (lessons) [rectangle, draw, minimum width=8cm, minimum height=1cm, fill=blue!10] {Lesson (e.g., "Chương 1 Bài 1: Dao Động Điều Hoà")};
+    \node (slides) [rectangle, draw, minimum width=8cm, minimum height=2cm, below of=lessons, fill=yellow!10] {Slides[] (8-11 slides/bài)};
+    \node (renderer) [rectangle, draw, minimum width=8cm, minimum height=1.5cm, below of=slides, fill=purple!10] {SlideRenderer Component};
+    \node (output) [rectangle, draw, minimum width=8cm, minimum height=1cm, below of=renderer, fill=orange!10] {HTML Output với Tailwind CSS + MathJax};
+    
+    \draw [->] (lessons) -- (slides);
+    \draw [->] (slides) -- (renderer);
+    \draw [->] (renderer) -- (output);
+    \end{tikzpicture}
+    \vspace{0.5 cm}
+    \caption{Luồng dữ liệu từ Lesson đến Slide Renderer}
+    \label{fig:slide-flow}
+\end{figure}
+
+\subsection{Các loại Slide}
+
+Nhằm tái hiện chân thực trải nghiệm quen thuộc khi sử dụng SGK Chân trời sáng tạo, hệ thống được thiết kế gồm 5 loại slide chính, tương ứng với các phần nội dung khác nhau trong sách gốc:
+
+\begin{enumerate}
+    \item \textbf{Intro Slide}: Slide mở đầu bài học, chứa tóm tắt nội dung (\texttt{summary-box}) và câu hỏi khởi động (\texttt{intro-box}).
+    
+    \item \textbf{Foundation Slide}: Slide kiến thức nền tảng, chứa định nghĩa (\texttt{memorise-box}), thảo luận (\texttt{discussion-box}), và bài tập thực hành (\texttt{practice-box}).
+    
+    \item \textbf{Example Slide}: Slide ví dụ minh họa, chứa các ví dụ mẫu cùng với lời giải từng bước chi tiết.
+    
+    \item \textbf{Exploratory Slide}: Slide khám phá, chứa nội dung mở rộng như thí nghiệm, ứng dụng thực tế.
+    
+    \item \textbf{Summary Slide}: Slide tổng kết, chứa bảng tóm tắt kiến thức và lời chúc mừng hoàn thành bài học.
+\end{enumerate}
+
+\subsection{Triển khai SlideRenderer}
+
+Component \texttt{SlideRenderer} chịu trách nhiệm:
+
+\begin{itemize}
+    \item Nhận \texttt{slide} object từ props.
+    \item Render nội dung HTML từ trường \texttt{content} sử dụng \texttt{dangerouslySetInnerHTML}.
+    \item Tích hợp MathJax/KaTeX để hiển thị công thức toán học (các công thức được đánh dấu bằng cú pháp \texttt{[[formula:id]]} và được thay thế bằng LaTeX thực tế từ mảng \texttt{formulas} của chapter).
+    \item Hỗ trợ điều hướng giữa các slide bằng nút Next/Prev và phím mũi tên.
+    \item Hiển thị thanh tiến trình slide.
+\end{itemize}
+
+\section{Xây dựng Mô phỏng 3D Tương tác}
+
+Đây là phần quan trọng nhất của hệ thống. Mỗi mô phỏng được triển khai như một module độc lập với cấu trúc component nhất quán.
+
+\subsection{Mô phỏng 1: Con lắc đơn (PendulumSimulation)}
+
+\textbf{File}: \texttt{PendulumSimulation.tsx}, \texttt{PendulumChart.tsx}
+
+\textbf{Công nghệ}: React Three Fiber, Drei (Line, Html, OrbitControls), Three.js
+
+\textbf{Kiến trúc Component}:
+
+
+
+\textbf{Chi tiết Triển khai}:
+
+\begin{enumerate}
+    \item \textbf{State Management}: Component chính \texttt{MoPhongConLac3D} quản lý các state:
+    \begin{itemize}
+        \item \texttt{chieuDaiConLac}: Chiều dài dây treo (0.5–4.0 m)
+        \item \texttt{gocHienTai}: Góc lệch hiện tại (rad)
+        \item \texttt{vanTocGoc}: Vận tốc góc (rad/s)
+        \item \texttt{dangChay}: Trạng thái Play/Pause
+        \item \texttt{doGiamChan}: Hệ số giảm chấn (0–0.2)
+        \item Các mảng lịch sử: \texttt{lichSuGoc}, \texttt{lichSuVanToc}, \texttt{lichSuNangLuong}, \texttt{lichSuThoiGian}
+    \end{itemize}
+    
+    \item \textbf{Animation Loop}: Component \texttt{ConLac3D} sử dụng \texttt{useFrame} từ R3F để:
+    \begin{itemize}
+        \item Tính gia tốc góc: $\alpha = -(g/L)\sin\theta - b\omega$
+        \item Cập nhật vận tốc góc: $\omega_{new} = \omega + \alpha \cdot dt$
+        \item Cập nhật góc: $\theta_{new} = \theta + \omega_{new} \cdot dt$
+        \item Tính vị trí quả nặng: $x = L\sin\theta$, $y = -L\cos\theta$
+        \item Cập nhật vị trí mesh quả nặng và dây treo (Line geometry)
+    \end{itemize}
+    
+    \item \textbf{Tương tác Kéo thả}: Quả nặng có thể được kéo thả trực tiếp trong không gian 3D thông qua các event handler:
+    \begin{itemize}
+        \item \texttt{onPointerDown}: Bắt đầu kéo, tạm dừng animation loop
+        \item \texttt{onPointerMove}: Tính góc mới từ vị trí chuột, cập nhật vị trí
+        \item \texttt{onPointerUp}: Thả, đặt vận tốc = 0, tiếp tục animation loop
+    \end{itemize}
+    
+    \item \textbf{Đồ thị Phân tích}: Component \texttt{DoThiConLac} (PendulumChart) sử dụng Recharts để hiển thị:
+    \begin{itemize}
+        \item Đồ thị góc $\theta(t)$ và vận tốc $\omega(t)$ theo thời gian (LineChart với 2 trục Y)
+        \item Biểu đồ năng lượng: $K(t)$, $U(t)$, $E(t)$ (AreaChart)
+        \item Đồ thị không gian pha (ScatterChart: $\omega$ vs $\theta$)
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Mô phỏng 2: Con lắc lò xo (SpringPendulumSimulation)}
+
+\textbf{File}: \texttt{SpringPendulumSimulation.tsx}, \texttt{LatexPanel.tsx}
+
+\textbf{Kiến trúc}: Tương tự Con lắc đơn, với các điểm khác biệt:
+
+\begin{itemize}
+    \item \textbf{Lò xo xoắn ốc}: Sử dụng component \texttt{Line} của Drei để vẽ lò xo dạng helix. Số vòng = 18, mỗi vòng 16 điểm. Tọa độ các điểm được tính toán lại mỗi khi \texttt{x} (độ dời) thay đổi.
+    
+    \item \textbf{Phương trình dao động}: $mx'' + bx' + kx = 0$, giải bằng phương pháp Euler:
+    \begin{itemize}
+        \item $a = (-k \cdot x - b \cdot v) / m$
+        \item $v_{new} = v + a \cdot dt$
+        \item $x_{new} = x + v_{new} \cdot dt$
+    \end{itemize}
+    
+    \item \textbf{Hiển thị LaTeX}: Component \texttt{LatexPanel} hiển thị công thức thời gian thực: $x(t)$, $v(t)$, $\omega = \sqrt{k/m}$.
+    
+    \item \textbf{Tương tác}: Kéo thả vật nặng để thiết lập độ dời ban đầu, tương tự con lắc đơn.
+\end{itemize}
+
+\subsection{Mô phỏng 3: Sóng dọc và Sóng ngang (LongitudinalWave)}
+
+\textbf{File}: \texttt{LongitudinalWave.tsx}, \texttt{LongitudinalWaveChart.tsx}
+
+\textbf{Kiến trúc}: Hai component 3D độc lập (\texttt{SongDocVisualization} và \texttt{SongNgangVisualization}) được hiển thị song song trong cùng một giao diện.
+
+\textbf{Chi tiết}:
+
+\begin{itemize}
+    \item \textbf{Sóng dọc}: 32 phần tử dao động dọc theo trục X. Vị trí mỗi phần tử: $x_i(t) = x_{i,0} + A\cos(\omega t - k x_{i,0})$. Màu sắc thay đổi theo vùng nén (đỏ) và giãn (xanh), dựa trên khoảng cách giữa các phần tử liền kề.
+    
+    \item \textbf{Sóng ngang}: 6 vòng tròn đồng tâm, mỗi vòng 48 điểm. Bán kính vòng tròn: $r(t) = r_0 + A\cos(\omega t - k r_0)$. Biên độ giảm dần theo hàm mũ: $A(r) = A_0 e^{-\gamma r}$. 12 tia sóng tỏa ra từ tâm.
+    
+    \item \textbf{Đồ thị}: Component \texttt{SoSanhSongChart} hiển thị so sánh li độ sóng dọc $u(t)$ và sóng ngang $h(t)$, cùng với vận tốc dao động và năng lượng.
+\end{itemize}
+
+\subsection{Mô phỏng 4: Sóng trên dây (WaveOnString)}
+
+\textbf{File}: \texttt{WaveOnString.tsx}
+
+\textbf{Công nghệ}: Canvas 2D API
+
+\textbf{Kiến trúc}: Toàn bộ mô phỏng được vẽ trên một \texttt{<canvas>} element sử dụng Canvas 2D API.
+
+\textbf{Chi tiết}:
+
+\begin{itemize}
+    \item \textbf{Vẽ lại mỗi frame}: Sử dụng \texttt{requestAnimationFrame} để vẽ lại toàn bộ canvas 60 lần/giây.
+    
+    \item \textbf{Tính toán li độ}: $u(x,t) = A\cos(\omega t - kx + \varphi) \cdot e^{-\beta x} \cdot e^{-\gamma t}$ (sóng tới). Sóng phản xạ được tính riêng tùy theo điều kiện biên (cố định: ngược pha, tự do: cùng pha, hấp thụ: không có).
+    
+    \item \textbf{Vẽ canvas}: Mỗi frame thực hiện:
+    \begin{enumerate}
+        \item Xóa canvas (\texttt{clearRect})
+        \item Vẽ nền gradient
+        \item Vẽ lưới tọa độ và nhãn
+        \item Vẽ đường cong sóng (200 điểm, nối bằng \texttt{lineTo})
+        \item Vẽ nguồn dao động (hình tròn đỏ)
+        \item Vẽ đầu cuối (cố định/tự do/hấp thụ)
+        \item Vẽ mũi tên vận tốc truyền sóng (nếu bật)
+        \item Vẽ thông tin năng lượng (nếu bật)
+    \end{enumerate}
+    
+    \item \textbf{Chế độ}: Hỗ trợ sóng liên tục (harmonic) và xung đơn (Gauss pulse).
+\end{itemize}
+
+\subsection{Mô phỏng 5: Giao thoa sóng (WaveInterference3D)}
+
+\textbf{File}: \texttt{WaveInterference3D.tsx}, \texttt{WaveInterferencePattern.tsx}
+
+\textbf{Công nghệ then chốt}: InstancedMesh – kỹ thuật tối ưu hóa hiệu năng quan trọng nhất.
+
+\textbf{Kiến trúc}:
+
+
+
+\textbf{Chi tiết Triển khai InstancedMesh}:
+
+Đây là phần \textbf{quan trọng nhất} về mặt tối ưu hóa hiệu năng:
+
+\begin{enumerate}
+    \item \textbf{Khởi tạo}: Tạo một \texttt{instancedMesh} với số lượng instances = \texttt{resolution × resolution} (mặc định $80 \times 80 = 6.400$). Mỗi instance sử dụng \texttt{boxGeometry} kích thước 1×1×1 và \texttt{meshStandardMaterial}.
+    
+    \item \textbf{Pre-computation} (chạy một lần khi component mount, sử dụng \texttt{useMemo}):
+    \begin{itemize}
+        \item Mảng \texttt{positions}: Tọa độ (x, 0, z) của tất cả 6.400 điểm trên lưới.
+        \item Mảng \texttt{sourceDistances}: Khoảng cách từ mỗi điểm đến từng nguồn sóng (mảng 2 chiều: $M$ nguồn × $N$ điểm).
+    \end{itemize}
+    
+    \item \textbf{Cập nhật mỗi frame} (trong \texttt{useFrame}):
+    \begin{verbatim}
+    useFrame(() => {
+      for (let i = 0; i < totalInstances; i++) {
+        // Tính tổng dao động từ tất cả nguồn
+        let totalDisplacement = 0;
+        sources.forEach((source, sIdx) => {
+          const distance = sourceDistances[sIdx][i];
+          const phase = omega * time - k * distance + source.phase;
+          totalDisplacement += source.amplitude * Math.cos(phase);
+        });
+        
+        // Tính cường độ và màu sắc
+        const intensity = totalDisplacement * totalDisplacement;
+        const normalizedIntensity = Math.min(1, intensity / maxIntensity);
+        const color = calculateColor(normalizedIntensity);
+        
+        // Cập nhật instance
+        mesh.setColorAt(i, color);
+        dummy.position.set(x, height, z);
+        dummy.scale.set(baseScale, boxHeight, baseScale);
+        dummy.updateMatrix();
+        mesh.setMatrixAt(i, dummy.matrix);
+      }
+      
+      mesh.instanceMatrix.needsUpdate = true;
+      mesh.instanceColor.needsUpdate = true;
+    });
+    \end{verbatim}
+    
+    \item \textbf{Kết quả}: 6.400 điểm được render chỉ với 1 draw call, cho phép mô phỏng chạy mượt mà ở 60 FPS trên hầu hết thiết bị.
+\end{enumerate}
+
+\textbf{Vân giao thoa Hyperbol}:
+
+Component \texttt{InterferenceFringes} tính toán và vẽ các đường vân cực đại và cực tiểu dựa trên điều kiện:
+\begin{itemize}
+    \item Cực đại: $|d_2 - d_1| = k\lambda$
+    \item Cực tiểu: $|d_2 - d_1| = (k + 0.5)\lambda$
+\end{itemize}
+Sử dụng phương pháp tìm kiếm nhị phân để giải phương trình hyperbol cho từng giá trị $z$.
+
+\subsection{Mô phỏng 6: Sóng điện từ (ElectromagneticWave3D)}
+
+\textbf{File}: \texttt{ElectromagneticWave3D.tsx}, \texttt{EMWaveChart.tsx}
+
+\textbf{Chi tiết}:
+
+\begin{itemize}
+    \item \textbf{Đường sóng E và B}: 200 điểm lấy mẫu cho mỗi đường. Tọa độ được tính lại mỗi khi \texttt{time} hoặc tham số thay đổi (sử dụng \texttt{useMemo} để tránh tính toán lại không cần thiết):
+    \begin{align*}
+        E(x,t) &= E_0 \cos(\omega t - kx + \varphi) \quad \text{(dao động theo trục Y)} \\
+        B(x,t) &= B_0 \cos(\omega t - kx + \varphi) \quad \text{(dao động theo trục Z)}
+    \end{align*}
+    
+    \item \textbf{Vectơ E và B}: Tại 12 điểm nút dọc trục X, vẽ các vectơ sử dụng \texttt{Line} + \texttt{ConeGeometry} (mũi tên). Độ dài vectơ tỉ lệ với cường độ tức thời.
+    
+    \item \textbf{Thang sóng điện từ}: Component \texttt{ThangSongDienTu} hiển thị 7 loại sóng từ Gamma đến Radio với màu sắc và thông tin bước sóng/tần số.
+    
+    \item \textbf{Đồ thị}: \texttt{EMWaveChart} hiển thị $E(t)$, $B(t)$, $I(t)$ và so sánh $E$ và $B$ chuẩn hóa.
+\end{itemize}
+
+\subsection{Mô phỏng 7: Sonar (SonarSimulation3D)}
+
+\textbf{File}: \texttt{SonarSimulation3D.tsx}, \texttt{SonarWaveChart.tsx}
+
+\textbf{Chi tiết}:
+
+\begin{itemize}
+    \item \textbf{Tàu nổi}: Component \texttt{Boat} – mô hình 3D chi tiết với thân tàu, boong, cabin, ống khói, cửa sổ, sonar dome. Tàu dao động nhẹ trên mặt nước (sử dụng \texttt{useFrame} với $\sin$).
+    
+    \item \textbf{Địa hình đáy biển}: Component \texttt{DetailedSeabed} – sử dụng \texttt{PlaneGeometry} với 200×200 segments. Độ cao mỗi đỉnh được tính bằng hàm toán học:
+    \begin{itemize}
+        \item Núi lớn: $y += \sin(d_1 \cdot 1.2) \cdot 0.6 \cdot e^{-d_1 \cdot 0.25}$
+        \item Gò giữa: $y += \sin(d_2 \cdot 1.5) \cdot 0.25 \cdot e^{-d_2 \cdot 0.4}$
+        \item Gợn sóng đáy: $y += \sin(x \cdot 1.8) \cdot \cos(z \cdot 1.8) \cdot 0.04$
+    \end{itemize}
+    
+    \item \textbf{Tia Sonar}: Component \texttt{SonarBeam} – vẽ 1 tia chính và 2 tia phụ sử dụng \texttt{Line}. Tia dao động nhẹ theo thời gian.
+    
+    \item \textbf{Sóng phát và Echo}: 
+    \begin{itemize}
+        \item Sóng phát: Các vòng tròn đồng tâm lan ra từ sonar, bán kính tăng theo thời gian: $r(t) = (t \cdot v_{sound} \cdot 1.5 + \text{delay}) \bmod \text{maxDistance}$
+        \item Sóng echo: Vòng tròn phản xạ từ đáy biển với màu đỏ.
+    \end{itemize}
+    
+    \item \textbf{Môi trường nước}: Component \texttt{WaterEnvironment} – 1500 hạt nước (Points) + 60 bọt khí (Spheres) tạo hiệu ứng dưới nước.
+\end{itemize}
+
+\subsection{Các Component UI Dùng chung}
+
+Tất cả các mô phỏng đều sử dụng chung các component UI sau:
+
+\begin{itemize}
+    \item \textbf{\texttt{ThanhTruot}} (Slider): Nhận \texttt{label}, \texttt{value}, \texttt{min}, \texttt{max}, \texttt{step}, \texttt{onChange}, \texttt{donVi}, \texttt{ghiChu}, \texttt{icon}, \texttt{mau}. Render một thanh trượt với gradient màu và hiển thị giá trị hiện tại.
+    
+    \item \textbf{\texttt{NutGradient}} (Button): Nút bấm với nền gradient, hỗ trợ icon, disabled state, và hiệu ứng hover/active.
+    
+    \item \textbf{\texttt{CardThongSo}} (Info Card): Thẻ hiển thị thông số với tiêu đề, giá trị lớn, đơn vị, icon, và màu sắc theo chủ đề.
+\end{itemize}
+
+\section{Xây dựng Hệ thống Đồ thị Phân tích (Recharts)}
+
+Tất cả đồ thị trong hệ thống được xây dựng bằng Recharts, một thư viện React declarative cho phép khai báo biểu đồ dưới dạng JSX.
+
+\subsection{Các Component Đồ thị Chính}
+
+\begin{enumerate}
+    \item \textbf{PendulumChart} (\texttt{DoThiConLac}):
+    \begin{itemize}
+        \item \textbf{Đồ thị 1}: Góc và Vận tốc theo thời gian – \texttt{LineChart} với 2 trục Y (trái: góc (rad), phải: vận tốc (rad/s)).
+        \item \textbf{Đồ thị 2}: Phân tích Năng lượng – \texttt{AreaChart} với 3 area: động năng (vàng), thế năng (xanh), tổng năng lượng (tím).
+        \item \textbf{Đồ thị 3}: Không gian Pha – \texttt{ScatterChart} với $\theta$ trên trục X, $\omega$ trên trục Y.
+        \item \textbf{Custom Tooltip}: Hiển thị thông tin chi tiết bằng tiếng Việt khi hover.
+    \end{itemize}
+    
+    \item \textbf{EMWaveChart}:
+    \begin{itemize}
+        \item $E(t)$ – \texttt{LineChart} với đường màu đỏ.
+        \item $B(t)$ – \texttt{LineChart} với đường màu xanh lá.
+        \item $I(t)$ – \texttt{LineChart} với đường màu tím.
+        \item So sánh $E$ và $B$ chuẩn hóa – \texttt{LineChart} với 2 đường.
+    \end{itemize}
+    
+    \item \textbf{InterferenceChart} (trong WaveInterference3D):
+    \begin{itemize}
+        \item Cường độ giao thoa $I(x)$ theo vị trí – \texttt{LineChart}.
+        \item Sơ đồ vị trí các vân – HTML/CSS custom.
+    \end{itemize}
+    
+    \item \textbf{LongitudinalWaveChart} (\texttt{SoSanhSongChart}):
+    \begin{itemize}
+        \item So sánh $u(t)$ (sóng dọc) và $h(t)$ (sóng ngang) – 2 \texttt{Line}.
+        \item $v(t)$ – \texttt{LineChart}.
+        \item $E(t)$ – \texttt{AreaChart}.
+    \end{itemize}
+    
+    \item \textbf{SonarWaveChart}:
+    \begin{itemize}
+        \item Khoảng cách phát hiện theo thời gian – \texttt{LineChart}.
+        \item Cường độ tín hiệu – \texttt{AreaChart}.
+        \item Thời gian phản hồi – \texttt{LineChart}.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Xử lý Dữ liệu Đồ thị}
+
+Dữ liệu cho đồ thị được thu thập từ animation loop của mô phỏng:
+
+\begin{verbatim}
+// Trong animation loop (useEffect hoặc useFrame)
+useEffect(() => {
+  if (!dangChay) return;
+  
+  const interval = setInterval(() => {
+    // Tính giá trị hiện tại
+    const E = eAmplitude * Math.cos(omega * time - k * 0 + phase);
+    const B = bAmplitude * Math.cos(omega * time - k * 0 + phase);
+    
+    // Lưu vào mảng lịch sử (giới hạn 500 mẫu)
+    setLichSuT(h => [...h.slice(-500), time]);
+    setLichSuE(h => [...h.slice(-500), E]);
+    setLichSuB(h => [...h.slice(-500), B]);
+  }, 100); // Lấy mẫu mỗi 100ms
+  
+  return () => clearInterval(interval);
+}, [dangChay, time]);
+\end{verbatim}
+
+\section{Xây dựng Module Luyện tập}
+
+\subsection{Cơ chế Thế số (Parameter Substitution)}
+
+Hệ thống sử dụng \texttt{exerciseblueprints} collection để tạo đề mới bằng cơ chế thế số ngẫu nhiên. Mỗi blueprint chứa:
+
+\begin{itemize}
+    \item \texttt{questionTemplate}: Mẫu câu hỏi với placeholder (e.g., "\{n\}", "\{t\}").
+    \item \texttt{correctAnswerTemplate}: Biểu thức toán học (e.g., "\{n\}/\{t\}").
+    \item \texttt{explanationTemplate}: Mẫu lời giải.
+    \item \texttt{variables}: Định nghĩa biến (min, max, type, decimals).
+\end{itemize}
+
+\textbf{Quy trình tạo đề mới}:
+
+\begin{enumerate}
+    \item Hệ thống chọn ngẫu nhiên các blueprint phù hợp với loại đề.
+    \item Với mỗi blueprint, sinh giá trị ngẫu nhiên cho từng biến trong miền xác định.
+    \item Thay thế placeholder trong template bằng giá trị đã sinh.
+    \item Tính đáp án đúng bằng cách evaluate biểu thức \texttt{correctAnswerTemplate}.
+    \item Tạo document mới trong collection \texttt{exercises} (hoặc trả về trực tiếp cho client).
+\end{enumerate}
+
+\subsection{Giao diện Làm bài}
+
+Component \texttt{QuizInterface} cung cấp:
+
+\begin{itemize}
+    \item Hiển thị từng câu hỏi một hoặc dạng danh sách.
+    \item Bộ đếm thời gian (countdown).
+    \item Thanh tiến trình câu hỏi.
+    \item Hỗ trợ phím tắt \texttt{1-4} để chọn đáp án trắc nghiệm.
+    \item Nút "Nộp bài" để kết thúc và chấm điểm.
+\end{itemize}
+
+
+
+\section{Xây dựng Trang Quản trị (Admin Dashboard)}
+
+\subsection{Chức năng Chính}
+
+\begin{itemize}
+    \item \textbf{Dashboard}: Hiển thị thống kê tổng quan (số người dùng, số bài học, số đề, số mô phỏng).
+    \item \textbf{Quản lý Người dùng}: Xem danh sách, tìm kiếm, xóa (đơn lẻ và hàng loạt).
+    \item \textbf{Quản lý Ngân hàng Bài tập (CRUD)}: Thêm, sửa, xóa blueprint bài tập.
+    \item \textbf{Quản lý Nội dung}: Thêm, sửa chapter, lesson, slide (trong tương lai).
+\end{itemize}
+
+\subsection{Bảo mật}
+
+\begin{itemize}
+    \item Tất cả API admin đều yêu cầu JWT token với \texttt{role: "admin"}.
+    \item Middleware kiểm tra role trước khi xử lý request.
+    \item Admin có thể xóa người dùng nhưng không thể xóa chính mình.
+\end{itemize}
+
+\section{Tối ưu hóa Hiệu năng}
+
+\subsection{Kỹ thuật Đã Áp dụng}
+
+\begin{enumerate}
+    \item \textbf{InstancedMesh}: Giảm 6.400 draw calls → 1 draw call (mô phỏng giao thoa sóng).
+    
+    \item \textbf{useMemo / useCallback}: Tránh tính toán lại không cần thiết trong mỗi lần render. Đặc biệt quan trọng cho:
+    \begin{itemize}
+        \item Tính tọa độ điểm sóng (200 điểm × 2 đường × 60 FPS = 24.000 phép tính/giây nếu không dùng useMemo).
+        \item Pre-compute vị trí và khoảng cách trong InstancedMesh.
+    \end{itemize}
+    
+    \item \textbf{React.memo và Lazy Loading}: Các component mô phỏng nặng được lazy-load bằng \texttt{React.lazy} + \texttt{Suspense}, chỉ tải khi người dùng cuộn đến slide chứa mô phỏng.
+    
+    \item \textbf{Canvas 2D thay vì WebGL}: Cho mô phỏng sóng trên dây – giảm overhead khởi tạo WebGL context không cần thiết.
+    
+    \item \textbf{Giới hạn dữ liệu đồ thị}: Chỉ lưu 300-500 mẫu dữ liệu gần nhất cho đồ thị, tránh memory leak.
+    
+    \item \textbf{Debounce Progress Updates}: Gửi request cập nhật tiến độ sau mỗi 500ms thay vì mỗi lần tương tác.
+\end{enumerate}
+
+\subsection{Kết quả Đo lường}
+
+\begin{table}[H]
+\centering
+\caption{Kết quả đo lường hiệu năng}
+\begin{tabular}{|p{0.3\textwidth}|p{0.2\textwidth}|p{0.2\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{Mô phỏng} & \textbf{FPS trung bình} & \textbf{Draw Calls} & \textbf{Memory (MB)} \\
+\hline
+Con lắc đơn & 60 & 15-20 & 45 \\
+Con lắc lò xo & 60 & 20-25 & 48 \\
+Sóng dọc \& Sóng ngang & 58 & 30-35 & 55 \\
+Sóng trên dây (Canvas 2D) & 60 & N/A & 30 \\
+Giao thoa sóng (InstancedMesh) & 60 & \textbf{1} (phần điểm) & 60 \\
+Sóng điện từ & 60 & 25-30 & 50 \\
+Sonar & 55 & 40-50 & 75 \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Kiểm thử và Đảm bảo Chất lượng}
+
+\subsection{Kiểm thử Chức năng}
+
+\begin{itemize}
+    \item \textbf{Unit Testing}: Kiểm thử các hàm tính toán vật lý (chu kỳ, năng lượng, pha...) so sánh với kết quả tính tay.
+    \item \textbf{Integration Testing}: Kiểm thử luồng dữ liệu giữa UI controls → State → 3D Visualization → Chart.
+    \item \textbf{Cross-browser Testing}: Kiểm thử trên Chrome, Firefox, Edge, Safari.
+    \item \textbf{Responsive Testing}: Kiểm thử trên các kích thước màn hình: 1920px, 1366px, 1024px, 768px, 375px.
+\end{itemize}
+
+\subsection{Kiểm thử Hiệu năng}
+
+\begin{itemize}
+    \item Sử dụng Chrome DevTools Performance Monitor để đo FPS, CPU usage, memory.
+    \item Sử dụng React DevTools Profiler để xác định component re-render không cần thiết.
+    \item Sử dụng Spector.js để kiểm tra số lượng draw calls trong WebGL.
+\end{itemize}
+
+\section{Kết luận Chương 7}
+
+Chương này đã trình bày chi tiết quá trình xây dựng hệ thống, bao gồm:
+
+\begin{itemize}
+    \item \textbf{Cấu trúc dự án}: Tổ chức thư mục rõ ràng theo kiến trúc module hóa, tách biệt giữa UI components, simulation components, API routes, và models.
+    
+    \item \textbf{Các mô phỏng 3D}: Mỗi mô phỏng được triển khai như một module độc lập với kiến trúc component nhất quán (Component Chính → 3D Visualization + Chart + UI Controls). Kỹ thuật InstancedMesh được áp dụng thành công trong mô phỏng giao thoa sóng, giảm 6.400 draw calls xuống còn 1.
+    
+    \item \textbf{Hệ thống đồ thị}: Sử dụng Recharts để hiển thị 5 loại đồ thị phân tích, đồng bộ thời gian thực với mô phỏng 3D.
+    
+    \item \textbf{Module luyện tập}: Cơ chế thế số từ blueprint cho phép tạo vô hạn đề mới.
+    
+    \item \textbf{Tối ưu hóa}: Các kỹ thuật useMemo, useCallback, lazy loading, InstancedMesh, và giới hạn dữ liệu đồ thị đảm bảo hệ thống chạy mượt mà ở 55-60 FPS trên hầu hết thiết bị.
+\end{itemize}
+
+Hệ thống đã sẵn sàng cho giai đoạn kiểm thử và đánh giá, sẽ được trình bày trong Chương 8.

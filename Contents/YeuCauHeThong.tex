@@ -1,0 +1,355 @@
+
+
+\chapter{Yêu cầu hệ thống}
+
+Hệ thống hướng tới việc hỗ trợ học sinh lớp 11, giáo viên và quản trị viên trong việc tổ chức, triển khai và theo dõi hoạt động học tập chương Dao động và chương Sóng theo chương trình Vật lý 11 – sách giáo khoa \textit{Chân trời sáng tạo}. Trọng tâm của hệ thống là Các mô phỏng 3D tương tác được xây dựng trên nền tảng web, kết hợp với hệ thống đồ thị phân tích thời gian thực, trình bày lý thuyết, và bài tập luyện tập.
+
+Các yêu cầu được chia thành hai nhóm chính: yêu cầu chức năng (Functional Requirements – hệ thống phải làm gì) và yêu cầu phi chức năng (Non-Functional Requirements – hệ thống phải hoạt động như thế nào).
+
+\section{Yêu cầu chức năng}
+
+Các yêu cầu chức năng của hệ thống được phân loại thành các nhóm chính sau đây:
+
+\subsection{Nhóm chức năng Xác thực và Phân quyền}
+
+\begin{itemize}
+    \item \textbf{FR-AUTH-01 – Đăng ký tài khoản:} Hệ thống cho phép người dùng mới tạo tài khoản bằng cách cung cấp địa chỉ email hợp lệ, mật khẩu (tối thiểu 8 ký tự, bao gồm chữ hoa, chữ thường và số), và họ tên đầy đủ. Hệ thống gửi email xác nhận để kích hoạt tài khoản.
+    
+    \item \textbf{FR-AUTH-02 – Đăng nhập và Đăng xuất:} Hệ thống cho phép người dùng đăng nhập bằng email và mật khẩu đã đăng ký. Phiên làm việc được duy trì thông qua JSON Web Token (JWT) có thời hạn. Người dùng có thể đăng xuất, hệ thống hủy token và xóa session.
+    
+    \item \textbf{FR-AUTH-03 – Phân quyền người dùng}: Hệ thống hỗ trợ ba vai trò chính:
+    \begin{itemize}
+        \item \textbf{student}: Học sinh – có quyền xem bài học, làm bài tập, xem mô phỏng sau khi hoàn thành bài học liên quan.
+        \item \textbf{teacher}: Giáo viên – có quyền tạo room kiểm tra, xem kết quả học viên, thêm câu hỏi vào ngân hàng bài tập, xem tất cả mô phỏng không cần điều kiện.
+        \item \textbf{admin}: Quản trị viên – có quyền quản lý người dùng và nội dung hệ thống.
+    \end{itemize}
+    Hệ thống đảm bảo chỉ \texttt{admin} mới có thể truy cập các API và trang quản trị.
+    
+    \item \textbf{FR-AUTH-04 – Quản lý người dùng (Admin):} Admin có thể xem danh sách tất cả người dùng dưới dạng bảng phân trang (20 người dùng/trang), tìm kiếm theo tên hoặc email, xem chi tiết thông tin một người dùng, và xóa một hoặc nhiều tài khoản (bulk delete với xác nhận).
+\end{itemize}
+
+\subsection{Nhóm chức năng Mô phỏng 3D Tương tác}
+
+Đây là nhóm chức năng cốt lõi của hệ thống, bao gồm các mô phỏng 3D bao quát toàn bộ chương Dao động và Sóng:
+
+\begin{enumerate}
+    \item \textbf{FR-SIM-01 – Mô phỏng Con lắc đơn:}
+    \begin{itemize}
+        \item Hiển thị mô hình 3D con lắc đơn với: điểm treo, dây treo, quả nặng hình cầu, thanh giá đỡ, vòng cung đo góc, và vị trí cân bằng được đánh dấu.
+        \item Cho phép người dùng kéo thả trực tiếp quả nặng trong không gian 3D để thiết lập góc dao động ban đầu.
+        \item Cho phép điều chỉnh các tham số qua thanh trượt: chiều dài dây treo ($L$, từ 0.5m đến 4.0m), hệ số giảm chấn ($b$, từ 0 đến 0.2 N·s/m), tốc độ mô phỏng (0.1x đến 2.0x).
+        \item Hiển thị thời gian thực: góc lệch hiện tại (radian và độ), vị trí (x, y), vận tốc tuyến tính, thời gian đã trôi.
+        \item Tích hợp đồ thị phân tích  gồm: đồ thị góc và vận tốc theo thời gian, biểu đồ năng lượng (động năng, thế năng, cơ năng), đồ thị không gian pha (phase space).
+        \item Cho phép bật/tắt điều khiển camera để xoay, pan, zoom góc nhìn 3D.
+    \end{itemize}
+    
+    \item \textbf{FR-SIM-02 – Mô phỏng Con lắc lò xo :}
+    \begin{itemize}
+        \item Hiển thị mô hình 3D con lắc lò xo thẳng đứng với: trần nhà, điểm treo, lò xo dạng xoắn ốc (helix), vật nặng hình cầu, và vị trí cân bằng được đánh dấu.
+        \item Cho phép người dùng kéo thả trực tiếp vật nặng để thiết lập độ dời ban đầu.
+        \item Cho phép điều chỉnh tham số: độ cứng lò xo ($k$, 1–50 N/m), khối lượng vật ($m$, 0.1–5.0 kg), hệ số cản ($b$, 0–2.0 N·s/m), tốc độ mô phỏng (0.1x–5.0x).
+        \item Hiển thị thời gian thực: độ dời $x$, vận tốc $v$, thời gian, trạng thái (nghỉ/dao động/tạm dừng).
+        \item Tích hợp đồ thị phân tích (sử dụng lại PendulumChart) với chế độ \texttt{pendulumType="spring"} hiển thị công thức đặc thù cho con lắc lò xo.
+        \item Hiển thị công thức LaTeX thời gian thực ($x(t)$, $v(t)$, $\omega = \sqrt{k/m}$) qua component \texttt{LatexPanel}.
+    \end{itemize}
+    
+    \item \textbf{FR-SIM-03 – Mô phỏng Sóng dọc và Sóng ngang:}
+    \begin{itemize}
+        \item Hiển thị đồng thời hai mô hình 3D cạnh nhau trong cùng một giao diện: sóng dọc (âm thanh) và sóng ngang (gợn sóng nước).
+        \item Sóng dọc: Hiển thị 32 phần tử dao động dọc theo trục $x$, với màu sắc thay đổi theo vùng nén (đỏ) và vùng giãn (xanh). Hiển thị biểu tượng nguồn phát (miệng) và nơi nhận (tai).
+        \item Sóng ngang: Hiển thị các vòng tròn sóng đồng tâm lan truyền từ tâm (6 vòng, 48 điểm/vòng), các tia sóng tỏa ra (12 tia), quả bóng rơi tại tâm. Biên độ giảm dần theo khoảng cách (hàm mũ suy giảm).
+        \item Cho phép điều chỉnh tham số chung cho cả hai loại sóng: biên độ (0.1–0.8 m), bước sóng (1.5–4.0 m), tần số (0.3–1.2 Hz), tốc độ mô phỏng (0.2x–2.5x).
+        \item Cho phép bật/tắt riêng biệt từng thành phần hiển thị: vùng nén/giãn, các phần tử (sóng dọc); vòng tròn sóng, tia sóng, phương truyền sóng (sóng ngang).
+        \item Tích hợp đồ thị so sánh: li độ sóng dọc $u(t)$ và li độ sóng ngang $h(t)$, vận tốc dao động $v(t)$, năng lượng $E(t)$.
+    \end{itemize}
+    
+    \item \textbf{FR-SIM-04 – Mô phỏng Sóng trên dây:}
+    \begin{itemize}
+        \item Hiển thị mô phỏng sử dụng Canvas 2D về sự lan truyền của sóng trên dây dài 10m.
+        \item Hỗ trợ hai chế độ sóng: sóng liên tục (hàm sin) và xung đơn (xung Gauss).
+        \item Hỗ trợ ba điều kiện biên tại đầu cuối:
+        \begin{itemize}
+            \item \textbf{Cố định:} Sóng phản xạ ngược pha.
+            \item \textbf{Tự do:} Sóng phản xạ cùng pha.
+            \item \textbf{Hấp thụ:} Không có sóng phản xạ.
+        \end{itemize}
+        \item Cho phép điều chỉnh tham số: biên độ (0.1–1.5 m), tần số (0.2–3.0 Hz), lực căng dây (0.2–3.0 N), mật độ khối lượng dài (0.01–0.5 kg/m), hệ số tắt dần (0–0.1), tốc độ mô phỏng (0.1x–3.0x).
+        \item Hiển thị thời gian thực: vận tốc truyền sóng $v = \sqrt{T/\mu}$, năng lượng sóng.
+        \item Cho phép gửi xung đơn bằng nút "Gửi Xung Sóng" (chế độ xung).
+        \item Tích hợp đồ thị phân tích: li độ tại điểm giữa dây theo thời gian, năng lượng.
+    \end{itemize}
+    
+    \item \textbf{FR-SIM-05 – Mô phỏng Giao thoa sóng:}
+    \begin{itemize}
+        \item Hiển thị mô hình 3D về giao thoa của hai nguồn sóng kết hợp $S_1$ và $S_2$ trên mặt phẳng XZ.
+        \item Sử dụng kỹ thuật InstancedMesh để hiển thị $80 \times 80 = 6.400$ điểm giao thoa chỉ với 1 draw call, đảm bảo hiệu năng cao.
+        \item Màu sắc của mỗi điểm thay đổi theo thời gian thực dựa trên cường độ giao thoa tức thời: đỏ/vàng cho cường độ cao (cực đại), xanh/tím cho cường độ thấp (cực tiểu).
+        \item Hiển thị các vân giao thoa hyperbol: đường màu đỏ cho cực đại ($d_2 - d_1 = k\lambda$), đường màu xanh cho cực tiểu ($d_2 - d_1 = (k+1/2)\lambda$).
+        \item Hiển thị sóng tròn lan truyền từ mỗi nguồn (6 vòng, 48 điểm/vòng).
+        \item Cho phép điều chỉnh tham số: khoảng cách giữa hai nguồn (1.0–6.0 m), bước sóng (0.5–4.0 m), tần số (0.1–2.0 Hz), biên độ từng nguồn (0.2–2.0), độ lệch pha giữa hai nguồn (0–2$\pi$ rad), tốc độ mô phỏng (0.1x–3.0x).
+        \item Cho phép bật/tắt riêng biệt: nguồn sóng, sóng tròn, hình ảnh giao thoa, vân giao thoa, vectơ biên độ.
+        \item Tích hợp đồ thị phân tích: cường độ giao thoa theo vị trí $I(x)$, sơ đồ vị trí các vân, khoảng vân, số vân cực đại, độ tương phản.
+    \end{itemize}
+    
+    \item \textbf{FR-SIM-06 – Mô phỏng Sóng điện từ:}
+    \begin{itemize}
+        \item Hiển thị mô hình 3D về sự lan truyền của sóng điện từ phẳng đơn sắc trong không gian.
+        \item Hiển thị đường sóng của vectơ điện trường $\vec{E}$ (màu đỏ, dao động theo trục Y, 200 điểm lấy mẫu) và vectơ từ trường $\vec{B}$ (màu xanh lá, dao động theo trục Z, 200 điểm lấy mẫu).
+        \item Hiển thị vectơ $\vec{E}$ và $\vec{B}$ tại 12 điểm nút dọc theo trục truyền sóng (trục X), mỗi vectơ có đầu mũi tên hình nón và nhãn.
+        \item Hiển thị phương truyền sóng (trục X, mũi tên chỉ hướng).
+        \item Cho phép điều chỉnh tham số: biên độ điện trường $E_0$ (0.2–3.0 V/m), bước sóng $\lambda$ (1.0–6.0 m), tần số $f$ (0.2–2.0 Hz), pha ban đầu $\varphi$ (0–2$\pi$ rad), tốc độ mô phỏng (0.1x–3.0x).
+        \item Biên độ từ trường $B_0$ được tính tự động theo hệ thức $E_0 = cB_0$ (với $c = 3 \times 10^8$ m/s).
+        \item Cho phép bật/tắt riêng biệt: đường sóng $\vec{E}$, đường sóng $\vec{B}$, vectơ $\vec{E}$ và $\vec{B}$, phương truyền sóng.
+        \item Tích hợp đồ thị phân tích: $E(t)$, $B(t)$, $I(t)$, so sánh $E$ và $B$ chuẩn hóa.
+        \item Hiển thị thang sóng điện từ với 7 loại sóng: tia Gamma, tia X, tia UV, ánh sáng nhìn thấy, hồng ngoại, vi sóng, radio.
+    \end{itemize}
+    
+    \item \textbf{FR-SIM-07 – Mô phỏng Sonar:}
+    \begin{itemize}
+        \item Hiển thị mô hình 3D về nguyên lý định vị bằng sóng âm dưới nước (sonar).
+        \item Hiển thị tàu nổi 3D chi tiết (thân tàu, boong, cabin, ống khói, cửa sổ, sonar dome), nổi trên mặt nước với hiệu ứng dao động nhẹ.
+        \item Hiển thị địa hình đáy biển 3D với núi, gò, và các chi tiết (đá, san hô).
+        \item Hiển thị tia sonar (chùm tia chính + 2 tia phụ) phát từ tàu xuống đáy biển, với các điểm sáng dọc theo tia.
+        \item Hiển thị sóng vòng tròn lan truyền từ sonar (sóng phát) và sóng echo phản xạ từ đáy biển (sóng thu).
+        \item Hiển thị điểm echo trên đáy biển – điểm sáng đỏ nhấp nháy tại vị trí sóng phản xạ.
+        \item Cho phép điều chỉnh tham số: khoảng cách đến đáy (30–250 m), cường độ tín hiệu (20\%–100\%), chu kỳ ping (0.5–3.0 s).
+        \item Hiển thị bảng thông số sonar: trạng thái (đang quét/tạm dừng), khoảng cách, thời gian phản hồi (ms), cường độ tín hiệu (với thanh tiến trình), số lần ping.
+        \item Tích hợp đồ thị phân tích: khoảng cách phát hiện, cường độ tín hiệu, thời gian phản hồi, quan hệ khoảng cách – cường độ.
+    \end{itemize}
+    \item \textbf{FR-SIM-ACCESS-01 – Truy cập mô phỏng theo tiến độ học tập}:
+    \begin{itemize}
+        \item Học sinh (student) chỉ được xem và tương tác với mô phỏng của một bài học nếu đã hoàn thành bài học đó (xem hết tất cả slide lý thuyết).
+        \item Nếu học sinh chưa hoàn thành bài học, nút/mô phỏng sẽ bị vô hiệu hóa và hiển thị thông báo: Bạn cần hoàn thành bài học trước khi xem mô phỏng này.
+        \item Giáo viên (teacher) có quyền truy cập tất cả mô phỏng mà không cần điều kiện, phục vụ giảng dạy.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Nhóm chức năng Chung cho tất cả Mô phỏng}
+
+\begin{itemize}
+    \item \textbf{FR-COM-01 – Điều khiển Phát/Tạm dừng/Đặt lại:} Mọi mô phỏng đều có các nút điều khiển: Phát (Play), Tạm dừng (Pause), và Đặt lại (Reset) để khôi phục tham số về giá trị mặc định và xóa dữ liệu đồ thị.
+    
+    \item \textbf{FR-COM-02 – Điều chỉnh Tốc độ mô phỏng:} Mọi mô phỏng cho phép điều chỉnh tốc độ thời gian mô phỏng (0.1x đến 5.0x tùy mô phỏng) để người dùng có thể quan sát nhanh hoặc chậm tùy nhu cầu.
+    
+    \item \textbf{FR-COM-03 – Điều khiển Camera 3D:} Mọi mô phỏng 3D đều hỗ trợ \texttt{OrbitControls} cho phép người dùng:
+    \begin{itemize}
+        \item Xoay camera bằng cách nhấn giữ chuột trái và kéo.
+        \item Di chuyển camera bằng cách nhấn giữ chuột phải và kéo.
+        \item Phóng to/thu nhỏ bằng cách lăn chuột giữa hoặc pinch trên màn hình cảm ứng.
+        \item Khóa/Mở camera bằng nút toggle để cố định góc nhìn khi cần.
+    \end{itemize}
+    
+    \item \textbf{FR-COM-04 – Bật/tắt Thành phần Hiển thị:} Mỗi mô phỏng cung cấp các checkbox để bật/tắt có chọn lọc từng thành phần của mô hình (đường sóng, vectơ, mặt sóng, vân giao thoa, vùng nén/giãn...), giúp người dùng tập trung vào khía cạnh cụ thể đang nghiên cứu.
+    
+    \item \textbf{FR-COM-05 – Chuyển đổi Tab Chức năng:} Mỗi mô phỏng có hệ thống tab để chuyển đổi giữa các nhóm chức năng:
+    \begin{itemize}
+        \item \textbf{Bảng Điều Khiển:} Các thanh trượt điều chỉnh tham số vật lý.
+        \item \textbf{Hiển Thị:} Các checkbox bật/tắt thành phần hiển thị.
+        \item \textbf{Thông Tin Vật Lý:} Hiển thị các đại lượng vật lý dẫn xuất (chu kỳ, tần số, vận tốc pha, năng lượng...) dưới dạng thẻ (Card), và các công thức quan trọng.
+        \item \textbf{Đồ Thị Phân Tích:} Hiển thị biểu đồ Recharts phân tích dữ liệu theo thời gian thực.
+    \end{itemize}
+    
+    \item \textbf{FR-COM-06 – Hiển thị Thông số Thời gian Thực:} Mọi mô phỏng hiển thị bảng thông số thời gian thực (thường ở góc màn hình) gồm: thời gian hiện tại, giá trị các đại lượng chính (góc lệch, vận tốc, cường độ...), trạng thái (đang chạy/tạm dừng).
+    
+    \item \textbf{FR-COM-07 – Chế độ Toàn màn hình:} Mọi mô phỏng hỗ trợ nút chuyển đổi chế độ toàn màn hình (fullscreen) để tận dụng toàn bộ không gian màn hình cho việc quan sát.
+    
+    \item \textbf{FR-COM-08 – Giao diện Tiếng Việt:} Toàn bộ giao diện người dùng, chú thích, nhãn, giải thích, công thức và hướng dẫn đều được hiển thị bằng tiếng Việt.
+    
+    \item \textbf{FR-COM-09 – Responsive Design:} Giao diện tự động điều chỉnh layout (từ 3 cột trên desktop xuống 1 cột trên mobile) để hiển thị tốt trên các kích thước màn hình khác nhau, sử dụng Tailwind CSS breakpoints.
+    
+    \item \textbf{FR-COM-10 – Dark Mode:} Hỗ trợ chế độ giao diện tối (dark mode) tự động theo cài đặt hệ thống hoặc lựa chọn của người dùng, áp dụng cho toàn bộ giao diện bao gồm cả đồ thị.
+\end{itemize}
+
+\subsection{Nhóm chức năng Nội dung Học tập}
+
+\begin{itemize}
+    \item \textbf{FR-CONT-01 – Sách giáo khoa điện tử:}
+    \begin{itemize}
+        \item Hiển thị danh sách các bài học thuộc Chương 1 – Dao động và Chương 2 – Sóng của Vật lý 11.
+        \item Cung cấp giao diện trình chiếu (Slide Presentation) cho từng bài học, hỗ trợ điều hướng bằng chuột (click) và bàn phím (phím mũi tên trái/phải).
+        \item Hỗ trợ hiển thị công thức Toán học và Vật lý dưới dạng LaTeX trên giao diện web.
+        \item Nhúng trực tiếp các mô phỏng tương tác vào cuối mỗi bài học liên quan (ví dụ: mô phỏng con lắc đơn ở cuối bài "Con lắc đơn").
+        \item Cung cấp lời giải mẫu cho các bài tập trong sách giáo khoa.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Nhóm chức năng Luyện tập và Đánh giá}
+
+\begin{itemize}
+    \item \textbf{FR-QUIZ-01 – Ngân hàng câu hỏi:}
+    \begin{itemize}
+        \item Hỗ trợ ba loại bài tập: trắc nghiệm nhiều lựa chọn (multiple choice), bài toán tính toán (numeric input), và câu hỏi đúng/sai.
+        \item Bao gồm kho đề có sẵn (pre-built tests) – được tuyển chọn từ các đề luyện tập của các trường THPT.
+        \item Bao gồm ngân hàng bài tập (question bank) – lưu trữ các blueprint bài tập với tham số có thể thay đổi, cho phép hệ thống tạo đề mới bằng cơ chế thế số khi người dùng đã hoàn thành tất cả đề có sẵn.
+    \end{itemize}
+    
+    \item \textbf{FR-QUIZ-02 – Chế độ Luyện tập:}
+    \begin{itemize}
+        \item \textbf{Luyện tập tổng hợp:} Đề thi bao quát toàn bộ kiến thức của một chương, được lấy từ kho đề có sẵn hoặc tạo từ blueprint.
+        \item \textbf{Luyện tập theo bài học:} Đề thi giới hạn trong phạm vi một bài học cụ thể, giúp học sinh củng cố kiến thức vừa học.
+    \end{itemize}
+    
+    \item \textbf{FR-QUIZ-03 – Làm bài và Chấm điểm:}
+    \begin{itemize}
+        \item Hiển thị giao diện làm bài trực quan với bộ đếm thời gian, thanh tiến trình câu hỏi.
+        \item Hỗ trợ phím tắt (1–4) để chọn nhanh đáp án trong bài tập trắc nghiệm.
+        \item Tự động chấm điểm và hiển thị kết quả ngay sau khi nộp bài (số câu đúng/tổng số, điểm số, thời gian làm bài).
+    \end{itemize}
+
+    \item \textbf{FR-TEACH-01 – Tạo mã đề bài tập}: Giáo viên có thể tạo một mã đề để kiểm tra với các tham số:
+        \begin{itemize}
+        \item Access code.
+        \item Chọn danh sách câu hỏi từ ngân hàng bài tập.
+        \item Thời gian làm bài (phút).
+        \item Hệ thống tạo URL duy nhất dạng: \texttt{/practice?accessCode=\{code\}}.
+        \end{itemize}
+
+    \item \textbf{FR-TEACH-02 – Xem kết quả học viên}: Giáo viên có thể xem danh sách các phòng đã tạo. Với mỗi phòng, xem được:
+        \begin{itemize}
+        \item Danh sách học viên đã tham gia.
+        \item Trạng thái: đã nộp bài / chưa nộp.
+        \item Điểm số và thời gian nộp của từng học viên.
+        \item Chi tiết câu trả lời đúng/sai (nếu cần).
+        \end{itemize}
+
+    \item \textbf{FR-TEACH-03 – Thêm câu hỏi vào ngân hàng bài tập}: Giáo viên có thể tạo câu hỏi mới dựa trên blueprint có sẵn.
+\end{itemize}
+
+\subsection{Nhóm chức năng Quản trị Hệ thống (Admin)}
+
+\begin{itemize}
+    \item \textbf{FR-ADM-01 – Dashboard Tổng quan:} Cung cấp trang dashboard hiển thị các số liệu thống kê: tổng số người dùng đăng ký, số người dùng hoạt động trong 7 ngày qua, số lượng bài học và mô phỏng, tổng số lượt làm bài tập.
+    
+    \item \textbf{FR-ADM-02 – Quản lý Ngân hàng Câu hỏi:} Admin có thể thực hiện các thao tác CRUD (Create, Read, Update, Delete) đối với câu hỏi trong ngân hàng: thêm câu hỏi mới (chọn loại, nhập nội dung, đáp án, lời giải), chỉnh sửa câu hỏi hiện có, xóa câu hỏi.
+    
+    \item \textbf{FR-ADM-03 – Quản lý Người dùng:} Admin có thể xem danh sách người dùng, tìm kiếm, xem chi tiết hoạt động của một người dùng (số lần làm bài, điểm trung bình, thời gian học), và xóa tài khoản (đơn lẻ hoặc hàng loạt với xác nhận).
+\end{itemize}
+
+\subsection{Nhóm chức năng Hỗ trợ Khác}
+
+\begin{itemize}
+    \item \textbf{FR-MISC-01 – Tìm kiếm:} Cung cấp chức năng tìm kiếm nội dung (bài học, bài tập, mô phỏng) theo từ khóa. Kết quả được hiển thị kèm theo loại nội dung và đường dẫn.
+    
+    \item \textbf{FR-MISC-02 – Thông báo:} Hiển thị thông báo khi: hoàn thành đề luyện tập, nộp bài thành công/thất bại, xảy ra lỗi hệ thống, hoặc đạt thành tích (điểm cao, hoàn thành chương).
+    
+    \item \textbf{FR-MISC-03 – Dark Mode Toggle:} Cho phép người dùng chuyển đổi giữa giao diện sáng (light mode) và tối (dark mode). Lựa chọn được ghi nhớ và áp dụng cho các lần truy cập sau.
+    
+    \item \textbf{FR-MISC-04 – Theo dõi Tiến độ Học tập:} Hệ thống ghi nhận: các bài học đã xem, các mô phỏng đã tương tác, các bài tập đã làm và điểm số. Hiển thị thanh tiến trình cho từng chương.
+\end{itemize}
+
+\section{Yêu cầu phi chức năng}
+
+Các yêu cầu phi chức năng xác định các tiêu chuẩn chất lượng mà hệ thống cần đáp ứng để đảm bảo trải nghiệm người dùng tốt và vận hành ổn định:
+
+\subsection{Hiệu năng (Performance)}
+
+\begin{itemize}
+    \item \textbf{NFR-PERF-01 – Thời gian phản hồi:} Hệ thống phải đảm bảo thời gian phản hồi trung bình với các thao tác chính (tải trang bài học, tải bài tập, nộp bài) nhỏ hơn 2 giây trong điều kiện đường truyền bình thường (băng thông $\geq$ 10 Mbps) và nhỏ hơn 3 giây trong khung giờ cao điểm (19h–23h).
+    
+    \item \textbf{NFR-PERF-02 – Tốc độ khung hình (FPS) của Mô phỏng 3D:} Tất cả các mô phỏng 3D phải duy trì tốc độ khung hình tối thiểu 30 FPS trên các thiết bị có GPU tích hợp trung bình (Intel Iris Xe, AMD Radeon Graphics) và 60 FPS trên các thiết bị có GPU rời (NVIDIA GeForce GTX 1650 trở lên).
+    
+    \item \textbf{NFR-PERF-03 – Tối ưu hóa Render:} Mô phỏng giao thoa sóng phải sử dụng kỹ thuật InstancedMesh để giới hạn số lượng draw calls xuống dưới 10 draw calls/frame cho phần hiển thị điểm giao thoa (so với 6.400 draw calls nếu dùng mesh riêng lẻ).
+    
+    \item \textbf{NFR-PERF-04 – Phân trang:} Dữ liệu lớn (danh sách đề thi, danh sách người dùng) phải được phân trang phía server (server-side pagination) với kích thước trang mặc định là 20 mục, nhằm giảm tải cho cả server và client.
+    
+    \item \textbf{NFR-PERF-05 – Tối ưu hóa JavaScript:} Các phép tính toán học lặp đi lặp lại (tính tọa độ điểm sóng, tính khoảng cách) phải sử dụng \texttt{useMemo} của React để tránh tính toán lại không cần thiết mỗi frame render.
+\end{itemize}
+
+\subsection{Tính sẵn sàng và Độ tin cậy (Availability \& Reliability)}
+
+\begin{itemize}
+    \item \textbf{NFR-AVAIL-01 – Uptime:} Hệ thống cần hoạt động ổn định với thời gian uptime $\geq$ 95\% trong tháng và $\geq$ 99\% trong khung giờ 8h–17h hàng ngày (thời gian sử dụng cao điểm của môi trường học đường).
+    
+    \item \textbf{NFR-AVAIL-02 – Sao lưu Dữ liệu:} Dữ liệu người dùng, bài học, bài tập, tiến độ học tập phải được lưu trữ tập trung trên MongoDB, có cơ chế sao lưu tự động hàng ngày (automated daily backup) và khả năng phục hồi trong vòng 1 giờ để hạn chế mất mát dữ liệu.
+    
+    \item \textbf{NFR-AVAIL-03 – Xử lý Lỗi:} Hệ thống phải xử lý lỗi một cách graceful (không crash toàn bộ ứng dụng). Khi một mô phỏng gặp lỗi (ví dụ: WebGL không được hỗ trợ), hiển thị thông báo lỗi thân thiện thay vì màn hình trắng.
+\end{itemize}
+
+\subsection{Bảo mật (Security)}
+
+\begin{itemize}
+    \item \textbf{NFR-SEC-01 – Mã hóa Mật khẩu:} Mật khẩu người dùng phải được mã hóa bằng thuật toán băm một chiều an toàn (\texttt{bcryptjs} với salt rounds $\geq$ 10) trước khi lưu trữ vào cơ sở dữ liệu.
+    
+    \item \textbf{NFR-SEC-02 – Xác thực và Phân quyền:} Hệ thống sử dụng JSON Web Token (JWT) cho xác thực. Token có thời hạn 8 giờ. Các API quản trị và dữ liệu nhạy cảm chỉ được truy cập bởi người dùng có vai trò \texttt{admin}.
+    
+    \item \textbf{NFR-SEC-04 – HTTPS:} Hệ thống phải được triển khai trên giao thức HTTPS để mã hóa dữ liệu truyền giữa client và server.
+    
+    \item \textbf{NFR-SEC-05 – Chống Tấn công Cơ bản:} Hệ thống cần có các biện pháp bảo vệ chống lại các lỗ hổng bảo mật web phổ biến: XSS (Cross-Site Scripting) – bằng cách escape dữ liệu người dùng trước khi hiển thị; CSRF (Cross-Site Request Forgery) – bằng cách sử dụng token xác thực; Rate Limiting – giới hạn số lượng request đến API trong một khoảng thời gian.
+\end{itemize}
+
+\subsection{Khả năng Mở rộng và Bảo trì (Scalability \& Maintainability)}
+
+\begin{itemize}
+    \item \textbf{NFR-SCAL-01 – Kiến trúc Module hóa:} Hệ thống phải được thiết kế theo kiến trúc module hóa (component-based architecture). Mỗi mô phỏng là một module độc lập, có thể được phát triển, kiểm thử và triển khai riêng biệt mà không ảnh hưởng đến các module khác.
+    
+    \item \textbf{NFR-SCAL-02 – Tái sử dụng Component:} Các thành phần giao diện dùng chung (\texttt{ThanhTruot}, \texttt{NutGradient}, \texttt{CardThongSo}, \texttt{DoThiConLac}, \texttt{EMWaveChart}) phải được thiết kế để tái sử dụng xuyên suốt các mô phỏng, giảm thiểu trùng lặp code.
+    
+    \item \textbf{NFR-SCAL-03 – Mở rộng Nội dung:} Kiến trúc hệ thống phải cho phép dễ dàng bổ sung mô phỏng mới (cho chương khác của Vật lý 11, hoặc cho môn học khác) với lượng thay đổi mã nguồn hiện tại < 10\%. Mỗi mô phỏng mới chỉ cần tuân theo interface chung và tái sử dụng các component UI có sẵn.
+    
+    \item \textbf{NFR-SCAL-04 – SOLID Principles:} Các thành phần chức năng (xác thực, quản lý bài học, bài tập, tiến độ, quản trị) cần được thiết kế tuân thủ các nguyên tắc SOLID để đảm bảo code dễ hiểu, dễ bảo trì và dễ mở rộng.
+\end{itemize}
+
+\subsection{Tính thân thiện với Người dùng (Usability \& User Experience)}
+
+\begin{itemize}
+    \item \textbf{NFR-UX-01 – Giao diện Trực quan:} Giao diện được thiết kế hiện đại, trực quan, sử dụng ngôn ngữ tiếng Việt hoàn toàn. Điểm đánh giá trải nghiệm người dùng (UX score) cần đạt $\geq$ 80/100 trong khảo sát với học sinh THPT và giáo viên (sử dụng thang đo System Usability Scale – SUS).
+    
+    \item \textbf{NFR-UX-02 – Responsive Design:} Hỗ trợ hiển thị tốt trên nhiều loại thiết bị và kích thước màn hình:
+    \begin{itemize}
+        \item \textbf{Desktop} ($\geq$1024px): Layout 2–3 cột, hiển thị đầy đủ tất cả thành phần.
+        \item \textbf{Tablet} (768px–1023px): Layout 2 cột, điều chỉnh kích thước canvas và panel.
+        \item \textbf{Mobile} (<768px): Layout 1 cột xếp dọc, canvas 3D thu nhỏ, panel điều khiển chuyển thành accordion.
+    \end{itemize}
+    Không xảy ra lỗi hiển thị hoặc tràn màn hình trong $\geq$ 95\% trường hợp kiểm thử.
+    
+    \item \textbf{NFR-UX-03 – Phản hồi Thao tác:} Cung cấp phản hồi rõ ràng cho mọi thao tác của người dùng:
+    \begin{itemize}
+        \item Hiển thị trạng thái loading (spinner, skeleton) khi đang tải dữ liệu hoặc khởi tạo mô phỏng.
+        \item Hiển thị thông báo thành công (Toast màu xanh) khi hoàn thành bài tập, lưu cài đặt.
+        \item Hiển thị thông báo lỗi (Toast màu đỏ) khi xảy ra lỗi, kèm mô tả lỗi.
+        \item Highlight (viền đỏ) các trường nhập liệu bị lỗi khi người dùng nhập sai định dạng.
+    \end{itemize}
+    
+    \item \textbf{NFR-UX-04 – Hỗ trợ Phím tắt:} Cung cấp phím tắt cho các thao tác thường xuyên:
+    \begin{itemize}
+        \item \texttt{Space}: Phát/Tạm dừng mô phỏng.
+        \item \texttt{R}: Đặt lại (Reset) mô phỏng.
+        \item \texttt{F}: Chuyển đổi chế độ toàn màn hình.
+        \item \texttt{1--4}: Chọn đáp án trắc nghiệm (trong chế độ làm bài).
+        \item \texttt{← →}: Chuyển slide trong trình chiếu bài học.
+    \end{itemize}
+    
+    \item \textbf{NFR-UX-05 – Accessibility:} Giao diện cần tuân thủ các nguyên tắc accessibility cơ bản (WCAG 2.1 Level A):
+    \begin{itemize}
+        \item Tất cả hình ảnh và icon có thuộc tính \texttt{alt} hoặc \texttt{aria-label}.
+        \item Các thành phần tương tác (button, input, select) có thể được truy cập và thao tác bằng bàn phím (Tab, Enter, Space).
+        \item Tỉ lệ tương phản màu sắc giữa văn bản và nền đạt tối thiểu 4.5:1 (văn bản thường) và 3:1 (văn bản lớn).
+    \end{itemize}
+    
+    \item \textbf{NFR-UX-06 – Tương thích Trình duyệt:} Hệ thống phải hoạt động chính xác trên các trình duyệt phổ biến:
+    \begin{itemize}
+        \item Google Chrome (phiên bản 90+)
+        \item Mozilla Firefox (phiên bản 88+)
+        \item Microsoft Edge (phiên bản 90+)
+        \item Apple Safari (phiên bản 14+)
+    \end{itemize}
+    Các mô phỏng 3D yêu cầu trình duyệt hỗ trợ WebGL. Nếu trình duyệt không hỗ trợ, hiển thị thông báo yêu cầu nâng cấp.
+\end{itemize}
+
+\subsection{Tương thích và Triển khai (Compatibility \& Deployment)}
+
+\begin{itemize}
+    \item \textbf{NFR-DEP-01 – Client-side Rendering:} Các mô phỏng 3D chạy hoàn toàn trên client (trình duyệt người dùng) thông qua React và WebGL, không yêu cầu server xử lý đồ họa. Server chỉ phục vụ file tĩnh (HTML, JS, CSS) và xử lý API (xác thực, dữ liệu học tập).
+    
+    \item \textbf{NFR-DEP-02 – Không phụ thuộc Plugin:} Hệ thống không yêu cầu người dùng cài đặt bất kỳ plugin nào (Java, Flash, Silverlight...). Tất cả đồ họa được render thông qua HTML5 Canvas và WebGL – các công nghệ được tích hợp sẵn trong trình duyệt hiện đại.
+    
+    \item \textbf{NFR-DEP-03 – Offline Capability (Tùy chọn):} Hệ thống có thể được cấu hình như một Progressive Web App (PWA), cho phép người dùng tải về và sử dụng các mô phỏng 3D ngay cả khi không có kết nối Internet (sau lần tải đầu tiên).
+\end{itemize}
+
+\section{Tổng kết Chương 4}
+
+Chương này đã xác định đầy đủ và chi tiết các yêu cầu chức năng và phi chức năng của hệ thống. Về mặt chức năng, hệ thống bao gồm các mô phỏng 3D tương tác làm trọng tâm (con lắc đơn, con lắc lò xo, sóng dọc và sóng ngang, sóng trên dây, giao thoa sóng, sóng điện từ, sonar), mỗi mô phỏng đều có đầy đủ các tính năng: điều khiển tham số qua thanh trượt, bật/tắt thành phần hiển thị, điều khiển camera 3D, đồ thị phân tích thời gian thực, và giao diện tiếng Việt. Bên cạnh đó, hệ thống còn cung cấp các chức năng học tập bổ trợ: nội dung lý thuyết dạng slide và trang quản trị.
+
+Về mặt phi chức năng, các yêu cầu về hiệu năng (FPS $\geq$ 30 cho mô phỏng 3D, thời gian phản hồi < 2s), tính sẵn sàng (uptime $\geq$ 95\%), bảo mật (mã hóa mật khẩu, JWT, bảo vệ API key), khả năng mở rộng (kiến trúc module hóa, tái sử dụng component), và tính thân thiện người dùng (responsive design, dark mode, phản hồi thao tác, phím tắt, accessibility) đã được đặc tả rõ ràng với các chỉ số định lượng cụ thể.
+
+Các yêu cầu này sẽ là cơ sở cho việc phân tích và thiết kế hệ thống chi tiết trong Chương 6, cũng như là tiêu chuẩn để kiểm thử và đánh giá hệ thống trong Chương 8.

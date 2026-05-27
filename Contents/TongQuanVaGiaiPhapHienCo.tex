@@ -1,0 +1,354 @@
+\chapter{Tổng quan và các giải pháp hiện có}
+
+\section{Giới thiệu chung}
+
+Trong thời đại công nghệ 4.0, giáo dục STEM (Khoa học, Công nghệ, Kỹ thuật và Toán học) đang trải qua những chuyển đổi sâu sắc với sự tích hợp ngày càng mạnh mẽ của các công nghệ kỹ thuật số vào mọi khía cạnh của quá trình dạy và học\footnote{Bybee, R. W. (2013). \textit{The case for STEM education: Challenges and opportunities}. NSTA Press.}. Đặc biệt, việc giảng dạy các môn khoa học tự nhiên như Vật lý đang chứng kiến sự chuyển dịch mang tính bước ngoặt từ phương pháp truyền thống (thuyết giảng, hình vẽ tĩnh trên bảng, thí nghiệm thật với thiết bị hạn chế) sang các mô hình học tập tương tác, dựa trên công nghệ, nơi người học đóng vai trò trung tâm của quá trình khám phá tri thức\footnote{National Research Council. (2012). \textit{A framework for K-12 science education: Practices, crosscutting concepts, and core ideas}. National Academies Press.}. Trong bối cảnh này, mô phỏng vật lý trực quan (physics simulation) nổi lên như một công cụ giáo dục mạnh mẽ, có khả năng biến những khái niệm trừu tượng, khó hình dung thành các trải nghiệm học tập cụ thể, sinh động và hấp dẫn\footnote{Rutten, N., van Joolingen, W. R., \& van der Veen, J. T. (2012). The learning effects of computer simulations in science education. \textit{Computers \& Education}, 58(1), 136-153.}.
+
+Mô phỏng vật lý không chỉ là công cụ minh họa thụ động – nơi học sinh chỉ quan sát một hoạt cảnh được tạo sẵn – mà còn là môi trường học tập tương tác cho phép học sinh thực hiện "thí nghiệm ảo" (virtual experiments), thay đổi các tham số, quan sát kết quả ngay lập tức, và khám phá các hiện tượng vật lý trong những điều kiện lý tưởng mà phòng thí nghiệm truyền thống khó có thể đáp ứng\footnote{de Jong, T., \& van Joolingen, W. R. (1998). Scientific discovery learning with computer simulations of conceptual domains. \textit{Review of Educational Research}, 68(2), 179-201.}. Nghiên cứu của Wieman và Perkins (2005) – những người sáng lập dự án PhET nổi tiếng – chỉ ra rằng việc sử dụng mô phỏng tương tác trong giảng dạy vật lý có thể cải thiện đáng kể khả năng hiểu khái niệm (conceptual understanding) và vận dụng kiến thức của học sinh, với mức độ cải thiện được ghi nhận lên đến 80\% so với phương pháp giảng dạy truyền thống\footnote{Wieman, C. E., \& Perkins, K. K. (2005). Transforming physics education. \textit{Physics Today}, 58(11), 36-41.}.
+
+Trong chương trình Vật lý Trung học Phổ thông Việt Nam, Chương Dao động và Chương Sóng (thuộc Vật lý lớp 11 theo sách giáo khoa \textit{Chân trời sáng tạo}) được đánh giá là hai trong số những chương có mức độ trừu tượng cao nhất, đòi hỏi học sinh phải có khả năng tư duy không gian, tư duy động (dynamic thinking) và khả năng liên hệ giữa mô hình toán học với hiện tượng thực tế\footnote{Duit, R., \& Treagust, D. F. (2003). Conceptual change: A powerful framework for improving science teaching and learning. \textit{International Journal of Science Education}, 25(6), 671-688.}. Các khái niệm như dao động điều hòa, sự chuyển hóa năng lượng giữa động năng và thế năng, sự lan truyền của sóng cơ học trong môi trường, hiện tượng giao thoa và nhiễu xạ, sự hình thành sóng dừng, hay sự lan truyền của sóng điện từ với các vectơ $\vec{E}$ và $\vec{B}$ vuông góc với nhau đều là những nội dung mà học sinh không thể quan sát trực tiếp bằng mắt thường. Nghiên cứu của Planinic et al. (2013) trên 1.200 học sinh trung học cho thấy hơn 65\% học sinh gặp khó khăn trong việc hình dung và hiểu bản chất của các hiện tượng dao động và sóng nếu không có sự hỗ trợ của các công cụ trực quan\footnote{Planinic, M., Ivanjek, L., \& Susac, A. (2013). Comparison of university students' understanding of graphs in different contexts. \textit{Physical Review Special Topics - Physics Education Research}, 9(2), 020103.}.
+
+Sự phát triển vượt bậc của công nghệ web hiện đại trong thập kỷ qua đã mở ra những khả năng hoàn toàn mới cho việc phát triển các mô phỏng vật lý trực tuyến. Các công nghệ như HTML5 Canvas API, WebGL, và các framework JavaScript tiên tiến cho phép tạo ra các mô phỏng có độ tương tác cao, hoạt động mượt mà ở tốc độ 60 khung hình/giây trên trình duyệt mà không cần cài đặt bất kỳ phần mềm bổ trợ hay plugin nào\footnote{Mozilla Developer Network. (2023). \textit{HTML5 Canvas: 2D graphics and animation}. Truy cập từ https://developer.mozilla.org/en-US/docs/Web/API/Canvas\_API}. Đặc biệt, sự xuất hiện của React Three Fiber – một thư viện renderer cho phép tích hợp Three.js/WebGL vào hệ sinh thái React một cách khai báo (declarative) – đã tạo ra một bước tiến lớn trong việc phát triển các ứng dụng 3D tương tác trên web, kết hợp sức mạnh đồ họa GPU-accelerated của WebGL với mô hình lập trình hướng thành phần (component-based) và quản lý trạng thái (state management) của React\footnote{React Three Fiber Documentation. (2023). \textit{Introduction to React Three Fiber}. Truy cập từ https://docs.pmnd.rs/react-three-fiber}.
+
+Tuy nhiên, qua quá trình khảo sát và phân tích, chúng tôi nhận thấy hầu hết các hệ thống mô phỏng vật lý hiện tại vẫn tồn tại những hạn chế đáng kể, đặc biệt trong bối cảnh giáo dục phổ thông Việt Nam. Theo phân tích của Dori và Belcher (2005), phần lớn các công cụ mô phỏng chỉ dừng lại ở mức độ minh họa thụ động, thiếu khả năng tương tác sâu và cá nhân hóa trải nghiệm học tập\footnote{Dori, Y. J., \& Belcher, J. (2005). How does technology-enabled active learning affect undergraduate students' understanding of electromagnetism concepts? \textit{The Journal of the Learning Sciences}, 14(2), 243-279.}. Nghiên cứu của Linn và Eylon (2011) chỉ ra rằng hiệu quả giáo dục của các mô phỏng phụ thuộc lớn vào việc chúng được tích hợp như thế nào vào quá trình học tập tổng thể (bao gồm lý thuyết, thực hành, và đánh giá), chứ không chỉ đơn thuần là công cụ độc lập\footnote{Linn, M. C., \& Eylon, B. S. (2011). \textit{Science learning and instruction: Taking advantage of technology to promote knowledge integration}. Routledge.}. Thêm vào đó, nhiều giải pháp quốc tế không bám sát chương trình sách giáo khoa Việt Nam, sử dụng ngôn ngữ tiếng Anh, và yêu cầu cài đặt phức tạp, gây ra rào cản đáng kể cho cả giáo viên và học sinh trong việc tiếp cận và sử dụng hiệu quả.
+
+Từ những phân tích trên, nghiên cứu của chúng tôi nhằm giải quyết ba vấn đề chính:
+
+\begin{enumerate}
+    \item \textbf{Phát triển một hệ thống mô phỏng vật lý tương tác toàn diện trên nền web} cho cả hai chương Dao động và Sóng (Vật lý 11 – \textit{Chân trời sáng tạo}), tận dụng tối đa khả năng của các công nghệ đồ họa web hiện đại nhất hiện nay: React Three Fiber + Three.js/WebGL cho các mô phỏng 3D phức tạp (con lắc đơn, con lắc lò xo, sóng dọc và sóng ngang, giao thoa sóng, sóng điện từ, sonar, sóng dừng), Canvas 2D API cho mô phỏng sóng trên dây (bài toán 1D phù hợp với 2D rendering), Recharts cho hệ thống đồ thị phân tích tích hợp, và Tailwind CSS cho giao diện người dùng nhất quán, responsive với dark mode.
+
+    \item \textbf{Áp dụng các kỹ thuật tối ưu hóa hiệu năng tiên tiến} để đảm bảo các mô phỏng chạy mượt mà ngay cả trên các thiết bị có cấu hình trung bình: sử dụng InstancedMesh của Three.js để giảm số lượng draw calls từ hàng nghìn xuống chỉ còn 1 (trong mô phỏng giao thoa sóng với $80 \times 80 = 6.400$ điểm), sử dụng \texttt{useMemo} và \texttt{useCallback} của React để tránh tính toán lại không cần thiết, và tổ chức kiến trúc component module hóa để dễ dàng bảo trì và mở rộng.
+
+    \item \textbf{Xây dựng một hệ thống học tập tích hợp} kết hợp giữa trình bày lý thuyết (thông tin vật lý, công thức, giải thích), thực hành tương tác (qua các thanh trượt điều khiển tham số, khả năng bật/tắt thành phần hiển thị, xoay camera 3D), và phân tích dữ liệu (qua đồ thị thời gian thực được đồng bộ với mô phỏng) trong một nền tảng thống nhất, có giao diện tiếng Việt hoàn toàn.
+\end{enumerate}
+
+Nghiên cứu này dựa trên nền tảng lý thuyết học tập kiến tạo (constructivist learning theory)\footnote{Vygotsky, L. S. (1978). \textit{Mind in society: The development of higher psychological processes}. Harvard University Press.} và lý thuyết tải nhận thức (cognitive load theory)\footnote{Sweller, J., van Merriënboer, J. J., \& Paas, F. (2019). Cognitive architecture and instructional design: 20 years later. \textit{Educational Psychology Review}, 31(2), 261-292.}, với mục tiêu tối ưu hóa quá trình tiếp thu kiến thức vật lý phức tạp thông qua sự kết hợp hài hòa giữa biểu diễn trực quan đa chiều (3D visualization + 2D charts), tương tác thực hành (direct manipulation), và phản hồi tức thời (real-time feedback).
+
+Chương này sẽ cung cấp một cái nhìn tổng quan toàn diện về các giải pháp công nghệ hiện có cho mô phỏng vật lý giáo dục, từ các phần mềm desktop truyền thống, các ứng dụng web hiện đại, đến các giải pháp di động và thư viện đồ họa 3D mã nguồn mở. Chúng tôi sẽ phân tích chi tiết ưu điểm, hạn chế của từng nhóm giải pháp, so sánh chúng dựa trên các tiêu chí quan trọng đối với giáo dục phổ thông (hiệu năng, khả năng tiếp cận, chi phí triển khai, mức độ tương tác, khả năng tích hợp), từ đó xác định khoảng trống nghiên cứu và cơ sở cho việc lựa chọn công nghệ của hệ thống đề xuất.
+
+\section{Nhóm phần mềm cài đặt trên máy tính (Desktop-based Applications)}
+
+Nhóm phần mềm desktop đã có lịch sử phát triển lâu dài và đạt được độ chín muồi cao về mặt kỹ thuật. Đây thường là các công cụ được phát triển cho mục đích nghiên cứu và kỹ thuật chuyên nghiệp, sau đó được điều chỉnh để sử dụng trong môi trường giáo dục, đặc biệt là ở bậc đại học và sau đại học.
+
+\subsection{Phần mềm thương mại chuyên nghiệp}
+
+\begin{itemize}
+    \item \textbf{MATLAB Simulink (MathWorks):} MATLAB với công cụ Simulink là một trong những nền tảng mô phỏng mạnh mẽ nhất hiện nay, cung cấp thư viện vật lý phong phú (Simscape) cho phép mô phỏng các hệ thống cơ học, điện, thủy lực, và nhiệt động lực học. Simulink hỗ trợ mô hình hóa dựa trên sơ đồ khối (block diagram), cho phép người dùng xây dựng mô hình trực quan bằng cách kéo thả các khối chức năng. Trong giảng dạy Vật lý, MATLAB thường được sử dụng để mô phỏng dao động điều hòa, dao động tắt dần, dao động cưỡng bức và hiện tượng cộng hưởng với độ chính xác số học rất cao. Tuy nhiên, MATLAB là phần mềm thương mại với chi phí bản quyền đáng kể (hàng nghìn USD/năm cho license education), yêu cầu cài đặt phức tạp, và có đường cong học tập dốc (steep learning curve) đối với học sinh phổ thông và ngay cả với nhiều giáo viên chưa có nền tảng lập trình.
+    
+    \item \textbf{COMSOL Multiphysics:} COMSOL là phần mềm mô phỏng đa vật lý (multiphysics) mạnh mẽ, sử dụng phương pháp phần tử hữu hạn (FEM) để giải các bài toán vật lý phức tạp. COMSOL nổi bật với giao diện đồ họa trực quan và khả năng tạo ra các mô phỏng tương tác với chất lượng hình ảnh cao. Ứng dụng COMSOL trong giáo dục Vật lý bao gồm mô phỏng trường điện từ, truyền nhiệt, cơ học chất lỏng và cơ học vật rắn. Tuy nhiên, tương tự MATLAB, COMSOL có chi phí bản quyền rất cao, yêu cầu cấu hình máy tính mạnh (RAM 16GB+, CPU đa nhân), và đòi hỏi kiến thức chuyên sâu về phương pháp số để thiết lập mô phỏng chính xác.
+    
+    \item \textbf{ANSYS Discovery:} ANSYS cung cấp bộ công cụ mô phỏng kỹ thuật toàn diện, trong đó ANSYS Discovery cho phép tạo mô phỏng tương tác thời gian thực với giao diện người dùng được đơn giản hóa hơn so với phiên bản ANSYS Mechanical/CFD truyền thống. ANSYS được sử dụng rộng rãi trong đào tạo kỹ sư ở bậc đại học, đặc biệt cho các bài toán về cơ học kết cấu, động lực học chất lỏng (CFD) và điện từ trường.
+    
+    \item \textbf{Crocodile Physics (Crocodile Clips):} Crocodile Physics là phần mềm mô phỏng được thiết kế riêng cho giáo dục phổ thông, cung cấp các mô phỏng 2D trong các lĩnh vực cơ học, điện học, quang học và sóng. Giao diện kéo thả đơn giản giúp học sinh dễ dàng tạo mạch điện, thiết lập thí nghiệm cơ học và quan sát kết quả. Tuy nhiên, phần mềm này đã ngừng phát triển từ những năm 2010, không còn được cập nhật cho các hệ điều hành mới, và chỉ hỗ trợ mô phỏng 2D với đồ họa ở mức cơ bản.
+\end{itemize}
+
+\subsection{Phần mềm mã nguồn mở và miễn phí}
+
+\begin{itemize}
+    \item \textbf{Algodoo (Algoryx Simulation):} Algodoo là phần mềm mô phỏng vật lý 2D miễn phí, nổi bật với giao diện thân thiện, đầy màu sắc và khả năng tương tác cao. Người dùng có thể vẽ các đối tượng hình học, thiết lập các thuộc tính vật lý (khối lượng, ma sát, độ đàn hồi, lực hấp dẫn...) và quan sát chúng tương tác trong môi trường vật lý 2D chân thực. Algodoo rất phù hợp để giới thiệu các khái niệm cơ bản về cơ học Newton, dao động và va chạm cho học sinh trung học cơ sở và đầu trung học phổ thông. Tuy nhiên, Algodoo bị giới hạn ở mô phỏng 2D, không hỗ trợ hiển thị 3D cho các khái niệm không gian như vectơ điện từ trường hay giao thoa sóng trên mặt phẳng, và không có khả năng tích hợp vào hệ thống học tập trực tuyến.
+    
+    \item \textbf{OpenModelica:} OpenModelica là môi trường mô phỏng mã nguồn mở dựa trên ngôn ngữ Modelica – một ngôn ngữ mô hình hóa hướng đối tượng cho các hệ thống vật lý đa miền. OpenModelica có khả năng mô phỏng các hệ thống cơ-điện-thủy lực phức tạp với độ chính xác cao. Cộng đồng phát triển tích cực và thư viện mô hình phong phú là những điểm mạnh của OpenModelica. Tuy nhiên, công cụ này đòi hỏi người dùng phải có kiến thức về ngôn ngữ Modelica và lập trình mô phỏng, khiến nó không phù hợp cho học sinh phổ thông hoặc giáo viên không chuyên về công nghệ.
+    
+    \item \textbf{Scilab/Xcos:} Scilab là phần mềm tính toán số mã nguồn mở, được xem là lựa chọn thay thế miễn phí cho MATLAB. Xcos là công cụ mô phỏng sơ đồ khối đi kèm Scilab, tương tự như Simulink. Scilab/Xcos có khả năng xử lý các bài toán dao động, hệ thống điều khiển và xử lý tín hiệu. Mặc dù miễn phí, Scilab/Xcos vẫn có giao diện phức tạp và đòi hỏi thời gian học tập đáng kể.
+\end{itemize}
+
+\subsection{Ưu điểm và hạn chế của nhóm Desktop-based Applications}
+
+\begin{itemize}
+    \item \textbf{Ưu điểm}:
+    \begin{itemize}
+        \item \textbf{Hiệu suất tính toán rất cao:} Các phần mềm desktop có thể tận dụng tối đa sức mạnh CPU/GPU của máy tính, cho phép giải các bài toán mô phỏng phức tạp với hàng trăm nghìn phần tử hoặc bước thời gian rất nhỏ.
+        \item \textbf{Độ chính xác số học cao:} Các thuật toán tích phân số (Runge-Kutta bậc 4, phương pháp phần tử hữu hạn) được triển khai với độ chính xác double-precision, phù hợp cho nghiên cứu và kỹ thuật.
+        \item \textbf{Thư viện mô hình chuyên sâu:} Hỗ trợ đa dạng các lĩnh vực vật lý (cơ học, điện từ, nhiệt, chất lỏng, âm học...).
+    \end{itemize}
+    \item \textbf{Hạn chế}:
+    \begin{itemize}
+        \item \textbf{Yêu cầu cài đặt và cấu hình phức tạp:} Người dùng phải tải về, cài đặt, và đôi khi cấu hình môi trường (runtime, license server), gây khó khăn cho việc triển khai đồng bộ trong trường học.
+        \item \textbf{Chi phí bản quyền cao:} Các phần mềm thương mại hàng đầu có chi phí từ vài trăm đến vài nghìn USD/năm, vượt quá ngân sách của hầu hết trường phổ thông Việt Nam.
+        \item \textbf{Khó tích hợp vào hệ thống học tập trực tuyến:} Các mô phỏng desktop thường là các ứng dụng độc lập, không thể nhúng vào trang web, LMS, hay chia sẻ dễ dàng qua Internet.
+        \item \textbf{Đường cong học tập dốc:} Giao diện phức tạp, thuật ngữ chuyên ngành và yêu cầu kiến thức lập trình/lý thuyết số khiến các công cụ này không phù hợp cho học sinh phổ thông tự học.
+        \item \textbf{Phụ thuộc nền tảng:} Nhiều phần mềm chỉ chạy trên Windows, không hỗ trợ macOS hoặc Linux, gây khó khăn cho học sinh sử dụng thiết bị cá nhân đa dạng.
+    \end{itemize}
+\end{itemize}
+
+\section{Nhóm ứng dụng trên nền tảng Web (Web-based Applications)}
+
+Sự phát triển của các chuẩn web mở (HTML5, CSS3, ECMAScript 6+) và các API đồ họa cấp thấp (Canvas 2D, WebGL) đã tạo ra một cuộc cách mạng trong việc phát triển ứng dụng đồ họa tương tác trên trình duyệt. Nhóm ứng dụng web hiện đang là xu hướng chủ đạo trong phát triển phần mềm giáo dục nhờ khả năng tiếp cận dễ dàng, không yêu cầu cài đặt, và khả năng tích hợp cao.
+
+\subsection{Công nghệ đồ họa nền tảng: Canvas 2D, SVG, và WebGL}
+
+Đây là ba công nghệ đồ họa cốt lõi trên nền web, mỗi công nghệ có những đặc điểm, ưu thế và hạn chế riêng, phù hợp với các bài toán mô phỏng khác nhau:
+
+\begin{itemize}
+    \item \textbf{Canvas 2D API:} Đây là công nghệ vẽ đồ họa bitmap 2D trực tiếp thông qua JavaScript, cung cấp một bề mặt vẽ (canvas element) nơi lập trình viên có thể điều khiển từng pixel thông qua context 2D. Canvas 2D API hoạt động theo cơ chế immediate mode rendering: mỗi khung hình, toàn bộ nội dung được xóa và vẽ lại từ đầu. Điều này rất phù hợp cho các ứng dụng animation thời gian thực và game 2D, nơi nội dung thay đổi liên tục.
+    \begin{itemize}
+        \item \textbf{Hiệu suất:} Rất tốt cho đồ họa 2D với số lượng đối tượng vừa phải. Với các ứng dụng có hàng nghìn đối tượng, hiệu năng có thể giảm do phải vẽ lại toàn bộ từng frame.
+        \item \textbf{API:} Đơn giản, trực quan với các phương thức như \texttt{fillRect()}, \texttt{arc()}, \texttt{beginPath()}, \texttt{stroke()}, \texttt{fillText()}. Phù hợp cho người mới bắt đầu.
+    \end{itemize}
+    
+    \item \textbf{SVG (Scalable Vector Graphics):} SVG là định dạng đồ họa vector dựa trên XML, trong đó mỗi đối tượng đồ họa (đường thẳng, hình tròn, chữ...) là một phần tử DOM (Document Object Model) riêng biệt. Điều này có nghĩa là mỗi đối tượng có thể được truy xuất, thay đổi thuộc tính, và gán sự kiện (click, hover) một cách độc lập thông qua JavaScript và CSS.
+    \begin{itemize}
+        \item \textbf{Hiệu suất:} Tốt cho đồ họa tĩnh hoặc ít đối tượng. Với số lượng lớn đối tượng (hàng trăm trở lên), hiệu năng giảm nhanh do mỗi đối tượng là một DOM node, làm tăng gánh nặng cho bộ render của trình duyệt.
+        \item \textbf{Khả năng tương tác:} Rất tốt cho tương tác trên từng đối tượng riêng lẻ (ví dụ: click vào một điểm trên đồ thị để xem thông tin).
+        \item \textbf{Ứng dụng:} Phù hợp cho biểu đồ, sơ đồ tương tác, và các visualization có số lượng phần tử ít, cần tương tác chi tiết với từng phần tử. Không được sử dụng trong đề tài này do yêu cầu animation thời gian thực với số lượng lớn đối tượng (hàng nghìn điểm giao thoa, hàng trăm điểm sóng).
+    \end{itemize}
+    
+    \item \textbf{WebGL (Web Graphics Library):} WebGL là API đồ họa cấp thấp cho phép render đồ họa 3D (và 2D) được tăng tốc phần cứng (GPU-accelerated) trực tiếp trong trình duyệt, không cần plugin. WebGL dựa trên OpenGL ES 2.0 và cung cấp khả năng truy cập trực tiếp vào GPU thông qua JavaScript. Tuy nhiên, WebGL thuần (raw WebGL) đòi hỏi lập trình viên phải viết shader (GLSL), quản lý buffer, và hiểu sâu về pipeline đồ họa – điều này tạo ra rào cản lớn cho việc phát triển ứng dụng giáo dục.
+    \begin{itemize}
+        \item \textbf{Three.js:} Để giải quyết vấn đề phức tạp của WebGL thuần, Three.js ra đời như một thư viện JavaScript cung cấp lớp trừu tượng (abstraction layer) bên trên WebGL. Three.js cung cấp các khái niệm quen thuộc như \texttt{Scene}, \texttt{Camera}, \texttt{Renderer}, \texttt{Mesh}, \texttt{Geometry}, \texttt{Material}, \texttt{Light} – cho phép lập trình viên tập trung vào việc "xây dựng cảnh 3D" thay vì "lập trình GPU". Three.js là thư viện WebGL phổ biến nhất thế giới với hơn 100k stars trên GitHub, cộng đồng lớn, tài liệu phong phú và hàng nghìn ví dụ.
+        \item \textbf{Ứng dụng trong đề tài:} Three.js là nền tảng cốt lõi cho tất cả các mô phỏng 3D trong đề tài. Các đối tượng Three.js được sử dụng trực tiếp bao gồm: \texttt{THREE.Vector3}, \texttt{THREE.Color}, \texttt{THREE.BufferGeometry}, \texttt{THREE.InstancedMesh}, \texttt{THREE.MathUtils}, \texttt{THREE.PlaneGeometry}, \texttt{THREE.SphereGeometry}, \texttt{THREE.ConeGeometry}, \texttt{THREE.CylinderGeometry}, \texttt{THREE.BoxGeometry}, \texttt{THREE.MeshStandardMaterial}, \texttt{THREE.MeshBasicMaterial}, \texttt{THREE.PointsMaterial}, \texttt{THREE.AmbientLight}, \texttt{THREE.PointLight}, \texttt{THREE.DirectionalLight}.
+    \end{itemize}
+\end{itemize}
+
+\subsection{React Three Fiber và hệ sinh thái}
+
+\textbf{React Three Fiber} (R3F) là một thư viện renderer cho Three.js, được xây dựng bởi cộng đồng Poimandres, cho phép khai báo các đối tượng 3D dưới dạng JSX component – cú pháp quen thuộc với mọi lập trình viên React. Thay vì phải viết code imperative để tạo scene, R3F cho phép chúng ta "compose" các đối tượng 3D giống như cách chúng ta compose các component React thông thường. Đây là một bước tiến lớn về mặt kiến trúc và trải nghiệm lập trình (Developer Experience - DX).
+
+\begin{itemize}
+    \item \textbf{Tích hợp với React state management:} R3F cho phép các đối tượng 3D phản ứng (react) với sự thay đổi của React state một cách tự nhiên. Ví dụ: khi người dùng kéo thanh trượt thay đổi biên độ, state \texttt{amplitude} thay đổi → component sóng tự động tính toán lại tọa độ các điểm sóng và render lại. Điều này loại bỏ hoàn toàn nhu cầu phải viết code cập nhật thủ công (imperative update) như khi dùng Three.js thuần.
+    
+    \item \textbf{Hỗ trợ đầy đủ vòng đời React:} Các hook như \texttt{useState}, \texttt{useEffect}, \texttt{useMemo}, \texttt{useCallback}, \texttt{useRef} hoạt động hoàn toàn bình thường bên trong các component R3F. Ngoài ra, R3F còn cung cấp hook đặc biệt \texttt{useFrame} – cho phép chạy code mỗi frame render (tương đương \texttt{requestAnimationFrame}) với tham số \texttt{state} (chứa camera, scene, renderer, clock) và \texttt{delta} (thời gian giữa hai frame).
+    
+    \item \textbf{Drei:} @react-three/drei là thư viện "đồ nghề" (utility library) chính thức cho R3F, cung cấp hàng chục component được xây dựng sẵn và tối ưu hóa cho các tác vụ phổ biến trong ứng dụng 3D. Các component Drei được sử dụng trong đề tài bao gồm:
+    \begin{itemize}
+        \item \texttt{OrbitControls}: Cho phép người dùng xoay (rotate), pan (di chuyển) và zoom (phóng to/thu nhỏ) camera bằng chuột hoặc cảm ứng, rất quan trọng để khám phá mô hình 3D từ mọi góc độ.
+        \item \texttt{Line}: Vẽ đường thẳng và đường cong trong không gian 3D từ mảng các điểm \texttt{THREE.Vector3}. Được sử dụng để vẽ dây treo con lắc, đường sóng điện từ E và B, mặt sóng tròn, vân giao thoa hyperbol, tia sonar, lò xo xoắn ốc.
+        \item \texttt{Html}: Cho phép nhúng nội dung HTML thuần (div, text, button...) vào trong cảnh 3D, tự động định vị theo tọa độ 3D. Cực kỳ hữu ích để tạo chú thích, nhãn, bảng thông tin, tooltip trong không gian 3D.
+        \item \texttt{Plane}: Tạo mặt phẳng hình học nhanh chóng (dùng làm nền, mặt nước).
+        \item \texttt{Text}: Hiển thị văn bản trong không gian 3D.
+        \item \texttt{Stars}: Tạo hiệu ứng sao lấp lánh (dùng trong mô phỏng Sonar để tạo nền nước sâu).
+    \end{itemize}
+\end{itemize}
+
+Việc lựa chọn \textbf{React Three Fiber + Drei} thay vì Three.js thuần hoặc các framework 3D khác (Babylon.js, A-Frame) dựa trên các lý do chính sau:
+
+\begin{enumerate}
+    \item \textbf{Đồng bộ trạng thái UI-3D tự nhiên:} Trong một ứng dụng mô phỏng giáo dục, có hàng chục tham số vật lý (biên độ, tần số, bước sóng, pha, khoảng cách nguồn...) được điều khiển bởi các UI controls (thanh trượt, checkbox, nút bấm). Với R3F, mối liên kết giữa UI và 3D scene được thực hiện đơn giản qua React state – thay đổi state → re-render component → cập nhật 3D scene. Với Three.js thuần, lập trình viên phải tự viết code lắng nghe sự kiện và cập nhật thủ công từng thuộc tính của mesh/geometry/material.
+    
+    \item \textbf{Kiến trúc component-based:} Mỗi mô phỏng (con lắc đơn, sóng điện từ, giao thoa...) là một component React độc lập, có thể được phát triển, kiểm thử và bảo trì riêng biệt.
+    \item \textbf{Cộng đồng và hệ sinh thái React:} React là framework frontend phổ biến nhất thế giới với cộng đồng khổng lồ, thư viện phong phú và công cụ phát triển mạnh mẽ (React DevTools, HMR - Hot Module Replacement). Điều này đảm bảo tính bền vững và khả năng bảo trì lâu dài cho dự án.
+\end{enumerate}
+
+\subsection{Kỹ thuật InstancedMesh – Tối ưu hóa hiệu năng render}
+
+Một trong những thách thức lớn nhất khi xây dựng mô phỏng 3D trên web là hiệu năng render. Mỗi mesh (đối tượng hình học) trong scene yêu cầu một draw call – một lệnh gửi từ CPU đến GPU để yêu cầu vẽ đối tượng đó. Số lượng draw calls càng nhiều, CPU và GPU càng bị quá tải, dẫn đến giảm tốc độ khung hình (FPS), gây ra hiện tượng giật lag.
+
+\textbf{InstancedMesh} (\texttt{THREE.InstancedMesh}) là một kỹ thuật render đặc biệt của Three.js cho phép vẽ hàng nghìn bản sao (instances) của cùng một geometry và material chỉ với một draw call duy nhất. Mỗi instance có thể có vị trí (position), tỉ lệ (scale), góc xoay (rotation) và màu sắc (color) riêng biệt, được lưu trữ trong các buffer attribute và truyền thẳng lên GPU.
+
+\begin{itemize}
+    \item \textbf{Ứng dụng trong mô phỏng giao thoa sóng:} Trong component \texttt{InterferenceInstancedMesh} thuộc mô phỏng giao thoa sóng, chúng ta cần hiển thị một lưới điểm $80 \times 80 = 6.400$ điểm để biểu diễn mẫu giao thoa. Nếu mỗi điểm là một mesh riêng biệt, sẽ có 6.400 draw calls mỗi frame – con số này vượt quá khả năng xử lý của hầu hết GPU tích hợp, dẫn đến FPS thấp và trải nghiệm không mượt mà. Với InstancedMesh, tất cả 6.400 điểm được gộp vào 1 draw call duy nhất. Kết quả: FPS duy trì ổn định ở mức 60 ngay cả trên các laptop có cấu hình trung bình.
+    \item \textbf{Cập nhật màu sắc và vị trí theo thời gian thực:} Mỗi frame, thông qua \texttt{useFrame}, chúng ta tính toán lại cường độ giao thoa tại từng điểm, cập nhật màu sắc qua \texttt{mesh.setColorAt(idx, color)} và vị trí/scale qua \texttt{mesh.setMatrixAt(idx, matrix)}. Các thay đổi được đánh dấu \texttt{needsUpdate = true} và GPU tự động cập nhật trong lần render tiếp theo. Cơ chế này cho phép toàn bộ mẫu giao thoa "sống" và dao động theo thời gian thực một cách mượt mà.
+\end{itemize}
+
+\subsection{Recharts – Thư viện đồ thị cho React}
+
+\textbf{Recharts} là thư viện vẽ đồ thị được xây dựng dành riêng cho React, sử dụng các component React thuần túy (composable components) để khai báo biểu đồ. Recharts hỗ trợ nhiều loại biểu đồ: \texttt{LineChart}, \texttt{AreaChart}, \texttt{BarChart}, \texttt{ScatterChart}, \texttt{PieChart}, \texttt{RadarChart}... Ưu điểm chính của Recharts bao gồm:
+
+\begin{itemize}
+    \item \textbf{Declarative API:} Biểu đồ được khai báo dưới dạng JSX, rất tự nhiên với lập trình viên React.
+    \item \textbf{Responsive:} Component \texttt{ResponsiveContainer} tự động điều chỉnh kích thước biểu đồ theo kích thước của container cha.
+    \item \textbf{Tích hợp tốt với React state:} Dữ liệu biểu đồ được truyền qua props, khi state thay đổi, biểu đồ tự động cập nhật.
+    \item \textbf{Hỗ trợ Tooltip và Legend:} Các component \texttt{Tooltip} và \texttt{Legend} có sẵn, dễ dàng tùy chỉnh nội dung và kiểu dáng.
+\end{itemize}
+
+
+\subsection{Các nền tảng mô phỏng vật lý web tiêu biểu}
+
+\begin{itemize}
+    \item \textbf{PhET Interactive Simulations (Đại học Colorado Boulder):} PhET là dự án mô phỏng giáo dục phi lợi nhuận nổi tiếng nhất thế giới, cung cấp hơn 160 mô phỏng miễn phí về Vật lý, Hóa học, Sinh học, Toán học và Khoa học Trái đất. Các mô phỏng PhET được xây dựng dựa trên nghiên cứu sư phạm kỹ lưỡng, sử dụng đồ họa 2D/3D hấp dẫn và cho phép tương tác cao. PhET đã chứng minh hiệu quả vượt trội trong việc cải thiện hiểu biết khái niệm của học sinh qua nhiều nghiên cứu độc lập. Tuy nhiên, PhET được thiết kế cho chương trình giáo dục quốc tế (chủ yếu theo chuẩn Mỹ - NGSS), không bám sát cấu trúc chương trình và sách giáo khoa Việt Nam. Giao diện và chú thích bằng tiếng Anh (dù đã có phiên bản dịch cho một số mô phỏng) vẫn là rào cản với nhiều học sinh. Hơn nữa, các mô phỏng PhET sử dụng công nghệ HTML5/Canvas, chủ yếu là 2D, không cung cấp khả năng xoay camera 3D để quan sát từ nhiều góc độ.
+    
+    \item \textbf{GeoGebra:} GeoGebra là nền tảng toán học tương tác miễn phí, kết hợp hình học, đại số, bảng tính, đồ thị, thống kê và giải tích trong một gói phần mềm. GeoGebra có một thư viện lớn các "hoạt động" (activities) và "mô phỏng" do cộng đồng giáo viên trên toàn thế giới tạo ra và chia sẻ, bao gồm nhiều mô phỏng vật lý. GeoGebra có ưu điểm là miễn phí, có cộng đồng lớn, hỗ trợ tiếng Việt, và chạy trên web. Tuy nhiên, GeoGebra được thiết kế chủ yếu cho toán học; khả năng mô phỏng vật lý của nó bị giới hạn ở mức 2D và phụ thuộc vào việc người dùng phải tự xây dựng mô hình bằng các công cụ toán học (phương trình, thanh trượt, điểm, đường thẳng). Điều này đòi hỏi kỹ năng cao từ giáo viên để tạo ra mô phỏng, và trải nghiệm đồ họa không thể so sánh với các ứng dụng 3D chuyên biệt.
+    
+    \item \textbf{Desmos:} Desmos nổi tiếng với máy tính đồ thị trực tuyến (graphing calculator) miễn phí, cho phép vẽ đồ thị hàm số, tạo thanh trượt, và tạo hoạt ảnh đơn giản. Desmos có thể được sử dụng để minh họa các khái niệm dao động và sóng thông qua đồ thị toán học, nhưng không phải là một nền tảng mô phỏng vật lý thực sự với khả năng hiển thị đối tượng 3D và tương tác không gian.
+    
+    \item \textbf{The Physics Aviary:} Đây là một bộ sưu tập các mô phỏng vật lý và công cụ thí nghiệm ảo, được phát triển bởi một giáo viên Vật lý. Các mô phỏng chạy trên web, sử dụng HTML5, có giao diện đơn giản và tập trung vào các bài thí nghiệm cụ thể. Tuy nhiên, đồ họa ở mức cơ bản, thiếu khả năng tương tác 3D.
+\end{itemize}
+
+\subsection{Ưu điểm và hạn chế của Web-based Solutions}
+
+\begin{itemize}
+    \item \textbf{Ưu điểm}:
+    \begin{itemize}
+        \item \textbf{Khả năng truy cập mọi lúc mọi nơi:} Chỉ cần một trình duyệt web và kết nối Internet, không yêu cầu cài đặt, không phụ thuộc hệ điều hành.
+        \item \textbf{Luôn ở phiên bản mới nhất:} Người dùng luôn sử dụng phiên bản mới nhất của phần mềm mà không cần cập nhật thủ công.
+        \item \textbf{Dễ dàng tích hợp và chia sẻ:} Có thể nhúng (embed) vào website, LMS (Moodle, Google Classroom), blog, hoặc chia sẻ đơn giản qua URL.
+        \item \textbf{Chi phí triển khai và bảo trì thấp:} Không cần mua bản quyền phần mềm cho từng máy tính; hosting web tĩnh có chi phí rất thấp hoặc miễn phí.
+        \item \textbf{Đa nền tảng:} Chạy trên mọi thiết bị có trình duyệt hiện đại: Windows, macOS, Linux, ChromeOS, Android, iOS.
+        \item \textbf{Khả năng đồ họa 3D vượt trội (với WebGL):} Các ứng dụng WebGL có thể đạt chất lượng đồ họa tương đương game 3D, với ánh sáng, đổ bóng, vật liệu, texture...
+    \end{itemize}
+    \item \textbf{Hạn chế}:
+    \begin{itemize}
+        \item \textbf{Hiệu năng phụ thuộc vào thiết bị và trình duyệt:} Các thiết bị cũ hoặc trình duyệt không hỗ trợ WebGL sẽ không thể chạy được mô phỏng 3D.
+        \item \textbf{Giới hạn về tài nguyên:} Ứng dụng web bị giới hạn bởi bộ nhớ và sức mạnh xử lý được phân bổ cho tab trình duyệt, thường thấp hơn so với ứng dụng native.
+        \item \textbf{Yêu cầu kết nối Internet (cho lần đầu tải):} Mặc dù có thể hoạt động offline sau khi đã tải (với Service Worker/PWA), lần truy cập đầu tiên yêu cầu tải toàn bộ ứng dụng.
+    \end{itemize}
+\end{itemize}
+
+\section{Nhóm giải pháp di động (Mobile-based Applications)}
+
+\subsection{Ứng dụng Native}
+
+\begin{itemize}
+    \item \textbf{iOS Physics Apps:} Các ứng dụng như "Physics Lab" (cho phép tạo mạch điện và thí nghiệm cơ học ảo), "Pocket Physics" (cung cấp công thức và mô phỏng đơn giản).
+    \item \textbf{Android Physics Apps:} Các ứng dụng từ Google Play Store với mô phỏng vật lý tương tác, tận dụng cảm biến gia tốc và con quay hồi chuyển của điện thoại.
+    \item \textbf{Cross-platform frameworks:} React Native, Flutter cho phép phát triển ứng dụng di động đa nền tảng từ một codebase JavaScript/Dart duy nhất.
+\end{itemize}
+
+\subsection{Ưu điểm và thách thức}
+
+\begin{itemize}
+    \item \textbf{Ưu điểm}: Tính di động cao, tận dụng cảm biến (gia tốc kế cho thí nghiệm con lắc thực tế), giao diện cảm ứng tự nhiên.
+    \item \textbf{Thách thức}: Màn hình nhỏ khó hiển thị mô phỏng phức tạp, phân mảnh nền tảng (iOS vs Android), chi phí phát triển và duy trì cao hơn web, cần thông qua cửa hàng ứng dụng để cài đặt.
+\end{itemize}
+
+\section{Thư viện mô phỏng 3D mã nguồn mở}
+
+\subsection{WebGL-based Libraries}
+
+\begin{itemize}
+    \item \textbf{Three.js:} Như đã phân tích chi tiết ở trên, đây là thư viện WebGL phổ biến nhất, với cộng đồng lớn nhất, tài liệu đầy đủ nhất và hệ sinh thái phong phú nhất (R3F, Drei, React Spring...). Three.js cung cấp sự cân bằng tốt nhất giữa sức mạnh và dễ sử dụng cho các dự án mô phỏng giáo dục.
+    
+    \item \textbf{Babylon.js:} Được phát triển bởi Microsoft, Babylon.js là một framework WebGL mạnh mẽ khác, tập trung vào game 3D và các ứng dụng thực tế ảo (VR/AR) trên web. Babylon.js có engine vật lý tích hợp, hỗ trợ WebXR tốt, và công cụ phát triển trực quan (Playground). Tuy nhiên, Babylon.js có đường cong học tập dốc hơn Three.js và cộng đồng nhỏ hơn. Babylon.js không có một thư viện tương đương React Three Fiber để tích hợp mượt mà với React.
+    
+    \item \textbf{A-Frame:} Được phát triển bởi Mozilla, A-Frame là một framework WebVR cho phép tạo các trải nghiệm thực tế ảo trên web bằng cách viết HTML. A-Frame rất dễ học và phù hợp để tạo nhanh các cảnh VR đơn giản, nhưng bị giới hạn về khả năng tùy chỉnh và hiệu suất cho các mô phỏng phức tạp.
+\end{itemize}
+
+\subsection{Physics Engines cho Web}
+
+Các physics engine (engine vật lý) cung cấp khả năng mô phỏng động lực học vật rắn (rigid body dynamics), phát hiện va chạm (collision detection), và các ràng buộc vật lý (constraints). Trong đề tài này, chúng tôi không sử dụng physics engine vì các lý do:
+
+\begin{enumerate}
+    \item \textbf{Tính chính xác và kiểm soát:} Các mô phỏng trong đề tài (dao động điều hòa, sóng, giao thoa, sóng điện từ) dựa trên các phương trình giải tích chính xác ($x = A\cos(\omega t + \varphi)$, $u = A\cos(\omega t - kx)$...). Việc tự triển khai các công thức này cho chúng tôi toàn quyền kiểm soát độ chính xác và hành vi của mô phỏng.
+    \item \textbf{Hiệu năng:} Physics engine thường tiêu tốn nhiều tài nguyên cho các tính toán va chạm và động lực học không cần thiết cho bài toán của chúng tôi.
+    \item \textbf{Tính đơn giản:} Với các hệ thống đơn giản như con lắc đơn hay con lắc lò xo, việc tự tích phân phương trình vi phân (dùng Euler hoặc Verlet) đơn giản và hiệu quả hơn so với việc tích hợp cả một physics engine.
+\end{enumerate}
+
+\section{Tổng hợp so sánh các giải pháp hiện có}
+
+Bảng \ref{table:tech-comparison} dưới đây tổng hợp so sánh các công nghệ mô phỏng vật lý dựa trên các tiêu chí quan trọng đối với giáo dục phổ thông.
+
+\begin{table}[H]
+\centering
+\caption{So sánh chi tiết các công nghệ mô phỏng vật lý}
+\label{table:tech-comparison}
+\begin{tabular}{|p{0.15\textwidth}|p{0.14\textwidth}|p{0.14\textwidth}|p{0.14\textwidth}|p{0.17\textwidth}|p{0.17\textwidth}|}
+\hline
+\textbf{Công nghệ} & \textbf{Hiệu năng đồ họa} & \textbf{Độ phức tạp phát triển} & \textbf{Khả năng tích hợp Web} & \textbf{Chi phí triển khai} & \textbf{Phù hợp giáo dục phổ thông} \\
+\hline
+Desktop Software (MATLAB, COMSOL) & Rất cao & Rất cao & Rất thấp (không thể nhúng web) & Rất cao (\$500–\$4000/năm) & Thấp (chỉ phù hợp đại học) \\
+\hline
+Algodoo, Crocodile Physics & Trung bình (2D) & Trung bình & Thấp (ứng dụng độc lập) & Thấp (miễn phí hoặc rẻ) & Trung bình (thiếu 3D, không tích hợp web) \\
+\hline
+GeoGebra, Desmos & Trung bình (2D) & Trung bình & Cao (nhúng web) & Miễn phí & Trung bình (thiếu 3D, cần kỹ năng xây dựng) \\
+\hline
+PhET Simulations & Tốt (2D/2.5D) & Cao (với người dùng cuối: Thấp) & Cao (nhúng web) & Miễn phí & Tốt (thiếu 3D, không bám sát CT Việt Nam) \\
+\hline
+Three.js thuần + WebGL & Rất cao (3D GPU) & Cao & Rất cao & Miễn phí (mã nguồn mở) & Thấp (rào cản kỹ thuật cao) \\
+\hline
+\textbf{React Three Fiber + Drei} & \textbf{Rất cao (3D GPU)} & \textbf{Trung bình} & \textbf{Rất cao} & \textbf{Miễn phí (mã nguồn mở)} & \textbf{Rất tốt} \\
+\hline
+Canvas 2D API & Tốt (2D CPU/GPU) & Thấp & Rất cao & Miễn phí (có sẵn trong trình duyệt) & Tốt (cho bài toán 2D đơn giản) \\
+\hline
+Recharts (Đồ thị) & Tốt (SVG) & Thấp & Rất cao & Miễn phí (mã nguồn mở) & Rất tốt (cho phân tích dữ liệu) \\
+\hline
+Mobile Native Apps & Tốt & Cao & Rất thấp & Trung bình & Trung bình (phân mảnh nền tảng) \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Phân tích theo tiêu chí giáo dục}
+
+Dưới đây là đánh giá định tính về mức độ phù hợp của các công nghệ theo các tiêu chí sư phạm quan trọng:
+
+\begin{itemize}
+    \item \textbf{Tính trực quan (Visualization):} \textbf{React Three Fiber/Three.js} > PhET > Desktop Software > Canvas 2D > GeoGebra. Khả năng render 3D với ánh sáng, vật liệu, và góc nhìn tự do của WebGL vượt trội hoàn toàn so với các giải pháp 2D.
+    
+    \item \textbf{Dễ sử dụng cho học sinh (Usability):} PhET > \textbf{React Three Fiber (với UI tùy chỉnh)} > Canvas 2D > GeoGebra > Desktop Software. Các ứng dụng được thiết kế riêng cho giáo dục với giao diện tiếng Việt và hướng dẫn rõ ràng sẽ dễ sử dụng nhất.
+    
+    \item \textbf{Khả năng tương tác (Interactivity):} \textbf{React Three Fiber/Three.js} $\approx$ PhET > Canvas 2D > GeoGebra > Desktop Software. Khả năng kéo thả trực tiếp lên đối tượng 3D, xoay camera 360°, bật/tắt thành phần hiển thị tạo ra mức độ tương tác rất cao.
+    
+    \item \textbf{Khả năng tiếp cận (Accessibility):} \textbf{Web-based (React/Canvas)} > Mobile Web > Desktop Software. Không cần cài đặt, chỉ cần trình duyệt.
+    
+    \item \textbf{Chi phí triển khai (Cost):} \textbf{Web-based (React/Canvas/Recharts)} < Mobile Web < Desktop Software. Toàn bộ công nghệ sử dụng trong đề tài đều là mã nguồn mở và miễn phí.
+    
+    \item \textbf{Khả năng tùy chỉnh theo chương trình (Customizability):} \textbf{React Three Fiber (tự phát triển)} > GeoGebra > PhET. Tự phát triển cho phép toàn quyền kiểm soát nội dung, giao diện, ngôn ngữ và phạm vi kiến thức.
+\end{itemize}
+
+\section{Xác định khoảng trống nghiên cứu}
+
+Qua phân tích toàn diện các giải pháp hiện có, chúng tôi xác định các khoảng trống nghiên cứu (research gaps) quan trọng sau:
+
+\subsection{Khoảng trống 1: Thiếu mô phỏng 3D tương tác toàn diện cho chương trình Vật lý 11 Việt Nam}
+
+Các nền tảng quốc tế như PhET, GeoGebra cung cấp mô phỏng chất lượng tốt nhưng:
+\begin{itemize}
+    \item Không bám sát cấu trúc và tiến trình nội dung của sách giáo khoa \textit{Chân trời sáng tạo}.
+    \item Chủ yếu là mô phỏng 2D hoặc 2.5D, không tận dụng được khả năng biểu diễn không gian 3D để thể hiện các khái niệm như vectơ $\vec{E} \perp \vec{B} \perp \vec{v}$ trong sóng điện từ, hay hình dạng hyperbol của các vân giao thoa trong không gian.
+    \item Giao diện tiếng Anh (hoặc bản dịch chưa đầy đủ) tạo rào cản cho học sinh Việt Nam.
+    \item Không có khả năng đồng bộ giữa mô phỏng 3D và đồ thị phân tích 2D trong cùng một giao diện.
+\end{itemize}
+
+\subsection{Khoảng trống 2: Thiếu tích hợp đồ thị phân tích đồng bộ với mô phỏng 3D}
+
+Hầu hết các mô phỏng hiện có chỉ tập trung vào khía cạnh trực quan không gian. Học sinh quan sát hiện tượng nhưng không có công cụ để liên hệ giữa những gì họ thấy trong không gian 3D với biểu diễn toán học. Việc thiếu kết nối này làm giảm hiệu quả của mô phỏng trong việc phát triển năng lực mô hình hóa toán học của học sinh.
+
+\subsection{Khoảng trống 3: Chưa áp dụng các kỹ thuật tối ưu hóa hiệu năng tiên tiến cho mô phỏng giáo dục}
+
+Nhiều mô phỏng web hiện tại gặp vấn đề về hiệu năng khi cần hiển thị số lượng lớn đối tượng (ví dụ: hàng nghìn điểm giao thoa). Kỹ thuật InstancedMesh – vốn phổ biến trong phát triển game 3D – chưa được áp dụng rộng rãi trong các mô phỏng giáo dục, dẫn đến trải nghiệm người dùng kém mượt mà trên các thiết bị có cấu hình trung bình.
+
+\subsection{Khoảng trống 4: Thiếu hệ thống học tập tích hợp lý thuyết – mô phỏng – đồ thị}
+
+Các mô phỏng hiện tại thường hoạt động như những công cụ độc lập. Học sinh phải tự kết nối giữa kiến thức lý thuyết (đọc trong sách giáo khoa), quan sát mô phỏng, và đọc đồ thị (nếu có) một cách riêng rẽ. Thiếu một hệ thống tích hợp nơi cả ba thành phần này cùng tồn tại trong một giao diện thống nhất, hỗ trợ học sinh xây dựng kiến thức một cách liền mạch.
+
+\subsection{Cơ hội nghiên cứu và định hướng của đề tài}
+
+Dựa trên các khoảng trống đã xác định, hệ thống đề xuất tập trung vào các định hướng sau:
+
+\begin{enumerate}
+    \item Phát triển bộ các mô phỏng 3D tương tác bao quát toàn bộ chương Dao động và Sóng (Vật lý 11 – \textit{Chân trời sáng tạo}), sử dụng React Three Fiber + Three.js + Drei làm nền tảng đồ họa, đảm bảo:
+    \begin{itemize}
+        \item Giao diện và chú thích hoàn toàn bằng tiếng Việt.
+        \item Bám sát nội dung, công thức và thuật ngữ trong sách giáo khoa.
+        \item Cho phép tương tác đa chiều: thay đổi tham số bằng thanh trượt, bật/tắt thành phần hiển thị, kéo thả đối tượng, xoay camera 360°.
+    \end{itemize}
+    
+    \item \textbf{Tích hợp hệ thống đồ thị phân tích đồng bộ} sử dụng Recharts, cho phép học sinh quan sát đồng thời biểu diễn không gian 3D và biểu diễn đồ thị 2D của cùng một hiện tượng. Dữ liệu đồ thị được thu thập và cập nhật theo thời gian thực từ chính mô phỏng.
+    
+    \item \textbf{Áp dụng kỹ thuật InstancedMesh} để tối ưu hóa hiệu năng render trong mô phỏng giao thoa sóng, giảm số lượng draw calls từ 6.400 xuống còn 1, đảm bảo trải nghiệm mượt mà trên các thiết bị phổ thông.
+    
+    \item \textbf{Xây dựng giao diện học tập tích hợp} với các tab chức năng (Bảng điều khiển, Hiển thị, Thông tin Vật lý, Đồ thị Phân tích, Lý thuyết) giúp tổ chức nội dung logic, hỗ trợ học sinh tự học và giáo viên giảng dạy.
+    
+    \item \textbf{Sử dụng kiến trúc module hóa} (component-based architecture) để đảm bảo:
+    \begin{itemize}
+        \item Mỗi mô phỏng là một module độc lập, dễ dàng bảo trì và mở rộng.
+        \item Có thể bổ sung mô phỏng mới (hoàn thiện tất cả các chương trong sách vật lý 11, hoặc có thể mở rộng cho lớp 10 và lớp 12 hoặc các môn học trừu tượng khác) mà không ảnh hưởng đến hệ thống hiện có.
+    \end{itemize}
+\end{enumerate}
+
+\section{Kết luận Chương 2}
+
+Chương này đã thực hiện một khảo sát toàn diện và có hệ thống về các giải pháp công nghệ hiện có cho mô phỏng vật lý giáo dục, trải dài từ các phần mềm desktop truyền thống (MATLAB, COMSOL, Algodoo), các nền tảng web phổ biến (PhET, GeoGebra, Desmos), đến các thư viện đồ họa 3D mã nguồn mở (Three.js, Babylon.js, A-Frame) và các công nghệ nền tảng (Canvas 2D, SVG, WebGL). Mỗi nhóm giải pháp đã được phân tích chi tiết về ưu điểm, hạn chế, và mức độ phù hợp với bối cảnh giáo dục phổ thông Việt Nam.
+
+Các phát hiện chính của chương bao gồm:
+
+\begin{enumerate}
+    \item \textbf{Web-based solutions} đang là xu hướng chủ đạo và phù hợp nhất cho giáo dục phổ thông nhờ khả năng tiếp cận dễ dàng (không cần cài đặt), chi phí triển khai thấp (mã nguồn mở, hosting tĩnh), khả năng tích hợp cao (nhúng vào LMS, website trường học), và khả năng chạy đa nền tảng (mọi thiết bị có trình duyệt).
+
+    \item \textbf{React Three Fiber + Three.js/WebGL} được xác định là công nghệ đồ họa 3D tối ưu cho đề tài nhờ:
+    \begin{itemize}
+        \item Khả năng render 3D GPU-accelerated với chất lượng cao (ánh sáng, vật liệu, đổ bóng).
+        \item Tích hợp mượt mà với React state management, cho phép đồng bộ UI-3D tự nhiên.
+        \item Hệ sinh thái phong phú (Drei cung cấp OrbitControls, Line, Html...).
+        \item Kỹ thuật InstancedMesh cho phép tối ưu hóa hiệu năng vượt trội.
+    \end{itemize}
+
+    \item \textbf{Canvas 2D API} được xác định là lựa chọn phù hợp cho mô phỏng sóng trên dây (bài toán 1D), nhờ API đơn giản, hiệu năng tốt và không yêu cầu khởi tạo toàn bộ scene 3D.
+
+    \item \textbf{Recharts} được lựa chọn cho hệ thống đồ thị phân tích nhờ API declarative, khả năng responsive và tích hợp tốt với React.
+
+    \item Tồn tại 4 khoảng trống nghiên cứu chính: (1) thiếu mô phỏng 3D toàn diện bám sát chương trình Vật lý 11 Việt Nam, (2) thiếu tích hợp đồ thị phân tích đồng bộ với mô phỏng 3D, (3) chưa áp dụng kỹ thuật InstancedMesh trong mô phỏng giáo dục, (4) thiếu hệ thống tích hợp lý thuyết – mô phỏng – đồ thị trong một giao diện thống nhất.
+
+    \item Hệ thống đề xuất sẽ lấp đầy các khoảng trống này bằng cách phát triển các mô phỏng tương tác với giao diện tiếng Việt, tích hợp đồ thị Recharts đồng bộ thời gian thực, áp dụng InstancedMesh để tối ưu hiệu năng, và tổ chức nội dung trong một giao diện học tập tích hợp với kiến trúc module hóa.
+\end{enumerate}
+
+Những phân tích và lựa chọn công nghệ trong chương này tạo thành nền tảng vững chắc cho việc thiết kế và triển khai hệ thống, sẽ được trình bày chi tiết trong các chương tiếp theo. Chương 3 sẽ trình bày cơ sở lý thuyết về cả hai phương diện: lý thuyết vật lý (dao động và sóng) và công nghệ mô phỏng (kiến trúc React Three Fiber, cơ chế render, InstancedMesh, tối ưu hóa hiệu năng).

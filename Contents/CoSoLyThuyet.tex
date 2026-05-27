@@ -1,0 +1,1173 @@
+
+\chapter{Cơ sở lý thuyết và công nghệ}
+
+Chương này trình bày hai nền tảng then chốt làm cơ sở cho toàn bộ đề tài. Phần thứ nhất trình bày cơ sở lý thuyết Vật lý về dao động và sóng trong chương trình Vật lý lớp 11 theo sách giáo khoa \textit{Chân trời sáng tạo} – đây là nền tảng khoa học để xây dựng các thuật toán mô phỏng chính xác. Phần thứ hai trình bày cơ sở công nghệ – bao gồm các thư viện, framework, kỹ thuật và kiến trúc phần mềm được sử dụng để hiện thực hóa các mô phỏng 3D tương tác trên nền web.
+
+\section{Cơ sở lý thuyết Vật lý}
+
+\subsection{Tổng quan chương trình Vật lý 11 – Chân trời sáng tạo}
+
+Chương trình Vật lý lớp 11 theo sách giáo khoa \textit{Chân trời sáng tạo} (Bộ Giáo dục và Đào tạo, 2018) được cấu trúc thành các chương lớn, trong đó Chương 1 – Dao động và Chương 2 – Sóng là hai chương có mối liên hệ mật thiết, tạo thành nền tảng cho việc nghiên cứu các hiện tượng tuần hoàn và sự lan truyền dao động trong tự nhiên.
+
+Chương Dao động cung cấp các khái niệm cơ bản về chuyển động tuần hoàn – một trong những dạng chuyển động phổ biến nhất trong tự nhiên và kỹ thuật. Từ dao động của con lắc đồng hồ, dao động của dây đàn guitar, đến dao động của các phân tử trong vật chất, tất cả đều có thể được mô tả bằng các mô hình dao động. Chương này trang bị cho học sinh các đại lượng đặc trưng (biên độ, tần số, chu kỳ, pha), phương trình động học của dao động điều hòa, các định luật về năng lượng, và các hiện tượng thực tế như dao động tắt dần, dao động cưỡng bức và cộng hưởng.
+
+Chương Sóng mở rộng từ khái niệm dao động của một phần tử đơn lẻ sang nghiên cứu sự lan truyền của dao động trong không gian – tức là sóng. Đây là một bước nhảy về mặt khái niệm, đòi hỏi học sinh phải tư duy đồng thời về cả không gian và thời gian. Chương này bao gồm sóng cơ học (sóng trên dây, sóng âm, sóng nước), các đặc trưng của sóng, hiện tượng giao thoa và sóng dừng – những hiện tượng đặc trưng chỉ có ở sóng, và cuối cùng là sóng điện từ – một dạng sóng đặc biệt có thể truyền trong chân không.
+
+\subsection{Chương 1: Dao động}
+
+\subsubsection{Mô tả dao động}
+
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{Dao động cơ học}
+        
+    Dao động cơ học là một trong những hiện tượng vật lý cơ bản và phổ biến nhất trong tự nhiên. Về mặt định tính, dao động cơ học được định nghĩa là sự chuyển động có giới hạn trong không gian của một vật quanh một vị trí xác định, được gọi là vị trí cân bằng (VTCB). Tại vị trí cân bằng, tổng hợp lực tác dụng lên vật bằng không. Nếu vật được đặt tại VTCB với vận tốc ban đầu bằng không, nó sẽ đứng yên tại đó.
+
+    Để hiểu rõ hơn về bản chất của dao động, ta cần phân biệt giữa chuyển động nói chung và dao động nói riêng. Điểm khác biệt cốt lõi là: trong dao động, vật luôn có xu hướng quay trở về VTCB sau khi bị lệch khỏi vị trí này. Xu hướng này được tạo ra bởi lực kéo về (restoring force) – lực luôn hướng về VTCB và có độ lớn tăng dần khi vật càng xa VTCB.
+
+    Dao động mà trạng thái chuyển động của vật (bao gồm cả vị trí và vận tốc) được lặp lại như cũ sau những khoảng thời gian bằng nhau được gọi là dao động tuần hoàn. Khoảng thời gian ngắn nhất để trạng thái dao động lặp lại như cũ được gọi là chu kỳ ($T$). Ví dụ điển hình về dao động tuần hoàn là dao động của quả lắc đồng hồ (con lắc đơn), dao động của con lắc lò xo trong điều kiện lý tưởng không có ma sát, hay dao động của các phân tử trong mạng tinh thể.
+
+    Một khái niệm quan trọng khác là dao động tự do (hay dao động riêng). Đây là dao động của hệ xảy ra dưới tác dụng chỉ của nội lực (lực đàn hồi của lò xo, thành phần tiếp tuyến của trọng lực trong con lắc đơn...), không có ngoại lực tác dụng sau khi hệ được kích thích ban đầu. Mỗi hệ dao động tự do có một tần số riêng ($f_0$) và tần số góc riêng ($\omega_0$) xác định, chỉ phụ thuộc vào các đặc tính nội tại của hệ (khối lượng, độ cứng lò xo, chiều dài dây treo, gia tốc trọng trường...) mà không phụ thuộc vào cách kích thích dao động (biên độ ban đầu, vận tốc ban đầu).
+
+    \item \textbf{Khái niệm dao động điều hòa}
+
+    Trong số các dạng dao động tuần hoàn, dao động điều hòa (simple harmonic motion) là dạng dao động cơ bản và quan trọng nhất. Một dao động được gọi là điều hòa nếu li độ của vật là một hàm cosin (hoặc sin) theo thời gian. Về mặt toán học, điều này có nghĩa là đồ thị li độ – thời gian của dao động điều hòa là một đường hình sin hoàn hảo, không bị méo dạng.
+
+    \begin{center}
+        \fbox{\parbox{0.92\textwidth}{
+            \textbf{Định nghĩa:} Dao động điều hoà là dao động tuần hoàn mà li độ của vật dao động là một hàm cosin (hoặc sin) theo thời gian.
+        }}
+    \end{center}
+
+    Tầm quan trọng của dao động điều hòa trong vật lý không chỉ dừng lại ở việc nó là dạng dao động đơn giản nhất. Theo nguyên lý Fourier, bất kỳ dao động tuần hoàn phức tạp nào cũng có thể được phân tích thành tổng của nhiều dao động điều hòa có tần số khác nhau (các họa âm). Do đó, việc nắm vững dao động điều hòa là chìa khóa để hiểu mọi dạng dao động khác.
+
+    \item \textbf{Các đại lượng đặc trưng của dao động điều hòa}
+
+    Để mô tả đầy đủ một dao động điều hòa, ta cần các đại lượng sau:
+
+    \begin{itemize}
+        \item \textbf{Li độ} (ký hiệu $x$): Là tọa độ của vật dao động tại một thời điểm, với gốc tọa độ được chọn trùng với vị trí cân bằng. Li độ cho biết vật đang ở đâu so với VTCB. Li độ có thể dương (vật ở phía dương của trục tọa độ) hoặc âm (vật ở phía âm). Trong hệ SI, li độ có đơn vị là mét (m). Giá trị của li độ luôn nằm trong khoảng $[-A, A]$, trong đó $A$ là biên độ.
+        
+        \item \textbf{Biên độ} (ký hiệu $A$): Là độ lớn cực đại của li độ. Biên độ luôn là một số dương và cho biết "độ mạnh" hay "tầm xa" của dao động. Khi vật ở vị trí biên, $|x| = A$ và vận tốc của vật bằng 0. Biên độ phụ thuộc vào năng lượng được cung cấp cho hệ dao động ban đầu: năng lượng càng lớn, biên độ càng lớn. Trong hệ SI, biên độ có đơn vị là mét (m).
+        
+        \item \textbf{Chu kì} (ký hiệu $T$): Là khoảng thời gian ngắn nhất để vật thực hiện được một dao động toàn phần – tức là trở lại đúng trạng thái ban đầu (cùng vị trí và cùng vận tốc). Chu kì cho biết dao động nhanh hay chậm. Trong hệ SI, chu kì có đơn vị là giây (s).
+        
+        \item \textbf{Tần số} (ký hiệu $f$): Là số dao động toàn phần mà vật thực hiện được trong một giây. Mối quan hệ giữa tần số và chu kì là:
+        \[
+            f = \dfrac{1}{T} \quad \text{hay} \quad T = \dfrac{1}{f}
+        \]
+        Trong hệ SI, tần số có đơn vị là héc (Hz), với 1 Hz = 1 dao động/giây. Ví dụ: một con lắc có tần số 2 Hz nghĩa là nó thực hiện 2 dao động toàn phần mỗi giây.
+        
+        \item \textbf{Pha dao động} (ký hiệu $\phi = \omega t + \phi_0$): Là một đại lượng đặc trưng cho trạng thái dao động của vật tại một thời điểm. Trạng thái dao động bao gồm vị trí (li độ) và hướng chuyển động (dấu của vận tốc). Hai thời điểm có cùng pha dao động (lệch nhau một số nguyên lần $2\pi$) thì vật có cùng trạng thái. Trong hệ SI, pha dao động có đơn vị là radian (rad).
+        
+        \item \textbf{Pha ban đầu} (ký hiệu $\phi_0$): Là pha dao động tại thời điểm gốc $t = 0$. Pha ban đầu cho biết trạng thái xuất phát của vật: vật bắt đầu dao động từ đâu và theo hướng nào. Giá trị của $\phi_0$ phụ thuộc vào cách chọn gốc thời gian và điều kiện ban đầu.
+        
+        \item \textbf{Độ lệch pha} (ký hiệu $\Delta\phi$): Khi so sánh hai dao động điều hòa cùng tần số, độ lệch pha giữa chúng được xác định:
+        \[
+            \Delta \phi = 2\pi \dfrac{\Delta t}{T}
+        \]
+        trong đó $\Delta t$ là khoảng thời gian lệch giữa hai thời điểm tương ứng của hai dao động. Hai dao động được gọi là:
+        \begin{itemize}
+            \item \textbf{Cùng pha} nếu $\Delta\phi = 2k\pi$: chúng luôn đạt cực đại, cực tiểu cùng lúc.
+            \item \textbf{Ngược pha} nếu $\Delta\phi = (2k+1)\pi$: khi dao động này đạt cực đại thì dao động kia đạt cực tiểu.
+            \item \textbf{Vuông pha} nếu $\Delta\phi = (2k+1)\frac{\pi}{2}$: khi dao động này qua VTCB thì dao động kia ở biên.
+        \end{itemize}
+        
+        \item \textbf{Tần số góc} (ký hiệu $\omega$): Là đại lượng đặc trưng cho tốc độ biến thiên của pha dao động. Vật thực hiện một dao động toàn phần tương ứng với pha dao động thay đổi một lượng $2\pi$ rad. Do đó:
+        \[
+            \omega = \dfrac{2\pi}{T} = 2\pi f
+        \]
+        Trong hệ SI, tần số góc có đơn vị là radian trên giây (rad/s). Tần số góc là cầu nối giữa mô tả dao động và mô tả chuyển động tròn đều.
+    \end{itemize}
+
+    \item \textbf{Mối liên hệ giữa dao động điều hoà và chuyển động tròn đều}
+
+    Đây là một trong những mối liên hệ quan trọng nhất trong chương Dao động, cho phép sử dụng các công cụ hình học (vòng tròn lượng giác) để giải quyết các bài toán dao động một cách trực quan.
+
+    Xét một chất điểm M chuyển động tròn đều trên một đường tròn bán kính $A$ với tốc độ góc $\omega$. Tại thời điểm $t = 0$, M ở vị trí xác định bởi góc $\phi_0$ so với trục $Ox$. Tại thời điểm $t$, M ở vị trí xác định bởi góc $\omega t + \phi_0$.
+
+    Hình chiếu của M lên trục $Ox$ có tọa độ: $x = A\cos(\omega t + \phi_0)$ – đây chính là phương trình của dao động điều hòa với biên độ $A$ và tần số góc $\omega$. Hình chiếu của M lên trục $Oy$ có tọa độ: $y = A\sin(\omega t + \phi_0)$.
+
+    Như vậy, dao động điều hòa có thể được xem như là hình chiếu của một chuyển động tròn đều lên một đường kính bất kỳ của đường tròn đó. Điều này có ý nghĩa sâu sắc:
+    \begin{itemize}
+        \item Biên độ $A$ của dao động chính là bán kính của đường tròn.
+        \item Tần số góc $\omega$ của dao động chính là tốc độ góc của chuyển động tròn.
+        \item Pha dao động $\omega t + \phi_0$ chính là góc quét được sau thời gian $t$.
+        \item Một chu kỳ dao động tương ứng với một vòng quay của chuyển động tròn.
+    \end{itemize}
+
+    Mối liên hệ này là cơ sở cho phương pháp vòng tròn lượng giác – một công cụ mạnh mẽ để giải nhanh các bài toán về thời gian trong dao động điều hòa. Trong đề tài, mô phỏng CircularMotionGraph được xây dựng để minh họa trực quan mối liên hệ này, cho phép học sinh quan sát đồng thời chuyển động tròn đều, hình chiếu của nó (dao động điều hòa), và đồ thị li độ theo thời gian.
+\end{enumerate}
+
+\subsubsection{Phương trình động học của dao động điều hoà}
+
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{Phương trình li độ}
+
+    Phương trình li độ là phương trình cơ bản nhất, mô tả vị trí của vật theo thời gian:
+
+    \begin{center}
+        \fbox{\parbox{0.92\textwidth}{
+        \textbf{Phương trình li độ:}
+        \[
+            x = A\cos(\omega t + \phi_0)
+        \]
+        Trong đó:
+        \begin{itemize}
+            \item $x$: li độ của vật tại thời điểm $t$ (m)
+            \item $A$: biên độ dao động – li độ cực đại (m)
+            \item $\omega$: tần số góc (rad/s)
+            \item $t$: thời điểm đang xét (s)
+            \item $\phi_0$: pha ban đầu – xác định trạng thái tại $t = 0$ (rad)
+            \item $\omega t + \phi_0$: pha dao động tại thời điểm $t$ (rad)
+        \end{itemize}
+        }}
+    \end{center}
+
+    Từ phương trình này, ta có thể xác định được vị trí của vật tại bất kỳ thời điểm nào. Đồ thị của $x$ theo $t$ là một đường hình sin với biên độ $A$, chu kỳ $T = 2\pi/\omega$, và được dịch pha một lượng $\phi_0$.
+
+    \textbf{Độ dịch chuyển} của vật dao động so với vị trí ban đầu (tại $t = 0$) được tính:
+    \[
+        d = \Delta x = x(t) - x(0) = A\cos(\omega t + \phi_0) - A\cos(\phi_0)
+    \]
+    Độ dịch chuyển cũng biến thiên điều hòa theo thời gian với cùng biên độ, chu kỳ và pha như li độ.
+
+    \item \textbf{Phương trình vận tốc}
+
+    Vận tốc là đạo hàm bậc nhất của li độ theo thời gian. Sử dụng quy tắc đạo hàm của hàm hợp:
+    \[
+        v = \frac{dx}{dt} = -A\omega\sin(\omega t + \phi_0) = A\omega\cos\left(\omega t + \phi_0 + \frac{\pi}{2}\right)
+    \]
+
+    \begin{center}
+        \fbox{\parbox{0.92\textwidth}{
+        \textbf{Phương trình vận tốc:}
+        \[
+            v = -\omega A\sin(\omega t + \phi_0) = \omega A\cos\left(\omega t + \phi_0 + \frac{\pi}{2}\right)
+        \]
+        \textbf{Đặc điểm:}
+        \begin{itemize}
+            \item Vận tốc biến thiên điều hòa cùng tần số với li độ.
+            \item Vận tốc nhanh pha hơn li độ một góc $\frac{\pi}{2}$ (vuông pha).
+            \item Vận tốc cực đại: $v_{\max} = \omega A$ (khi $x = 0$, vật qua VTCB).
+            \item Vận tốc bằng 0 khi $x = \pm A$ (vật ở biên).
+            \item Dấu của $v$ cho biết chiều chuyển động: $v > 0$ khi vật chuyển động theo chiều dương, $v < 0$ khi ngược lại.
+        \end{itemize}
+        }}
+    \end{center}
+
+    \textbf{Hệ thức độc lập thời gian} giữa $v$ và $x$ (thu được bằng cách khử $t$ từ hai phương trình):
+    \[
+        \frac{v^2}{\omega^2 A^2} + \frac{x^2}{A^2} = 1 \quad \text{hay} \quad A^2 = x^2 + \frac{v^2}{\omega^2}
+    \]
+    
+    Hệ thức này rất hữu ích vì cho phép tính một đại lượng khi biết các đại lượng còn lại mà không cần biết thời điểm $t$. Đồ thị của hệ thức này trong hệ tọa độ $(x, v)$ là một đường elip – đây chính là cơ sở của đồ thị không gian pha (phase space) được hiển thị trong mô phỏng.
+
+    \item \textbf{Phương trình gia tốc}
+
+    Gia tốc là đạo hàm của vận tốc theo thời gian (đạo hàm bậc hai của li độ):
+    \[
+        a = \frac{dv}{dt} = \frac{d^2x}{dt^2} = -\omega^2 A\cos(\omega t + \phi_0) = -\omega^2 x
+    \]
+
+    \begin{center}
+        \fbox{\parbox{0.92\textwidth}{
+        \textbf{Phương trình gia tốc:}
+        \[
+            a = -\omega^2 A\cos(\omega t + \phi_0) = -\omega^2 x
+        \]
+        \textbf{Đặc điểm:}
+        \begin{itemize}
+            \item Gia tốc biến thiên điều hòa cùng tần số với li độ và vận tốc.
+            \item Gia tốc ngược pha với li độ (lệch $\pi$ rad): khi $x$ dương cực đại thì $a$ âm cực đại.
+            \item Gia tốc nhanh pha hơn vận tốc một góc $\frac{\pi}{2}$.
+            \item Gia tốc cực đại: $a_{\max} = \omega^2 A$ (khi $x = \pm A$, vật ở biên).
+            \item Gia tốc bằng 0 khi $x = 0$ (vật qua VTCB).
+            \item Gia tốc luôn hướng về VTCB (dấu trừ trong $a = -\omega^2 x$ thể hiện điều này).
+        \end{itemize}
+        }}
+    \end{center}
+
+    Hệ thức $a = -\omega^2 x$ là đặc trưng quan trọng nhất của dao động điều hòa. Nó cho thấy gia tốc (và do đó lực tác dụng) tỉ lệ thuận với li độ nhưng ngược dấu.
+
+    \textbf{Định luật II Newton và lực kéo về:} Từ $F = ma$, ta có:
+    \[
+        F = ma = -m\omega^2 x = -kx
+    \]
+    với $k = m\omega^2$ được gọi là hệ số lực kéo về. Lực $F = -kx$ gọi là lực kéo về (hay lực hồi phục), có đặc điểm:
+    \begin{itemize}
+        \item Luôn hướng về VTCB (ngược dấu với li độ).
+        \item Có độ lớn tỉ lệ thuận với độ lớn của li độ.
+    \end{itemize}
+
+    \textbf{Điều kiện để một vật thực hiện dao động điều hoà:}
+    \begin{enumerate}
+        \item Vật phải có một vị trí cân bằng xác định.
+        \item Lực tác dụng vào vật (hoặc hợp lực) phải là lực kéo về: luôn hướng về VTCB và có độ lớn tỉ lệ với li độ ($F = -kx$).
+    \end{enumerate}
+
+    \textbf{Vận dụng cho các hệ dao động cụ thể:}
+
+    \begin{table}[H]
+    \centering
+    \caption{Tần số góc và chu kỳ của các hệ dao động điều hòa}
+    \begin{tabular}{|l|c|c|c|}
+        \hline
+        \textbf{Hệ dao động} & \textbf{Lực kéo về} & \textbf{Tần số góc $\omega$} & \textbf{Chu kỳ $T$} \\ 
+        \hline
+        Con lắc lò xo (ngang) & $F = -kx$ & $\omega = \sqrt{\dfrac{k}{m}}$ & $T = 2\pi\sqrt{\dfrac{m}{k}}$ \\
+        \hline
+        Con lắc đơn (góc nhỏ) & $F = -mg\dfrac{x}{l}$ & $\omega = \sqrt{\dfrac{g}{l}}$ & $T = 2\pi\sqrt{\dfrac{l}{g}}$ \\
+        \hline
+    \end{tabular}
+    \end{table}
+
+    \textbf{Đối với con lắc lò xo}, $k$ là độ cứng của lò xo (N/m), $m$ là khối lượng vật nặng (kg). Chu kỳ $T = 2\pi\sqrt{m/k}$ chỉ phụ thuộc vào $m$ và $k$, không phụ thuộc vào biên độ dao động hay gia tốc trọng trường.
+
+    \textbf{Đối với con lắc đơn}, $l$ là chiều dài dây treo (m), $g$ là gia tốc trọng trường (m/s²). Công thức $\omega = \sqrt{g/l}$ và $T = 2\pi\sqrt{l/g}$ chỉ đúng khi biên độ góc nhỏ ($\alpha_0 < 10^\circ$), lúc đó $\sin\alpha \approx \alpha$ và dao động được coi là điều hòa. Khi biên độ góc lớn, dao động của con lắc đơn không còn là dao động điều hòa và chu kỳ phụ thuộc vào biên độ.
+\end{enumerate}
+
+\subsubsection{Năng lượng trong dao động điều hoà}
+
+Năng lượng là một khía cạnh quan trọng khác của dao động. Trong quá trình dao động điều hòa, năng lượng liên tục chuyển hóa qua lại giữa hai dạng: động năng (năng lượng do chuyển động) và thế năng (năng lượng dự trữ do vị trí).
+
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{Thế năng}
+
+    Đối với con lắc lò xo, thế năng là thế năng đàn hồi của lò xo:
+    \[
+        W_t = \frac{1}{2}kx^2 = \frac{1}{2}m\omega^2 x^2
+    \]
+    
+    Thay $x = A\cos(\omega t + \phi_0)$ vào:
+    \[
+        W_t = \frac{1}{2}m\omega^2 A^2\cos^2(\omega t + \phi_0)
+    \]
+
+    Sử dụng công thức lượng giác $\cos^2\alpha = \frac{1 + \cos 2\alpha}{2}$:
+    \[
+        W_t = \frac{1}{4}m\omega^2 A^2 + \frac{1}{4}m\omega^2 A^2\cos(2\omega t + 2\phi_0)
+    \]
+
+    \begin{center}
+        \fbox{\parbox{0.92\textwidth}{
+        \textbf{Đặc điểm của thế năng:}
+        \begin{itemize}
+            \item Thế năng biến thiên tuần hoàn với \textbf{tần số góc $\omega' = 2\omega$} (gấp đôi tần số góc của li độ).
+            \item Thế năng cực đại: $W_{t\max} = \frac{1}{2}m\omega^2 A^2 = \frac{1}{2}kA^2$ (khi $x = \pm A$, vật ở biên).
+            \item Thế năng cực tiểu bằng 0 (khi $x = 0$, vật qua VTCB).
+            \item Thế năng luôn không âm ($W_t \geq 0$).
+        \end{itemize}
+        }}
+    \end{center}
+
+    \item \textbf{Động năng}
+
+    Động năng của vật dao động được tính theo công thức:
+    \[
+        W_d = \frac{1}{2}mv^2
+    \]
+    
+    Thay $v = -\omega A\sin(\omega t + \phi_0)$ vào:
+    \[
+        W_d = \frac{1}{2}m\omega^2 A^2\sin^2(\omega t + \phi_0)
+    \]
+
+    Sử dụng công thức lượng giác $\sin^2\alpha = \frac{1 - \cos 2\alpha}{2}$:
+    \[
+        W_d = \frac{1}{4}m\omega^2 A^2 - \frac{1}{4}m\omega^2 A^2\cos(2\omega t + 2\phi_0)
+    \]
+
+    \begin{center}
+        \fbox{\parbox{0.92\textwidth}{
+        \textbf{Đặc điểm của động năng:}
+        \begin{itemize}
+            \item Động năng biến thiên tuần hoàn với tần số góc $\omega' = 2\omega$ (giống thế năng).
+            \item Động năng cực đại: $W_{d\max} = \frac{1}{2}m\omega^2 A^2 = W_{t\max}$ (khi $x = 0$, vật qua VTCB với tốc độ cực đại).
+            \item Động năng cực tiểu bằng 0 (khi $x = \pm A$, vật ở biên, $v = 0$).
+            \item Động năng luôn không âm ($W_d \geq 0$).
+        \end{itemize}
+        }}
+    \end{center}
+
+    So sánh biểu thức của $W_t$ và $W_d$, ta thấy chúng biến thiên điều hòa cùng tần số $2\omega$ nhưng ngược pha với nhau: khi $W_t$ đạt cực đại thì $W_d = 0$ và ngược lại. Tổng của chúng là một hằng số.
+
+    \item \textbf{Cơ năng và định luật bảo toàn}
+
+    Cơ năng là tổng của động năng và thế năng:
+    \[
+        W = W_d + W_t = \frac{1}{2}mv^2 + \frac{1}{2}kx^2
+    \]
+
+    Cộng hai biểu thức đã biến đổi của $W_d$ và $W_t$:
+    \[
+        W = \left[\frac{1}{4}m\omega^2 A^2 - \frac{1}{4}m\omega^2 A^2\cos(2\omega t + 2\phi_0)\right] + \left[\frac{1}{4}m\omega^2 A^2 + \frac{1}{4}m\omega^2 A^2\cos(2\omega t + 2\phi_0)\right]
+    \]
+    \[
+        W = \frac{1}{2}m\omega^2 A^2 = \frac{1}{2}kA^2
+    \]
+
+    \begin{center}
+        \fbox{\parbox{0.92\textwidth}{
+        \textbf{Định luật bảo toàn cơ năng trong dao động điều hòa:}
+        \[
+            W = W_d + W_t = \frac{1}{2}m\omega^2 A^2 = \frac{1}{2}kA^2 = \text{hằng số}
+        \]
+        \textbf{Ý nghĩa:}
+        \begin{itemize}
+            \item Cơ năng của dao động điều hòa được bảo toàn (không đổi theo thời gian) nếu bỏ qua mọi ma sát và lực cản.
+            \item Cơ năng tỉ lệ thuận với bình phương biên độ: nếu biên độ tăng gấp đôi, cơ năng tăng gấp bốn.
+            \item Trong quá trình dao động, động năng và thế năng liên tục "chuyển hóa" qua lại cho nhau, nhưng tổng của chúng không đổi.
+        \end{itemize}
+        }}
+    \end{center}
+
+    \textbf{Quá trình chuyển hóa năng lượng trong một chu kỳ:}
+    \begin{enumerate}
+        \item \textbf{Tại biên} ($x = \pm A$, $v = 0$): $W_t = W_{\max} = \frac{1}{2}kA^2$, $W_d = 0$. Toàn bộ năng lượng dưới dạng thế năng.
+        \item \textbf{Từ biên về VTCB}: Vật chuyển động nhanh dần, $|x|$ giảm, $|v|$ tăng. $W_t$ giảm, $W_d$ tăng. Năng lượng chuyển hóa từ thế năng sang động năng.
+        \item \textbf{Tại VTCB} ($x = 0$, $v = \pm v_{\max}$): $W_t = 0$, $W_d = W_{\max} = \frac{1}{2}m v_{\max}^2$. Toàn bộ năng lượng dưới dạng động năng.
+        \item \textbf{Từ VTCB ra biên}: Vật chuyển động chậm dần, $|x|$ tăng, $|v|$ giảm. $W_t$ tăng, $W_d$ giảm. Năng lượng chuyển hóa từ động năng sang thế năng.
+    \end{enumerate}
+
+    Trong một chu kỳ, động năng và thế năng mỗi loại biến thiên được 2 lần (từ 0 đến max rồi về 0), tương ứng với tần số góc $2\omega$ và chu kỳ $T/2$. Điều này được thể hiện rõ trong đồ thị năng lượng của mô phỏng.
+\end{enumerate}
+
+\subsubsection{Dao động tắt dần và hiện tượng cộng hưởng}
+
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{Dao động tắt dần}
+
+    Trong các phần trước, chúng ta đã xét dao động điều hòa trong điều kiện lý tưởng – không có ma sát, không có lực cản. Tuy nhiên, trong thực tế, mọi dao động đều chịu tác dụng của lực cản từ môi trường (ma sát với không khí, ma sát bề mặt tiếp xúc, lực nhớt trong chất lỏng...). Lực cản luôn ngược chiều chuyển động, sinh công âm, làm giảm cơ năng của hệ theo thời gian. Kết quả là biên độ dao động giảm dần và cuối cùng dao động tắt hẳn.
+
+    \begin{center}
+        \fbox{\parbox{0.92\textwidth}{
+            \textbf{Dao động tắt dần} là dao động có biên độ (và do đó cơ năng) giảm dần theo thời gian do tác dụng của lực cản môi trường.
+        }}
+    \end{center}
+
+    Tùy theo độ lớn của lực cản so với lực kéo về của hệ, dao động tắt dần được chia thành ba chế độ:
+
+    \begin{enumerate}
+        \item \textbf{Dao động tắt dần dưới hạn (underdamped):} Xảy ra khi lực cản nhỏ ($b < 2\sqrt{mk}$, trong đó $b$ là hệ số cản). Hệ thực hiện nhiều dao động trước khi dừng hẳn, với biên độ giảm dần theo hàm mũ: $A(t) = A_0 e^{-\frac{b}{2m}t}$. Chu kỳ dao động gần bằng chu kỳ riêng $T_0 = 2\pi\sqrt{m/k}$ (lớn hơn một chút).
+        
+        \item \textbf{Dao động tắt dần tới hạn (critically damped):} Xảy ra khi $b = 2\sqrt{mk}$. Hệ trở về VTCB nhanh nhất mà không thực hiện được dao động nào. Đây là chế độ được mong muốn trong nhiều ứng dụng kỹ thuật (giảm xóc ô tô, cửa tự động đóng êm...).
+        
+        \item \textbf{Dao động tắt dần vượt hạn (overdamped):} Xảy ra khi $b > 2\sqrt{mk}$. Hệ trở về VTCB chậm hơn trường hợp tới hạn, không dao động.
+    \end{enumerate}
+
+    Phương trình vi phân tổng quát của dao động tắt dần (con lắc lò xo có cản):
+    \[
+        mx'' + bx' + kx = 0
+    \]
+    trong đó $b$ là hệ số cản (N·s/m), $k$ là độ cứng lò xo, $m$ là khối lượng.
+
+    \item \textbf{Dao động cưỡng bức}
+
+    Để duy trì dao động không bị tắt dần, cần phải bổ sung năng lượng cho hệ để bù lại phần năng lượng bị tiêu hao do lực cản. Có hai cách thực hiện điều này:
+
+    \begin{enumerate}
+        \item \textbf{Dao động duy trì (self-oscillation):} Bổ sung năng lượng đúng bằng phần năng lượng tiêu hao sau mỗi chu kỳ, bằng một cơ chế điều khiển (ví dụ: cơ chế dây cót trong đồng hồ quả lắc). Hệ dao động với tần số riêng $\omega_0$ và biên độ được duy trì không đổi.
+        
+        \item \textbf{Dao động cưỡng bức (forced oscillation):} Tác dụng một ngoại lực biến thiên điều hòa $F(t) = F_0\cos(\Omega t)$ lên hệ. Dưới tác dụng của ngoại lực này, sau một giai đoạn chuyển tiếp (transient), hệ sẽ dao động ổn định với tần số bằng tần số của ngoại lực $\Omega$ (không phải tần số riêng $\omega_0$).
+    \end{enumerate}
+
+    \begin{center}
+        \fbox{\parbox{0.92\textwidth}{
+        \textbf{Đặc điểm của dao động cưỡng bức ở giai đoạn ổn định:}
+        \begin{itemize}
+            \item Là dao động điều hòa.
+            \item Tần số góc bằng tần số góc $\Omega$ của ngoại lực cưỡng bức.
+            \item Biên độ $A$ phụ thuộc vào:
+            \begin{enumerate}
+                \item Biên độ ngoại lực $F_0$: $F_0$ càng lớn, $A$ càng lớn.
+                \item Độ chênh lệch giữa $\Omega$ và $\omega_0$: $|\Omega - \omega_0|$ càng nhỏ, $A$ càng lớn.
+                \item Hệ số cản $b$: $b$ càng nhỏ, $A$ càng lớn (đặc biệt khi $\Omega \approx \omega_0$).
+            \end{enumerate}
+        \end{itemize}
+        }}
+    \end{center}
+
+    \item \textbf{Hiện tượng cộng hưởng}
+
+    Cộng hưởng là hiện tượng biên độ dao động cưỡng bức đạt giá trị cực đại khi tần số của ngoại lực cưỡng bức bằng tần số riêng của hệ dao động ($\Omega = \omega_0$).
+
+    \begin{center}
+        \fbox{\parbox{0.92\textwidth}{
+            \textbfHiện tượng cộng hưởng xảy ra khi tần số góc của lực cưỡng bức bằng tần số góc riêng của hệ dao động ($\Omega = \omega_0$). Khi đó, biên độ dao động cưỡng bức đạt giá trị cực đại $A_{\max}$.
+        }}
+    \end{center}
+
+    \textbfĐường cong cộng hưởng là đồ thị biểu diễn sự phụ thuộc của biên độ $A$ vào tần số ngoại lực $\Omega$. Đường cong này có dạng một đỉnh nhọn tại $\Omega = \omega_0$:
+    \begin{itemize}
+        \item Khi lực cản nhỏ ($b$ nhỏ): đỉnh cộng hưởng cao và nhọn.
+        \item Khi lực cản lớn ($b$ lớn): đỉnh cộng hưởng thấp và tù, thậm chí có thể biến mất.
+    \end{itemize}
+
+    Ý nghĩa thực tiễn của hiện tượng cộng hưởng:
+    \begin{itemize}
+        \item \textbf{Có lợi:} Hộp cộng hưởng của nhạc cụ (khuếch đại âm thanh), máy thu radio (chọn tần số), lò vi sóng (cộng hưởng phân tử nước).
+        \item \textbf{Có hại:} Cầu rung lắc mạnh khi gió có tần số trùng tần số riêng (cầu Tacoma Narrows sập năm 1940), nhà cao tầng rung lắc khi động đất, máy móc rung động mạnh gây hư hỏng.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Chương 2: Sóng}
+
+\subsubsection{Khái niệm sóng cơ học}
+
+Sóng cơ học là sự lan truyền dao động cơ học trong một môi trường vật chất (rắn, lỏng, khí). Khi một phần tử của môi trường dao động, do lực liên kết đàn hồi giữa các phần tử, dao động này được truyền sang các phần tử lân cận, và cứ thế lan truyền ra xa tạo thành sóng.
+
+\textbf{Đặc điểm quan trọng của sóng cơ:}
+\begin{itemize}
+    \item Sóng cơ truyền năng lượng và truyền pha dao động, nhưng không truyền vật chất đi xa. Các phần tử môi trường chỉ dao động tại chỗ quanh VTCB của chúng, không di chuyển theo sóng. Điều này có thể được kiểm chứng bằng thí nghiệm thả nút bấc trên mặt nước: khi sóng truyền qua, nút bấc chỉ nhấp nhô tại chỗ, không bị đẩy ra xa.
+    \item Sóng cơ chỉ truyền được trong môi trường vật chất (rắn, lỏng, khí), không truyền được trong chân không.
+    \item Tốc độ truyền sóng phụ thuộc vào bản chất của môi trường: mật độ, tính đàn hồi, nhiệt độ... Sóng truyền nhanh nhất trong chất rắn, chậm hơn trong chất lỏng, và chậm nhất trong chất khí.
+\end{itemize}
+
+\subsubsection{Phân loại sóng cơ}
+
+Dựa vào phương dao động của các phần tử môi trường so với phương truyền sóng, sóng cơ được phân thành hai loại chính:
+
+\begin{enumerate}
+    \item \textbf{Sóng dọc (Longitudinal wave):}
+    \begin{itemize}
+        \item Các phần tử môi trường dao động dọc theo phương truyền sóng (phương dao động $\parallel$ phương truyền sóng).
+        \item Trong quá trình truyền sóng, môi trường xuất hiện các vùng nén (compression – nơi các phần tử bị dồn lại gần nhau hơn so với trạng thái bình thường) và vùng giãn (rarefaction – nơi các phần tử bị tách xa nhau hơn). Các vùng nén và giãn lan truyền dọc theo phương truyền sóng.
+        \item Ví dụ điển hình: sóng âm trong không khí (các lớp không khí liên tục bị nén và giãn khi sóng âm truyền qua), sóng trên lò xo khi ta nén rồi thả một đầu (sóng dọc theo trục lò xo).
+        \item Sóng dọc truyền được trong cả ba môi trường: rắn, lỏng, khí. Sóng địa chấn loại P (Primary wave) là sóng dọc.
+    \end{itemize}
+    
+    \item \textbf{Sóng ngang (Transverse wave):}
+    \begin{itemize}
+        \item Các phần tử môi trường dao động vuông góc với phương truyền sóng (phương dao động $\perp$ phương truyền sóng).
+        \item Trong quá trình truyền sóng, môi trường xuất hiện các đỉnh sóng (crest – điểm cao nhất) và hõm sóng (trough – điểm thấp nhất).
+        \item Ví dụ điển hình: sóng trên mặt nước khi ta thả một viên đá (các phần tử nước dao động lên xuống trong khi sóng lan ra theo phương ngang), sóng trên dây đàn khi ta gảy (các điểm trên dây dao động vuông góc với dây, còn sóng truyền dọc theo dây).
+        \item Sóng ngang chỉ truyền được trong chất rắn và trên bề mặt chất lỏng. Trong lòng chất lỏng và chất khí, sóng ngang không truyền được vì các môi trường này không có lực đàn hồi cắt (shear elasticity). Sóng địa chấn loại S (Secondary wave) là sóng ngang.
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Lưu ý quan trọng:} Sóng trên mặt nước thực chất là sự kết hợp của cả sóng ngang và sóng dọc (các phần tử nước chuyển động theo quỹ đạo elip), nhưng thành phần dao động vuông góc với mặt nước (sóng ngang) là dễ quan sát nhất.
+
+\subsubsection{Các đại lượng đặc trưng của sóng}
+
+\begin{itemize}
+    \item \textbf{Biên độ sóng} ($A$): Là độ lệch cực đại của một phần tử môi trường so với VTCB khi có sóng truyền qua. Biên độ sóng phụ thuộc vào năng lượng mà nguồn sóng truyền cho môi trường. Đơn vị: mét (m).
+    
+    \item \textbf{Chu kì sóng} ($T$): Là khoảng thời gian để một phần tử môi trường thực hiện một dao động toàn phần (cũng chính là thời gian để sóng truyền đi được một bước sóng). Chu kì sóng bằng chu kì dao động của nguồn sóng. Đơn vị: giây (s).
+    
+    \item \textbf{Tần số sóng} ($f$): Là số dao động của một phần tử môi trường trong một giây (cũng là số bước sóng truyền đi trong một giây). Tần số sóng bằng tần số dao động của nguồn: $f = 1/T$. Đơn vị: héc (Hz).
+    
+    \item \textbf{Bước sóng} ($\lambda$): Là quãng đường sóng truyền đi được trong một chu kì. Nói cách khác, bước sóng là khoảng cách giữa hai điểm gần nhau nhất trên cùng một phương truyền sóng mà dao động cùng pha. Ví dụ: khoảng cách giữa hai đỉnh sóng liên tiếp, hoặc giữa hai hõm sóng liên tiếp. Đơn vị: mét (m).
+    
+    \item \textbf{Tốc độ truyền sóng} ($v$): Là tốc độ lan truyền của dao động (pha dao động) trong môi trường. Đây không phải là tốc độ dao động của các phần tử môi trường. Mối liên hệ cơ bản:
+    \[
+        v = \dfrac{\lambda}{T} = \lambda f
+    \]
+    Tốc độ truyền sóng phụ thuộc vào bản chất môi trường (mật độ, độ đàn hồi, nhiệt độ) và loại sóng (dọc hay ngang), nhưng không phụ thuộc vào tần số hay biên độ của nguồn sóng (trong cùng một môi trường).
+    
+    \item \textbf{Số sóng} ($k$): Là đại lượng đặc trưng cho sự biến thiên của pha sóng theo không gian, được định nghĩa:
+    \[
+        k = \dfrac{2\pi}{\lambda}
+    \]
+    Số sóng cho biết số bước sóng "chứa" trong một khoảng cách $2\pi$ mét. Đơn vị: rad/m.
+    
+    \item \textbf{Năng lượng sóng:} Năng lượng của sóng tỉ lệ thuận với bình phương biên độ và bình phương tần số: $E \propto A^2 f^2$. Khi sóng truyền ra xa nguồn điểm trong không gian ba chiều, năng lượng phân bố trên một diện tích mặt cầu ngày càng lớn, dẫn đến biên độ giảm dần theo khoảng cách: $A \propto 1/r$.
+\end{itemize}
+
+\subsubsection{Phương trình sóng}
+
+Xét một nguồn sóng đặt tại điểm O, dao động với phương trình:
+\[
+    u_O(t) = A\cos(\omega t)
+\]
+Dao động này lan truyền trong môi trường đồng nhất, đẳng hướng với tốc độ $v$ dọc theo trục $Ox$.
+
+Tại một điểm M nằm trên trục $Ox$, cách O một khoảng $x$, dao động tại M sẽ trễ pha hơn dao động tại O. Độ trễ pha này là do sóng cần thời gian $\Delta t = x/v$ để truyền từ O đến M. Trong khoảng thời gian $\Delta t$, pha dao động tại O đã thay đổi một lượng $\omega\Delta t = \omega x/v = 2\pi f x/v = 2\pi x/\lambda$.
+
+Do đó, phương trình sóng tại M là:
+\[
+    u_M(x, t) = A\cos\left[\omega\left(t - \frac{x}{v}\right)\right] = A\cos\left(\omega t - \frac{\omega x}{v}\right) = A\cos\left(\omega t - \frac{2\pi x}{\lambda}\right)
+\]
+\[
+    \boxed{u(x, t) = A\cos(\omega t - kx)}
+\]
+với $k = 2\pi/\lambda$ là số sóng.
+
+Phương trình này cho thấy sóng là một hàm của cả không gian và thời gian, có tính tuần hoàn theo cả hai biến:
+\begin{itemize}
+    \item \textbf{Theo thời gian} (với $x$ cố định): $u$ dao động điều hòa với chu kì $T = 2\pi/\omega$. Đây chính là dao động của một phần tử môi trường tại vị trí $x$.
+    \item \textbf{Theo không gian} (với $t$ cố định): $u$ biến thiên điều hòa theo $x$ với "bước sóng" $\lambda = 2\pi/k$. Đây chính là "hình ảnh" của sóng tại một thời điểm.
+\end{itemize}
+
+\textbf{Độ lệch pha giữa hai điểm trên cùng một phương truyền sóng:}
+Xét hai điểm M và N cách nhau một khoảng $\Delta x = x_N - x_M$. Độ lệch pha giữa dao động tại M và N là:
+\[
+    \Delta\phi = k\Delta x = \dfrac{2\pi\Delta x}{\lambda}
+\]
+\begin{itemize}
+    \item Nếu $\Delta x = k\lambda$: $\Delta\phi = 2k\pi$ → hai điểm cùng pha.
+    \item Nếu $\Delta x = (2k+1)\frac{\lambda}{2}$: $\Delta\phi = (2k+1)\pi$ → hai điểm ngược pha.
+\end{itemize}
+
+\subsubsection{Giao thoa sóng}
+
+\textbf{Giao thoa sóng} là hiện tượng đặc trưng của sóng, xảy ra khi hai hay nhiều sóng gặp nhau và chồng chất lên nhau, tạo thành một hệ vân giao thoa ổn định trong không gian (tập hợp các điểm có biên độ dao động cực đại và cực tiểu xen kẽ nhau một cách có quy luật).
+
+\textbf{Điều kiện để có giao thoa ổn định:} Hai nguồn sóng phải là nguồn kết hợp (coherent sources), nghĩa là:
+\begin{enumerate}
+    \item Có cùng tần số (cùng bước sóng).
+    \item Có độ lệch pha không đổi theo thời gian.
+\end{enumerate}
+Hai nguồn có cùng pha hoặc lệch pha một góc không đổi được gọi là hai nguồn kết hợp. Trong thực tế, hai nguồn kết hợp thường được tạo ra bằng cách tách từ một nguồn duy nhất (thí nghiệm Young về giao thoa ánh sáng, thí nghiệm giao thoa sóng nước với hai viên bi gắn trên cùng một cần rung).
+
+\textbf{Phân tích định lượng giao thoa với hai nguồn cùng pha:}
+
+Xét hai nguồn kết hợp $S_1$, $S_2$ cách nhau một khoảng $a$, dao động cùng pha với phương trình:
+\[
+    u_1 = u_2 = A\cos(\omega t)
+\]
+Hai sóng này lan truyền trong môi trường và gặp nhau tại điểm M. Gọi $d_1 = S_1M$ và $d_2 = S_2M$ là khoảng cách từ M đến hai nguồn.
+
+\begin{itemize}
+    \item Phương trình sóng từ $S_1$ truyền đến M:
+    \[
+        u_{1M} = A\cos\left(\omega t - \frac{2\pi d_1}{\lambda}\right)
+    \]
+    \item Phương trình sóng từ $S_2$ truyền đến M:
+    \[
+        u_{2M} = A\cos\left(\omega t - \frac{2\pi d_2}{\lambda}\right)
+    \]
+\end{itemize}
+
+Theo nguyên lý chồng chất sóng, dao động tổng hợp tại M là:
+\[
+    u_M = u_{1M} + u_{2M}
+\]
+
+Sử dụng công thức lượng giác $\cos\alpha + \cos\beta = 2\cos\frac{\alpha-\beta}{2}\cos\frac{\alpha+\beta}{2}$, ta được:
+\[
+    u_M = 2A\cos\left(\frac{\pi(d_2 - d_1)}{\lambda}\right) \cdot \cos\left(\omega t - \frac{\pi(d_2 + d_1)}{\lambda}\right)
+\]
+
+Đây là phương trình của một dao động điều hòa có:
+\begin{itemize}
+    \item \textbf{Biên độ}: $A_M = 2A\left|\cos\left(\dfrac{\pi(d_2 - d_1)}{\lambda}\right)\right|$
+    \item \textbf{Tần số góc}: $\omega$ (bằng tần số góc của nguồn)
+    \item \textbf{Pha ban đầu}: $-\dfrac{\pi(d_2 + d_1)}{\lambda}$
+\end{itemize}
+
+\textbf{Điều kiện cực đại và cực tiểu giao thoa:}
+
+\begin{center}
+    \fbox{\parbox{0.92\textwidth}{
+    \textbf{Vị trí cực đại giao thoa} (biên độ tổng hợp cực đại $A_M = 2A$):
+    \[
+        \left|\cos\left(\frac{\pi(d_2 - d_1)}{\lambda}\right)\right| = 1 \quad\Leftrightarrow\quad d_2 - d_1 = k\lambda \quad (k \in \mathbb{Z})
+    \]
+    Hiệu đường đi bằng một số nguyên lần bước sóng. Tại đây, hai sóng thành phần cùng pha, tăng cường lẫn nhau.
+    
+    \textbf{Vị trí cực tiểu giao thoa} (biên độ tổng hợp cực tiểu $A_M = 0$):
+    \[
+        \left|\cos\left(\frac{\pi(d_2 - d_1)}{\lambda}\right)\right| = 0 \quad\Leftrightarrow\quad d_2 - d_1 = \left(k + \frac{1}{2}\right)\lambda \quad (k \in \mathbb{Z})
+    \]
+    Hiệu đường đi bằng một số bán nguyên lần bước sóng. Tại đây, hai sóng thành phần ngược pha, triệt tiêu lẫn nhau.
+    }}
+\end{center}
+
+\textbf{Hình dạng các vân giao thoa:} Tập hợp các điểm có cùng hiệu đường đi $\Delta d = d_2 - d_1 = \text{hằng số}$ là các đường hyperbol nhận $S_1$ và $S_2$ làm hai tiêu điểm. Do đó:
+\begin{itemize}
+    \item Các vân cực đại (gợn lồi) là các đường hyperbol ứng với $\Delta d = k\lambda$.
+    \item Các vân cực tiểu (gợn lõm) là các đường hyperbol ứng với $\Delta d = (k+1/2)\lambda$.
+    \item Vân trung tâm ($k = 0$) là đường trung trực của $S_1S_2$, luôn là vân cực đại.
+\end{itemize}
+
+\textbf{Khoảng vân} (khoảng cách giữa hai vân cực đại hoặc hai vân cực tiểu liên tiếp trên màn quan sát đặt song song với $S_1S_2$ và cách hai nguồn một khoảng $D$):
+\[
+    i = \dfrac{\lambda D}{a}
+\]
+Công thức này cho thấy khoảng vân tỉ lệ thuận với bước sóng $\lambda$ và khoảng cách $D$, tỉ lệ nghịch với khoảng cách giữa hai nguồn $a$. Đây là cơ sở để đo bước sóng ánh sáng trong thí nghiệm Young.
+
+\subsubsection{Sóng dừng}
+
+\textbf{Sóng dừng} là hiện tượng giao thoa đặc biệt giữa sóng tới và sóng phản xạ trên cùng một phương truyền, tạo ra một hệ sóng có các điểm dao động với biên độ cực đại (bụng sóng) và các điểm đứng yên (nút sóng) cố định trong không gian, không truyền đi như sóng chạy.
+
+\textbf{Cơ chế hình thành:} Khi một sóng truyền trên dây đến gặp đầu cố định, nó bị phản xạ trở lại. Sóng phản xạ ngược pha với sóng tới (tại đầu cố định). Sóng tới và sóng phản xạ giao thoa với nhau, tạo thành sóng dừng.
+
+\textbf{Phương trình sóng dừng trên dây có hai đầu cố định:}
+
+Giả sử sóng tới có dạng: $u_t = A\cos(\omega t - kx)$
+Sóng phản xạ tại đầu cố định ($x = L$) có dạng: $u_{px} = -A\cos(\omega t + kx)$ (ngược pha với sóng tới tại điểm phản xạ)
+
+Sóng tổng hợp: $u = u_t + u_{px} = 2A\sin(kx)\sin(\omega t)$
+
+Biên độ sóng dừng tại vị trí $x$: $A(x) = 2A|\sin(kx)|$
+
+\begin{center}
+    \fbox{\parbox{0.92\textwidth}{
+    \textbf{Đặc điểm của sóng dừng trên dây hai đầu cố định:}
+    \begin{itemize}
+        \item \textbf{Nút sóng}: $A(x) = 0 \Leftrightarrow \sin(kx) = 0 \Leftrightarrow x = m\frac{\lambda}{2}$ ($m = 0, 1, 2, ..., n$)
+        \item \textbf{Bụng sóng}: $A(x) = 2A$ (cực đại) $\Leftrightarrow |\sin(kx)| = 1 \Leftrightarrow x = \left(m + \frac{1}{2}\right)\frac{\lambda}{2}$
+        \item \textbf{Điều kiện hình thành}: Chiều dài dây $L$ phải bằng một số nguyên lần nửa bước sóng:
+        \[
+            L = n\frac{\lambda}{2} \quad (n = 1, 2, 3, ...)
+        \]
+        $n$ được gọi là bậc họa âm (harmonic order), cũng chính là số bụng sóng trên dây.
+        \item Khoảng cách giữa hai nút hoặc hai bụng liên tiếp: $\lambda/2$.
+        \item Khoảng cách giữa một nút và một bụng liền kề: $\lambda/4$.
+    \end{itemize}
+    }}
+\end{center}
+
+\subsubsection{Sóng điện từ}
+
+\textbf{Sóng điện từ} là sự lan truyền của điện từ trường biến thiên trong không gian. Điện từ trường là trường thống nhất của điện trường (đặc trưng bởi vectơ cường độ điện trường $\vec{E}$) và từ trường (đặc trưng bởi vectơ cảm ứng từ $\vec{B}$). Khi điện trường và từ trường biến thiên, chúng tương tác và duy trì lẫn nhau theo cơ chế: điện trường biến thiên sinh ra từ trường biến thiên (định luật Maxwell–Ampère), và từ trường biến thiên sinh ra điện trường biến thiên (định luật Faraday). Kết quả là điện từ trường lan truyền trong không gian dưới dạng sóng.
+
+Điểm đặc biệt của sóng điện từ so với sóng cơ học là nó có thể truyền trong chân không (không cần môi trường vật chất) với tốc độ ánh sáng $c \approx 3 \times 10^8$ m/s.
+
+\textbf{Phương trình sóng điện từ phẳng đơn sắc} lan truyền theo phương $x$:
+\begin{align*}
+    E(x,t) &= E_0 \cos(\omega t - kx + \varphi) \quad \text{(dao động theo trục y)} \\
+    B(x,t) &= B_0 \cos(\omega t - kx + \varphi) \quad \text{(dao động theo trục z)}
+\end{align*}
+
+\textbf{Các tính chất quan trọng của sóng điện từ:}
+\begin{enumerate}
+    \item $\vec{E}$ và $\vec{B}$ luôn vuông góc với nhau ($\vec{E} \perp \vec{B}$).
+    \item Cả $\vec{E}$ và $\vec{B}$ đều vuông góc với phương truyền sóng $\vec{v}$ ($\vec{E} \perp \vec{v}$ và $\vec{B} \perp \vec{v}$). Do đó, sóng điện từ là sóng ngang.
+    \item $\vec{E}$ và $\vec{B}$ dao động cùng pha và cùng tần số.
+    \item Biên độ của $\vec{E}$ và $\vec{B}$ liên hệ với nhau qua tốc độ ánh sáng:
+    \[
+        E_0 = c B_0
+    \]
+    \item Tốc độ truyền sóng điện từ trong chân không:
+    \[
+        c = \frac{1}{\sqrt{\varepsilon_0\mu_0}} \approx 3 \times 10^8 \text{ m/s}
+    \]
+    trong đó $\varepsilon_0 = 8,854 \times 10^{-12}$ F/m là hằng số điện môi, $\mu_0 = 4\pi \times 10^{-7}$ H/m là hằng số từ thẩm của chân không.
+    \item Sóng điện từ mang theo năng lượng và động lượng. Mật độ năng lượng trung bình của sóng điện từ:
+    \[
+        \langle w \rangle = \frac{1}{2}\varepsilon_0 E_0^2 = \frac{1}{2\mu_0}B_0^2
+    \]
+\end{enumerate}
+
+\section{Công nghệ sử dụng trong hệ thống mô phỏng}
+
+\subsection{Tổng quan về đồ họa máy tính và ứng dụng trong mô phỏng giáo dục}
+
+Đồ họa máy tính (\textit{Computer Graphics}) là lĩnh vực khoa học máy tính nghiên cứu các phương pháp tạo ra, lưu trữ, xử lý và hiển thị thông tin dưới dạng hình ảnh bằng máy tính\footnote{Donald Hearn, M. Pauline Baker. (2011). \textit{Computer Graphics with OpenGL (4th ed.)}. Pearson.}. Mục tiêu cốt lõi của đồ họa máy tính là chuyển đổi dữ liệu số thành các biểu diễn trực quan, giúp con người quan sát, phân tích và tương tác với thông tin một cách hiệu quả hơn.
+
+Trong bối cảnh giáo dục, đồ họa máy tính đóng vai trò đặc biệt quan trọng. Các khái niệm vật lý trừu tượng (như dao động của vectơ điện từ trường, sự lan truyền của sóng trong không gian ba chiều, hay hình dạng hyperbol của các vân giao thoa) trở nên "hữu hình" và dễ hiểu khi được biểu diễn dưới dạng đồ họa 3D tương tác. Người học không chỉ quan sát thụ động mà còn có thể thay đổi góc nhìn, điều chỉnh tham số, và nhận phản hồi trực quan ngay lập tức – tạo ra trải nghiệm học tập "học qua khám phá" (discovery learning) hiệu quả\footnote{Rutten, N., van Joolingen, W. R., \& van der Veen, J. T. (2012). The learning effects of computer simulations in science education. \textit{Computers \& Education}, 58(1), 136-153.}.
+
+\subsection{Các công nghệ đồ họa nền tảng trên web}
+
+Hiện nay có ba công nghệ đồ họa chính trên nền tảng web, mỗi công nghệ có những đặc điểm và phạm vi ứng dụng riêng:
+
+\subsubsection{Canvas 2D API}
+
+Canvas 2D API là một phần của đặc tả HTML5, cung cấp một bề mặt vẽ bitmap hai chiều có thể được thao tác thông qua JavaScript. Canvas hoạt động theo cơ chế immediate mode rendering: mỗi khung hình, toàn bộ nội dung được xóa và vẽ lại từ đầu bởi lập trình viên. Điều này cho phép kiểm soát hoàn toàn từng pixel trên màn hình.
+
+\textbf{Ưu điểm của Canvas 2D:}
+\begin{itemize}
+    \item API đơn giản, dễ học với các phương thức vẽ cơ bản: \texttt{fillRect()}, \texttt{strokeRect()}, \texttt{arc()}, \texttt{beginPath()}, \texttt{moveTo()}, \texttt{lineTo()}, \texttt{stroke()}, \texttt{fill()}, \texttt{fillText()}, \texttt{drawImage()}...
+    \item Hỗ trợ rộng rãi trên mọi trình duyệt hiện đại (Chrome, Firefox, Safari, Edge) và trên thiết bị di động.
+    \item Hiệu năng tốt cho các ứng dụng 2D với số lượng đối tượng vừa phải (hàng trăm).
+    \item Không yêu cầu khởi tạo ngữ cảnh phức tạp như WebGL.
+    \item Hỗ trợ transformations (translate, rotate, scale), gradients, shadows, transparency.
+\end{itemize}
+
+\textbf{Hạn chế của Canvas 2D:}
+\begin{itemize}
+    \item Không hỗ trợ đồ họa 3D (không có khái niệm depth, perspective, camera).
+    \item Hiệu năng giảm đáng kể khi cần render hàng nghìn đối tượng.
+    \item Không tận dụng được GPU cho các phép tính đồ họa phức tạp (ánh sáng, đổ bóng, vật liệu).
+    \item Không có khái niệm "scene graph" – mỗi đối tượng phải được vẽ thủ công, không có cơ chế quản lý đối tượng tự động.
+\end{itemize}
+
+\textbf{Ứng dụng trong đề tài:} Canvas 2D được sử dụng cho mô phỏng sóng trên dây. Đây là bài toán 1D (dây dao động trên mặt phẳng 2D) với yêu cầu:
+\begin{itemize}
+    \item Vẽ một đường cong duy nhất (sóng) cập nhật 60 lần/giây.
+    \item Vẽ lưới tọa độ, nhãn, và các điểm đánh dấu (nguồn dao động, đầu cố định/tự do).
+    \item Tính toán li độ sóng dựa trên phương trình sóng có xét đến phản xạ và tắt dần.
+\end{itemize}
+Với những yêu cầu này, Canvas 2D tỏ ra phù hợp hơn WebGL vì: code đơn giản và dễ bảo trì hơn nhiều, không cần khởi tạo scene 3D, và hiệu năng hoàn toàn đáp ứng được (60 FPS dễ dàng).
+
+\subsubsection{WebGL và Three.js}
+
+\textbf{WebGL} (Web Graphics Library) là API đồ họa cấp thấp, cho phép render đồ họa 2D và 3D được tăng tốc phần cứng (GPU-accelerated) trực tiếp trong trình duyệt web mà không cần bất kỳ plugin nào. WebGL được phát triển bởi Khronos Group và dựa trên tiêu chuẩn OpenGL ES 2.0 (và OpenGL ES 3.0 cho WebGL 2.0)\footnote{Khronos Group. \textit{WebGL Specification}. https://www.khronos.org/webgl/}.
+
+\textbf{Ưu điểm của WebGL:}
+\begin{itemize}
+    \item Hiệu năng cực cao nhờ tận dụng GPU cho tính toán song song.
+    \item Hỗ trợ đồ họa 3D đầy đủ: phép chiếu phối cảnh, depth testing, ánh sáng, texture, shader...
+    \item Chạy trên mọi trình duyệt hiện đại, không cần plugin.
+    \item Cho phép tạo ra các hiệu ứng hình ảnh phức tạp (particle systems, post-processing...).
+\end{itemize}
+
+\textbf{Hạn chế của WebGL thuần (raw WebGL):}
+\begin{itemize}
+    \item API rất phức tạp, đòi hỏi lập trình viên phải:
+    \begin{itemize}
+        \item Viết shader bằng ngôn ngữ GLSL (OpenGL Shading Language) cho vertex shader và fragment shader.
+        \item Quản lý thủ công buffer (vertex buffer, index buffer), texture, framebuffer.
+        \item Hiểu sâu về graphics pipeline: vertex processing, rasterization, fragment processing.
+        \item Xử lý các phép toán ma trận (model, view, projection) thủ công.
+    \end{itemize}
+    \item Số lượng code cần viết cho một ứng dụng đơn giản có thể lên đến hàng trăm dòng.
+    \item Khó debug và bảo trì.
+\end{itemize}
+
+Three.js ra đời để giải quyết vấn đề phức tạp của WebGL thuần. Đây là thư viện JavaScript mã nguồn mở (MIT license), cung cấp một lớp trừu tượng (abstraction layer) bên trên WebGL, giúp đơn giản hóa đáng kể việc phát triển ứng dụng 3D\footnote{Dirksen, J. (2023). \textit{Learn Three.js: Program 3D animations and visualizations for the web with JavaScript and TypeScript} (4th ed.). Packt Publishing.}.
+
+Three.js cung cấp các khái niệm và đối tượng quen thuộc, giúp lập trình viên tập trung vào việc "xây dựng cảnh 3D" thay vì "lập trình GPU":
+
+\begin{itemize}
+    \item \texttt{THREE.Scene}: Không gian 3D, nơi chứa tất cả các đối tượng (mesh, light, camera...). Scene quản lý cây phân cấp (scene graph) của các đối tượng.
+    
+    \item \texttt{THREE.Camera}: Định nghĩa góc nhìn. Có hai loại chính:
+    \begin{itemize}
+        \item \texttt{PerspectiveCamera}: Mô phỏng góc nhìn của mắt người (các vật ở xa nhỏ hơn).
+        \item \texttt{OrthographicCamera}: Góc nhìn không có phối cảnh (dùng cho bản vẽ kỹ thuật, UI).
+    \end{itemize}
+    
+    \item \texttt{THREE.WebGLRenderer}: Bộ render, chịu trách nhiệm chuyển đổi scene thành hình ảnh trên canvas. Sử dụng WebGL bên dưới.
+    
+    \item \texttt{THREE.Mesh}: Đối tượng 3D cơ bản = \texttt{Geometry} (hình dạng) + \texttt{Material} (chất liệu).
+    
+    \item \texttt{THREE.Geometry} (và \texttt{THREE.BufferGeometry}): Định nghĩa hình dạng của đối tượng thông qua các đỉnh (vertices), mặt (faces), và các thuộc tính khác (normals, UV coordinates...). Các geometry cơ bản có sẵn:
+    \begin{itemize}
+        \item \texttt{BoxGeometry}: Hình hộp chữ nhật.
+        \item \texttt{SphereGeometry}: Hình cầu.
+        \item \texttt{ConeGeometry}: Hình nón.
+        \item \texttt{CylinderGeometry}: Hình trụ.
+        \item \texttt{PlaneGeometry}: Mặt phẳng.
+        \item \texttt{RingGeometry}: Vành khuyên.
+        \item \texttt{DodecahedronGeometry}: Khối đa diện 12 mặt.
+        \item \texttt{BufferGeometry}: Geometry tổng quát, cho phép tự định nghĩa các đỉnh.
+    \end{itemize}
+    
+    \item \texttt{THREE.Material}: Định nghĩa cách bề mặt tương tác với ánh sáng. Các loại material phổ biến:
+    \begin{itemize}
+        \item \texttt{MeshStandardMaterial}: Material PBR (Physically Based Rendering) – cho kết quả chân thực nhất, hỗ trợ roughness, metalness, emissive.
+        \item \texttt{MeshBasicMaterial}: Không bị ảnh hưởng bởi ánh sáng – luôn hiển thị màu đồng nhất.
+        \item \texttt{MeshPhongMaterial}: Material có phản xạ ánh sáng (specular highlight).
+        \item \texttt{PointsMaterial}: Material cho hệ thống hạt (particles).
+        \item \texttt{LineBasicMaterial}: Material cho đường thẳng/đường cong.
+    \end{itemize}
+    
+    \item \texttt{THREE.Light}: Các nguồn sáng trong scene:
+    \begin{itemize}
+        \item \texttt{AmbientLight}: Ánh sáng môi trường – chiếu đều từ mọi hướng, không có hướng cụ thể.
+        \item \texttt{PointLight}: Ánh sáng điểm – phát ra từ một điểm theo mọi hướng (như bóng đèn tròn).
+        \item \texttt{DirectionalLight}: Ánh sáng có hướng – các tia sáng song song (như mặt trời).
+    \end{itemize}
+    
+    \item \texttt{THREE.Vector3}: Vector 3 chiều, dùng để biểu diễn vị trí, hướng, vận tốc...
+    
+    \item \texttt{THREE.Color}: Biểu diễn màu sắc RGB, hỗ trợ nhiều định dạng: hex string (\texttt{"\#ff0000"}), CSS color name (\texttt{"red"}), RGB values...
+    
+    \item \texttt{THREE.MathUtils}: Các hàm toán học tiện ích: \texttt{clamp()}, \texttt{lerp()}, \texttt{degToRad()}, \texttt{radToDeg()}...
+\end{itemize}
+
+Three.js là nền tảng cốt lõi cho tất cả các mô phỏng 3D trong đề tài. Các đối tượng và API của Three.js được sử dụng trực tiếp trong code thông qua React Three Fiber.
+
+\subsection{React Three Fiber và hệ sinh thái}
+
+\subsubsection{React Three Fiber (@react-three/fiber) – Cầu nối giữa React và Three.js}
+
+\textbf{React Three Fiber} (viết tắt: R3F) là một thư viện React renderer cho Three.js, được phát triển và duy trì bởi cộng đồng Poimandres (pmnd.rs). R3F cho phép khai báo (declare) các đối tượng 3D dưới dạng JSX component – cú pháp mà mọi lập trình viên React đều quen thuộc. Thay vì viết code imperative (thủ tục, từng bước) để tạo scene, camera, mesh như với Three.js thuần, R3F cho phép "compose" các đối tượng 3D giống như cách chúng ta compose các component React thông thường.
+
+Đây là một bước tiến quan trọng về mặt kiến trúc phần mềm và trải nghiệm lập trình (Developer Experience - DX). R3F không chỉ đơn giản là một wrapper mỏng quanh Three.js; nó thực sự tích hợp sâu với mô hình lập trình của React:
+
+\textbf{Các ưu điểm chính của React Three Fiber:}
+
+\begin{enumerate}
+    \item \textbf{Tích hợp với React state management:} Đây là ưu điểm quan trọng nhất. Trong một ứng dụng mô phỏng giáo dục, có hàng chục tham số vật lý (biên độ, tần số, bước sóng, pha, khoảng cách nguồn, hệ số cản...) được điều khiển bởi các UI controls (thanh trượt, checkbox, nút bấm). Với R3F, mối liên kết giữa UI và 3D scene được thực hiện đơn giản qua React state: thay đổi state → React re-render component → R3F tự động cập nhật 3D scene. Lập trình viên không cần viết bất kỳ code cập nhật thủ công nào.
+    
+    \item \textbf{Mô hình lập trình declarative:} Các đối tượng 3D được khai báo dưới dạng JSX, phản ánh cấu trúc cây (tree structure) của scene. Ví dụ:
+\begin{verbatim}
+<Canvas>
+  <ambientLight intensity={0.5} />
+  <pointLight position={[5, 5, 5]} />
+  <mesh position={[0, 0, 0]}>
+    <sphereGeometry args={[0.3, 32, 32]} />
+    <meshStandardMaterial color="red" />
+  </mesh>
+</Canvas>
+\end{verbatim}
+    Code này rất dễ đọc và dễ hiểu: có một canvas, bên trong có ánh sáng môi trường, ánh sáng điểm, và một quả cầu màu đỏ.
+
+    \item \textbf{Hỗ trợ đầy đủ vòng đời React:} Tất cả các hook của React hoạt động bình thường bên trong các component R3F:
+    \begin{itemize}
+        \item \texttt{useState}: Quản lý trạng thái cục bộ.
+        \item \texttt{useEffect}: Chạy code khi component mount/unmount hoặc khi dependencies thay đổi.
+        \item \texttt{useMemo}: Ghi nhớ kết quả tính toán để tránh tính lại không cần thiết.
+        \item \texttt{useCallback}: Ghi nhớ hàm để tránh tạo lại function object.
+        \item \texttt{useRef}: Tham chiếu đến các đối tượng Three.js (mesh, group...).
+    \end{itemize}
+    
+    \item \textbf{Hook đặc biệt \texttt{useFrame}:} R3F cung cấp hook \texttt{useFrame} – chạy một callback mỗi frame render (tương đương với \texttt{requestAnimationFrame}). Callback nhận hai tham số:
+    \begin{itemize}
+        \item \texttt{state}: Chứa các thông tin về scene hiện tại (\texttt{state.camera}, \texttt{state.scene}, \texttt{state.renderer}, \texttt{state.clock}...).
+        \item \texttt{delta}: Khoảng thời gian (tính bằng giây) giữa frame hiện tại và frame trước đó.
+    \end{itemize}
+    \texttt{useFrame} được sử dụng trong đề tài cho:
+    \begin{itemize}
+        \item Cập nhật vị trí, màu sắc của tất cả 6.400 instances trong InstancedMesh mỗi frame (mô phỏng giao thoa sóng).
+        \item Cập nhật vị trí quả nặng con lắc và dây treo trong animation loop.
+        \item Tạo hiệu ứng animation (vật nổi trên sóng, sao xoay trong mô phỏng Sonar).
+    \end{itemize}
+    
+    \item \textbf{Tự động quản lý vòng đời đối tượng 3D:} R3F tự động gọi \texttt{scene.add()} khi component được mount và \texttt{scene.remove()} khi component bị unmount. Điều này ngăn chặn memory leak – một vấn đề thường gặp khi dùng Three.js thuần.
+    
+    \item \textbf{Kiến trúc component-based:} Mỗi mô phỏng là một component React độc lập, có thể được phát triển, kiểm thử (unit test với React Testing Library), và tái sử dụng. Các thành phần giao diện dùng chung (\texttt{ThanhTruot}, \texttt{NutGradient}, \texttt{CardThongSo}) được tách thành component riêng và dùng xuyên suốt dự án.
+\end{enumerate}
+
+\subsubsection{Drei (@react-three/drei) – Bộ công cụ tiện ích cho R3F}
+
+\textbf{Drei} (tiếng Đức nghĩa là "số ba", chơi chữ với "Three.js") là thư viện tiện ích chính thức cho React Three Fiber, được phát triển bởi cùng cộng đồng Poimandres. Drei cung cấp hàng chục component được xây dựng sẵn và tối ưu hóa, giải quyết các tác vụ phổ biến trong phát triển ứng dụng 3D mà không cần viết lại từ đầu.
+
+Các component Drei được sử dụng trong đề tài bao gồm:
+
+\begin{itemize}
+    \item \textbf{\texttt{OrbitControls}}: Component điều khiển camera bằng chuột hoặc cảm ứng, cho phép người dùng:
+    \begin{itemize}
+        \item \textbf{Xoay} (rotate): Nhấn giữ chuột trái và kéo.
+        \item \textbf{Di chuyển} (pan): Nhấn giữ chuột phải và kéo.
+        \item \textbf{Phóng to/thu nhỏ} (zoom): Lăn chuột giữa hoặc pinch trên màn hình cảm ứng.
+    \end{itemize}
+    Các props quan trọng:
+    \begin{itemize}
+        \item \texttt{enabled}: Bật/tắt điều khiển (dùng khi người dùng nhấn nút "Khóa/Mở Camera").
+        \item \texttt{minDistance}, \texttt{maxDistance}: Giới hạn khoảng cách zoom.
+        \item \texttt{maxPolarAngle}: Giới hạn góc xoay theo phương dọc (ngăn camera lật ngược).
+        \item \texttt{target}: Điểm mà camera nhìn vào (mặc định là gốc tọa độ).
+    \end{itemize}
+    OrbitControls cực kỳ quan trọng trong mô phỏng giáo dục vì nó cho phép học sinh chủ động khám phá mô hình 3D từ mọi góc độ, thay vì chỉ xem từ một góc nhìn cố định.
+    
+    \item \textbf{\texttt{Line}}: Vẽ đường thẳng hoặc đường cong trong không gian 3D. Nhận một mảng các \texttt{THREE.Vector3} làm điểm và các props về màu sắc, độ dày:
+    \begin{itemize}
+        \item \texttt{points}: Mảng các \texttt{THREE.Vector3} (bắt buộc).
+        \item \texttt{color}: Màu của đường (CSS string hoặc hex).
+        \item \texttt{lineWidth}: Độ dày của đường (pixel).
+        \item \texttt{transparent}: Cho phép trong suốt.
+        \item \texttt{opacity}: Độ mờ (0-1).
+        \item \texttt{dashed}: Vẽ nét đứt.
+        \item \texttt{dashSize}, \texttt{gapSize}: Kích thước nét đứt và khoảng cách.
+    \end{itemize}
+    \texttt{Line} là một trong những component được sử dụng nhiều nhất trong đề tài, dùng để vẽ:
+    \begin{itemize}
+        \item Dây treo con lắc (từ điểm treo đến quả nặng).
+        \item Đường sóng điện trường $\vec{E}$ (dao động theo trục Y).
+        \item Đường sóng từ trường $\vec{B}$ (dao động theo trục Z).
+        \item Các vòng tròn sóng đồng tâm từ nguồn giao thoa.
+        \item Các tia sóng tỏa ra từ tâm trong mô phỏng sóng nước.
+        \item Các đường vân giao thoa hyperbol (cực đại – màu đỏ, cực tiểu – màu xanh).
+        \item Tia sonar chính và các tia phụ trong mô phỏng Sonar.
+        \item Lò xo xoắn ốc trong mô phỏng con lắc lò xo.
+        \item Đường bao sóng dừng (nét đứt).
+    \end{itemize}
+    
+    \item \textbf{\texttt{Html}}: Nhúng nội dung HTML thuần (thẻ \texttt{div}, \texttt{span}, \texttt{button}...) vào trong cảnh 3D. Component này tự động tính toán vị trí 2D trên màn hình tương ứng với tọa độ 3D được chỉ định, sử dụng phép chiếu ngược từ không gian 3D về không gian màn hình. Props:
+    \begin{itemize}
+        \item \texttt{position}: Tọa độ 3D trong không gian (mảng \texttt{[x, y, z]}).
+        \item \texttt{center}: Nếu \texttt{true}, nội dung HTML được canh giữa tại vị trí đó.
+        \item \texttt{occlude}: Nếu \texttt{true}, nội dung sẽ bị ẩn khi bị vật thể khác che khuất.
+    \end{itemize}
+    \texttt{Html} cực kỳ hữu ích để tạo:
+    \begin{itemize}
+        \item Chú thích cho các đối tượng (nhãn "E", "B", "S₁", "S₂", "Nguồn dao động", "Phương truyền sóng", "Nút", "Bụng"...).
+        \item Bảng thông tin real-time (góc lệch hiện tại, vận tốc, năng lượng, thời gian...).
+        \item Bảng chú thích màu sắc và ký hiệu.
+        \item Tooltip hiển thị khi người dùng tương tác.
+    \end{itemize}
+    
+    \item \textbf{\texttt{Plane}}: Tạo nhanh một mặt phẳng hình học với các props \texttt{args} (kích thước), \texttt{rotation}, \texttt{position}. Dùng làm mặt nền tham chiếu, mặt nước.
+    
+    \item \textbf{\texttt{Text}}: Hiển thị văn bản 3D trong không gian (sử dụng troika-three-text). Hỗ trợ font, kích thước, màu sắc.
+    
+    \item \textbf{\texttt{Stars}}: Tạo hiệu ứng sao lấp lánh (particle system với các điểm sáng ngẫu nhiên), dùng trong mô phỏng Sonar để tạo nền nước sâu.
+\end{itemize}
+
+\subsubsection{Kỹ thuật InstancedMesh – Tối ưu hóa hiệu năng render}
+
+\textbf{InstancedMesh} (\texttt{THREE.InstancedMesh}) là một kỹ thuật render đặc biệt của Three.js, được thiết kế để giải quyết bài toán hiển thị số lượng lớn đối tượng giống hệt nhau (về hình dạng và chất liệu) nhưng khác nhau về vị trí, tỉ lệ, góc xoay và màu sắc.
+
+\textbf{Vấn đề:} Trong đồ họa máy tính, mỗi lần yêu cầu GPU vẽ một mesh (đối tượng hình học) được gọi là một draw call. Mỗi draw call đều có một chi phí (overhead) nhất định do CPU phải chuẩn bị dữ liệu, thiết lập trạng thái GPU, và gửi lệnh. Khi số lượng draw calls vượt quá khả năng xử lý (thường là vài trăm đến vài nghìn draw calls mỗi frame), CPU trở thành nút cổ chai (bottleneck), khiến GPU phải "chờ" và tốc độ khung hình (FPS) giảm nghiêm trọng.
+
+\textbf{Giải pháp – InstancedMesh:} Thay vì tạo $N$ mesh riêng biệt (mỗi mesh = 1 draw call), InstancedMesh tạo một mesh duy nhất nhưng có khả năng chứa $N$ "bản sao" (instances). Tất cả $N$ instances được gửi đến GPU trong cùng một draw call. GPU, với kiến trúc xử lý song song hàng nghìn nhân, sẽ vẽ tất cả instances một cách hiệu quả.
+
+Mỗi instance có thể có:
+\begin{itemize}
+    \item \textbf{Vị trí, tỉ lệ, góc xoay} riêng – được lưu trong \texttt{instanceMatrix} (một ma trận 4×4 cho mỗi instance).
+    \item \textbf{Màu sắc} riêng – được lưu trong \texttt{instanceColor} (một vector RGB cho mỗi instance).
+\end{itemize}
+
+Các phương thức chính của InstancedMesh:
+\begin{itemize}
+    \item \texttt{setMatrixAt(index, matrix)}: Thiết lập ma trận biến đổi cho instance thứ \texttt{index}.
+    \item \texttt{setColorAt(index, color)}: Thiết lập màu sắc cho instance thứ \texttt{index}.
+    \item \texttt{instanceMatrix.needsUpdate = true}: Đánh dấu rằng dữ liệu ma trận đã thay đổi và cần được cập nhật lên GPU.
+    \item \texttt{instanceColor.needsUpdate = true}: Đánh dấu rằng dữ liệu màu sắc đã thay đổi.
+\end{itemize}
+
+\textbf{Ứng dụng trong mô phỏng giao thoa sóng:}
+
+Trong mô phỏng giao thoa sóng, chúng ta cần hiển thị một lưới điểm với độ phân giải \texttt{resolution × resolution} (mặc định $80 \times 80 = 6.400$ điểm) để biểu diễn cường độ giao thoa trên mặt phẳng XZ. Các điểm này cần được cập nhật mỗi frame (60 lần/giây) vì cường độ giao thoa thay đổi theo thời gian:
+
+\begin{itemize}
+    \item \textbf{Nếu dùng mesh riêng lẻ:} $6.400$ draw calls mỗi frame. Với giới hạn thực tế khoảng 500-1000 draw calls để duy trì 60 FPS trên phần cứng trung bình, điều này là không khả thi. FPS sẽ giảm xuống dưới 10, gây giật lag.
+    
+    \item \textbf{Với InstancedMesh:} 1 draw call duy nhất cho tất cả 6.400 điểm. GPU xử lý tất cả các instance song song. FPS duy trì ổn định ở mức 60, ngay cả trên các laptop có GPU tích hợp (Intel Iris Xe, AMD Radeon Graphics).
+\end{itemize}
+
+\textbf{Chi tiết triển khai trong code:}
+
+\begin{enumerate}
+    \item \textbf{Khởi tạo:} InstancedMesh được tạo với số lượng instances xác định trước:
+    \begin{verbatim}
+    <instancedMesh ref={meshRef} args={[undefined, undefined, totalInstances]}>
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial toneMapped={true} />
+    </instancedMesh>
+    \end{verbatim}
+
+    \item \textbf{Pre-computation (một lần):} Sử dụng \texttt{useMemo} để tính toán trước:
+    \begin{itemize}
+        \item Vị trí cân bằng của tất cả các điểm trên lưới (mảng $N$ phần tử, mỗi phần tử là \texttt{[x, 0, z]}).
+        \item Khoảng cách từ mỗi điểm đến từng nguồn sóng (mảng 2 chiều $M \times N$, với $M$ là số nguồn). Các giá trị này không đổi theo thời gian vì nguồn và điểm đều cố định.
+    \end{itemize}
+
+    \item \textbf{Cập nhật mỗi frame} (trong \texttt{useFrame}): Với mỗi instance $i$:
+    \begin{itemize}
+        \item Tính toán tổng dao động từ tất cả các nguồn tại điểm $i$:
+        \[
+            \text{totalDisplacement}_i = \sum_{s=1}^{M} A_s \cos(\omega t - k \cdot d_{s,i} + \phi_s)
+        \]
+        \item Tính cường độ tức thời: $\text{intensity}_i = (\text{totalDisplacement}_i)^2$.
+        \item Chuẩn hóa cường độ về khoảng $[0, 1]$ dựa trên giá trị cực đại lý thuyết.
+        \item Chuyển đổi cường độ thành màu sắc (đỏ/vàng cho cường độ cao, xanh/tím cho cường độ thấp).
+        \item Cập nhật màu: \texttt{mesh.setColorAt(i, color)}.
+        \item Cập nhật vị trí và scale (điểm có thể nâng lên theo biên độ): \texttt{mesh.setMatrixAt(i, matrix)}.
+    \end{itemize}
+    \item \textbf{Đánh dấu cập nhật:} Sau khi cập nhật tất cả instances:
+    \begin{verbatim}
+    mesh.instanceMatrix.needsUpdate = true
+    mesh.instanceColor.needsUpdate = true
+    \end{verbatim}
+\end{enumerate}
+
+\textbf{Kết quả:} Mô phỏng giao thoa sóng hiển thị 6.400 điểm dao động theo thời gian thực, với màu sắc thay đổi liên tục phản ánh cường độ giao thoa, chỉ với 1 draw call – một minh chứng cho sức mạnh của kỹ thuật instanced rendering.
+
+\subsection{Recharts – Thư viện đồ thị cho React}
+
+\textbf{Recharts} là thư viện vẽ đồ thị mã nguồn mở được xây dựng dành riêng cho React, sử dụng các component React thuần túy (composable components) để khai báo biểu đồ. Recharts dựa trên D3.js cho các tính toán toán học (scale, interpolation) và SVG cho rendering.
+
+Recharts hỗ trợ đa dạng các loại biểu đồ:
+\begin{itemize}
+    \item \texttt{LineChart}: Biểu đồ đường – phù hợp cho dữ liệu liên tục theo thời gian (li độ, vận tốc, cường độ...).
+    \item \texttt{AreaChart}: Biểu đồ diện tích – phù hợp cho năng lượng, thể hiện phần diện tích dưới đường cong.
+    \item \texttt{BarChart}: Biểu đồ cột – phù hợp cho so sánh.
+    \item \texttt{ScatterChart}: Biểu đồ điểm phân tán – phù hợp cho không gian pha (phase space).
+    \item \texttt{PieChart}, \texttt{RadarChart}, \texttt{ComposedChart}: Các loại biểu đồ khác.
+\end{itemize}
+
+\textbf{Ưu điểm của Recharts:}
+\begin{itemize}
+    \item \textbf{Declarative API:} Biểu đồ được khai báo dưới dạng JSX thuần túy, rất tự nhiên với lập trình viên React.
+    \item \textbf{Responsive:} Component \texttt{ResponsiveContainer} tự động điều chỉnh kích thước biểu đồ theo kích thước của container cha, đảm bảo hiển thị tốt trên mọi kích thước màn hình.
+    \item \textbf{Tích hợp React state:} Dữ liệu biểu đồ được truyền qua prop \texttt{data} (một mảng các object). Khi state thay đổi (dữ liệu mới được thêm vào), biểu đồ tự động cập nhật mà không cần thao tác thủ công.
+    \item \textbf{Tooltip và Legend có sẵn:} Component \texttt{Tooltip} hiển thị thông tin chi tiết khi hover, \texttt{Legend} hiển thị chú thích màu sắc. Cả hai đều có thể tùy chỉnh nội dung và kiểu dáng.
+    \item \textbf{Customizable:} Có thể tùy chỉnh màu sắc, độ dày đường, kiểu điểm (dot), grid, label trục...
+\end{itemize}
+
+\textbf{Các component Recharts được sử dụng trong đề tài:}
+
+\begin{enumerate}
+    \item \textbf{\texttt{EMWaveChart.tsx}}: Đồ thị phân tích sóng điện từ, bao gồm:
+    \begin{itemize}
+        \item $E(t)$ – Cường độ điện trường theo thời gian (LineChart).
+        \item $B(t)$ – Cảm ứng từ theo thời gian (LineChart).
+        \item $I(t)$ – Cường độ sóng theo thời gian (LineChart).
+        \item So sánh $E$ và $B$ chuẩn hóa (LineChart với hai đường).
+    \end{itemize}
+    
+    \item \textbf{\texttt{InterferenceChart}} (trong \texttt{WaveInterference3D.tsx}):
+    \begin{itemize}
+        \item Đồ thị cường độ giao thoa $I(x)$ theo vị trí (đường cong với các đỉnh cực đại và cực tiểu).
+        \item Sơ đồ vị trí các vân giao thoa trên trục tọa độ.
+    \end{itemize}
+    
+    \item \textbf{\texttt{PendulumChart.tsx}} (\texttt{DoThiConLac}):
+    \begin{itemize}
+        \item Đồ thị góc $\theta(t)$ và vận tốc $\omega(t)$ theo thời gian (LineChart với hai trục Y).
+        \item Biểu đồ năng lượng: động năng $K(t)$, thế năng $U(t)$, cơ năng $E(t)$ (AreaChart).
+        \item Đồ thị không gian pha: $\omega$ theo $\theta$ (ScatterChart).
+    \end{itemize}
+    
+    \item \textbf{\texttt{LongitudinalWaveChart.tsx}} (\texttt{SoSanhSongChart}):
+    \begin{itemize}
+        \item So sánh li độ sóng dọc và sóng ngang (LineChart với hai đường).
+        \item Vận tốc dao động $v(t)$ (LineChart).
+        \item Năng lượng dao động $E(t)$ (AreaChart).
+    \end{itemize}
+    
+    \item \textbf{\texttt{SonarWaveChart.tsx}}:
+    \begin{itemize}
+        \item Khoảng cách phát hiện theo thời gian (LineChart).
+        \item Cường độ tín hiệu echo (AreaChart).
+        \item Thời gian phản hồi (LineChart).
+        \item Quan hệ khoảng cách – cường độ (LineChart).
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Xử lý xung đột tên:} Component \texttt{Line} của Recharts (dùng để vẽ đường trong biểu đồ) trùng tên với component \texttt{Line} của Drei (dùng để vẽ đường trong không gian 3D). Để giải quyết, TypeScript/JavaScript cho phép sử dụng alias import:
+
+\begin{verbatim}
+import { Line as RechartsLine } from 'recharts'
+// Sử dụng trong JSX: <RechartsLine ... />
+\end{verbatim}
+
+\subsection{Các thư viện hỗ trợ khác}
+
+\subsubsection{Tailwind CSS}
+
+Tailwind CSS là framework CSS theo triết lý utility-first, cung cấp hàng trăm class tiện ích được định nghĩa sẵn, mỗi class tương ứng với một thuộc tính CSS cụ thể. Ví dụ: \texttt{p-4} = padding 1rem, \texttt{text-sm} = font-size 0.875rem, \texttt{bg-blue-500} = background-color blue, \texttt{rounded-xl} = border-radius 0.75rem.
+
+\textbf{Ưu điểm khi sử dụng Tailwind CSS trong đề tài:}
+\begin{itemize}
+    \item \textbf{Tính nhất quán cao:} Cùng một bộ class được sử dụng xuyên suốt tất cả các mô phỏng, đảm bảo giao diện đồng nhất.
+    \item \textbf{Responsive:} Hỗ trợ breakpoint với tiền tố: \texttt{sm:}, \texttt{md:}, \texttt{lg:}, \texttt{xl:}. Ví dụ: \texttt{grid-cols-1 lg:grid-cols-3} nghĩa là 1 cột trên mobile, 3 cột trên desktop.
+    \item \textbf{Dark mode:} Hỗ trợ dark mode qua class tiền tố \texttt{dark:}. Ví dụ: \texttt{bg-white dark:bg-gray-800}.
+    \item \textbf{Tùy chỉnh nhanh:} Các gradient (\texttt{bg-gradient-to-r from-blue-500 to-purple-500}), shadow (\texttt{shadow-lg}, \texttt{shadow-xl}), backdrop blur (\texttt{backdrop-blur-sm}) được tạo dễ dàng.
+    \item \textbf{Không cần đặt tên class:} Tránh được vấn đề đặt tên và quản lý CSS truyền thống (BEM, SMACSS...).
+\end{itemize}
+
+\subsubsection{Lucide React}
+
+Lucide React là thư viện icon mã nguồn mở (ISC license), cung cấp hơn 1000 biểu tượng vector chất lượng cao dưới dạng React component. Mỗi icon là một component React, nhận các props chuẩn như \texttt{size}, \texttt{color}, \texttt{strokeWidth}, \texttt{className}. Các icon được sử dụng xuyên suốt giao diện để tăng tính trực quan và thẩm mỹ:
+
+\begin{itemize}
+    \item \texttt{Play}, \texttt{Pause}: Nút phát/tạm dừng mô phỏng.
+    \item \texttt{RotateCcw}: Nút đặt lại (reset).
+    \item \texttt{Lock}, \texttt{Unlock}: Nút khóa/mở camera.
+    \item \texttt{Settings}: Tab bảng điều khiển.
+    \item \texttt{Eye}, \texttt{EyeOff}: Tab hiển thị, bật/tắt thành phần.
+    \item \texttt{Waves}, \texttt{Radio}, \texttt{Activity}, \texttt{Zap}: Các icon liên quan đến sóng và dao động.
+    \item \texttt{Gauge}, \texttt{Ruler}, \texttt{Target}, \texttt{Clock}: Icon cho các đại lượng đo lường.
+    \item \texttt{Brain}, \texttt{BarChart3}, \texttt{GitCompare}: Tab lý thuyết và đồ thị.
+    \item \texttt{Maximize2}, \texttt{Minimize2}: Toàn màn hình.
+    \item \texttt{Volume2}, \texttt{Droplets}, \texttt{Mountain}, \texttt{Navigation}, \texttt{Radar}: Icon đặc thù cho từng mô phỏng.
+\end{itemize}
+
+\subsubsection{React Hooks – Công cụ quản lý trạng thái và hiệu năng}
+
+Các hook của React đóng vai trò then chốt trong việc quản lý trạng thái, tối ưu hiệu năng và điều phối luồng dữ liệu trong toàn bộ hệ thống:
+
+\begin{itemize}
+    \item \textbf{\texttt{useState}}: Được sử dụng để quản lý mọi trạng thái của mô phỏng:
+    \begin{itemize}
+        \item Tham số vật lý: biên độ, tần số, bước sóng, pha, chiều dài, độ cứng lò xo, khối lượng...
+        \item Trạng thái UI: đang chạy/tạm dừng, tab đang chọn, chế độ hiển thị, khóa camera, toàn màn hình...
+        \item Dữ liệu thời gian thực: \texttt{time}, các mảng lịch sử (angleData, velocityData, energyData...).
+    \end{itemize}
+    
+    \item \textbf{\texttt{useEffect}}: Được sử dụng cho:
+    \begin{itemize}
+        \item \textbf{Animation loop:} Thiết lập \texttt{requestAnimationFrame} để cập nhật \texttt{time} liên tục. Cleanup function (\texttt{cancelAnimationFrame}) được gọi khi component unmount để tránh memory leak.
+        \item \textbf{Thu thập dữ liệu:} Định kỳ lấy mẫu dữ liệu (góc, vận tốc, năng lượng...) và lưu vào mảng lịch sử để vẽ đồ thị.
+        \item \textbf{Resize handler:} Cập nhật kích thước canvas khi cửa sổ thay đổi.
+        \item \textbf{Khởi tạo:} Đánh dấu component đã sẵn sàng sau khi mount (quan trọng cho SSR/Next.js).
+    \end{itemize}
+    
+    \item \textbf{\texttt{useMemo}}: Đây là hook quan trọng nhất cho hiệu năng. Nó ghi nhớ (memoize) kết quả của một phép tính và chỉ tính lại khi dependencies thay đổi. Trong mô phỏng vật lý, có những phép tính rất nặng (tính tọa độ 200 điểm sóng, tính khoảng cách từ 6400 điểm đến 2 nguồn...) không cần phải thực hiện lại mỗi frame nếu tham số không đổi. \texttt{useMemo} được sử dụng cho:
+    \begin{itemize}
+        \item Tính tọa độ các điểm sóng điện trường (\texttt{electricPoints}) và từ trường (\texttt{magneticPoints}).
+        \item Tính vị trí cân bằng và độ dịch chuyển của các phần tử trong sóng dọc.
+        \item Tính tọa độ các điểm trên vòng tròn sóng và tia sóng.
+        \item Pre-compute vị trí của tất cả 6400 điểm trong InstancedMesh (chỉ chạy một lần).
+        \item Pre-compute khoảng cách từ mỗi điểm đến từng nguồn (chỉ chạy một lần).
+        \item Tính toán các đại lượng vật lý dẫn xuất (vận tốc pha, năng lượng, chu kỳ...).
+        \item Chuẩn bị dữ liệu cho đồ thị Recharts.
+    \end{itemize}
+    
+    \item \textbf{\texttt{useCallback}}: Tương tự \texttt{useMemo} nhưng cho function. Ghi nhớ function object để tránh tạo lại mỗi lần render. Đặc biệt quan trọng khi function được truyền xuống component con (như \texttt{onChange} của \texttt{ThanhTruot}) – nếu function thay đổi mỗi lần render, component con sẽ bị re-render không cần thiết.
+    
+    \item \textbf{\texttt{useRef}}: Lưu tham chiếu đến:
+    \begin{itemize}
+        \item \textbf{DOM elements}: Canvas (\texttt{canvasRef}), container div (\texttt{containerRef}).
+        \item \textbf{Three.js objects}: InstancedMesh (\texttt{meshRef}), Line (\texttt{lineRef}), Mesh (\texttt{quaNangRef}, \texttt{dayTreoRef}), Group (\texttt{groupRef}).
+        \item \textbf{Animation frame ID}: Để có thể hủy animation loop khi component unmount.
+        \item \textbf{Biến mutable không cần trigger re-render}: Trạng thái kéo thả (\texttt{dangKeoRef}, \texttt{khoaChuotRef}), thời gian trước đó (\texttt{lastTimeRef}).
+    \end{itemize}
+\end{itemize}
+
+\subsection{Kiến trúc component và luồng dữ liệu tổng thể}
+
+Mỗi mô phỏng trong hệ thống được tổ chức theo một kiến trúc component nhất quán, đảm bảo tính module hóa, dễ bảo trì và mở rộng:
+
+\begin{enumerate}
+    \item \textbf{Component chính} (ví dụ: \texttt{ElectromagneticWaveSimulation}, \texttt{WaveInterference3D}, \texttt{MoPhongConLac3D}, \texttt{MoPhongLoXo3D}, \texttt{SoSanhSong}, \texttt{SonarSimulation3D}, \texttt{WaveOnString}):
+    \begin{itemize}
+        \item \textbf{Trách nhiệm:} Quản lý toàn bộ state của mô phỏng, chứa layout chính (Header, Canvas 3D, Navigation tabs, Control Panel, Sidebar), chạy animation loop.
+        \item \textbf{State quản lý:} Tất cả tham số vật lý, trạng thái UI, dữ liệu lịch sử cho đồ thị, trạng thái animation.
+        \item \textbf{Props xuống:} Truyền tham số và dữ liệu xuống các component con.
+    \end{itemize}
+    
+    \item \textbf{Component 3D Visualization} (\texttt{EMWaveVisualization}, \texttt{InterferenceVisualization}, \texttt{ConLac3D}, \texttt{MoHinhLoXo3D}, \texttt{SongDocVisualization}, \texttt{SongNgangVisualization}, \texttt{DetailedSeabed}...):
+    \begin{itemize}
+        \item \textbf{Trách nhiệm:} Nhận tham số vật lý và thời gian qua props, tính toán hình học (sử dụng \texttt{useMemo}), render các đối tượng 3D.
+        \item \textbf{Được bọc trong} \texttt{<Canvas>} của R3F.
+        \item \textbf{Không quản lý state toàn cục} – chỉ nhận props và render.
+    \end{itemize}
+    
+    \item \textbf{Component Chart} (\texttt{EMWaveChart}, \texttt{DoThiConLac}, \texttt{InterferenceChart}, \texttt{SoSanhSongChart}, \texttt{SonarWaveChart}):
+    \begin{itemize}
+        \item \textbf{Trách nhiệm:} Nhận dữ liệu lịch sử (các mảng số liệu theo thời gian) qua props, transform dữ liệu (\texttt{useMemo}), render biểu đồ Recharts.
+        \item \textbf{Không phụ thuộc vào} 3D scene – có thể phát triển và kiểm thử độc lập.
+    \end{itemize}
+    
+    \item \textbf{Component UI dùng chung} (\texttt{ThanhTruot}, \texttt{NutGradient}, \texttt{CardThongSo}):
+    \begin{itemize}
+        \item Được định nghĩa một lần và tái sử dụng trong tất cả các mô phỏng.
+        \item \texttt{ThanhTruot}: Thanh trượt với gradient màu, hiển thị giá trị hiện tại, hỗ trợ icon và ghi chú.
+        \item \texttt{NutGradient}: Nút bấm với nền gradient, hỗ trợ icon, disabled state.
+        \item \texttt{CardThongSo}: Thẻ hiển thị thông số với tiêu đề, giá trị lớn, đơn vị, icon, và màu sắc theo chủ đề.
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Luồng dữ liệu trong một mô phỏng điển hình:}
+
+\begin{enumerate}
+    \item Người dùng tương tác với UI controls (kéo thanh trượt, nhấn nút Play/Pause, check/uncheck checkbox hiển thị).
+    \item Event handler gọi \texttt{setState} để cập nhật React state tương ứng.
+    \item React re-render component chính và truyền state mới xuống các component con qua props.
+    \item Component 3D Visualization sử dụng \texttt{useMemo} để tính toán lại hình học dựa trên props mới (tọa độ điểm sóng, vị trí vật...). R3F tự động cập nhật scene.
+    \item Animation loop (chạy qua \texttt{useEffect} + \texttt{requestAnimationFrame} hoặc \texttt{useFrame}) liên tục cập nhật \texttt{time} state (60 lần/giây).
+    \item Mỗi khi \texttt{time} thay đổi, component 3D cập nhật vị trí các đối tượng động (sóng lan truyền, con lắc dao động, điểm giao thoa thay đổi màu...).
+    \item Dữ liệu lịch sử được thu thập định kỳ (mỗi 100ms) và lưu vào mảng state.
+    \item Mảng dữ liệu được truyền xuống Component Chart, nơi \texttt{useMemo} transform dữ liệu và Recharts render biểu đồ.
+    \item Người dùng có thể chuyển đổi giữa các tab (Bảng điều khiển, Hiển thị, Thông tin Vật lý, Đồ thị) để xem các khía cạnh khác nhau của mô phỏng.
+\end{enumerate}
+
+\section{Kết luận Chương 3}
+
+Chương này đã trình bày đầy đủ và chi tiết hai nền tảng cốt lõi của đề tài:
+
+\textbf{Về cơ sở lý thuyết Vật lý:} Chương đã hệ thống hóa toàn bộ kiến thức trọng tâm của chương Dao động (từ định nghĩa dao động cơ học, dao động điều hòa, các đại lượng đặc trưng, phương trình li độ - vận tốc - gia tốc, mối liên hệ với chuyển động tròn đều, năng lượng trong dao động và định luật bảo toàn cơ năng, đến dao động tắt dần, dao động cưỡng bức và hiện tượng cộng hưởng, cùng các ứng dụng cụ thể cho con lắc lò xo và con lắc đơn) và chương Sóng (từ khái niệm sóng cơ học, phân loại sóng dọc/sóng ngang, các đại lượng đặc trưng, phương trình sóng tổng quát, đến hai hiện tượng đặc trưng của sóng là giao thoa với điều kiện cực đại/cực tiểu và vân hyperbol, và sóng dừng với điều kiện hình thành, và cuối cùng là sóng điện từ với các tính chất $\vec{E} \perp \vec{B} \perp \vec{v}$). Tất cả các công thức, định luật và hệ thức được trình bày đều là cơ sở toán học trực tiếp cho các thuật toán tính toán trong code mô phỏng.
+
+\textbf{Về cơ sở công nghệ:} Chương đã trình bày chi tiết về toàn bộ hệ sinh thái công nghệ được sử dụng:
+\begin{itemize}
+    \item \textbf{Canvas 2D API}: Nền tảng cho mô phỏng sóng trên dây 2D – đơn giản, hiệu quả.
+    \item \textbf{WebGL và Three.js}: Nền tảng đồ họa 3D cốt lõi, cung cấp scene graph, geometry, material, lighting, camera.
+    \item \textbf{React Three Fiber}: Cầu nối giữa React và Three.js, cho phép khai báo 3D scene dưới dạng JSX, tích hợp state management và component lifecycle.
+    \item \textbf{Drei}: Bộ công cụ tiện ích (OrbitControls, Line, Html, Plane, Stars) giúp tăng tốc phát triển.
+    \item \textbf{InstancedMesh}: Kỹ thuật tối ưu hóa hiệu năng then chốt, giảm 6.400 draw calls xuống còn 1 trong mô phỏng giao thoa sóng.
+    \item \textbf{Recharts}: Thư viện đồ thị declarative cho React, được sử dụng trong tất cả các component phân tích dữ liệu.
+    \item \textbf{Tailwind CSS}: Framework CSS utility-first đảm bảo giao diện nhất quán, responsive và hỗ trợ dark mode.
+    \item \textbf{Lucide React}: Thư viện icon vector chất lượng cao.
+    \item \textbf{React Hooks} (\texttt{useState}, \texttt{useEffect}, \texttt{useMemo}, \texttt{useCallback}, \texttt{useRef}, \texttt{useFrame}): Công cụ quản lý trạng thái và tối ưu hiệu năng.
+\end{itemize}
+
+Chương cũng đã trình bày kiến trúc component tổng thể và luồng dữ liệu trong một mô phỏng điển hình, cho thấy cách các công nghệ này phối hợp với nhau để tạo ra một hệ thống mô phỏng vật lý 3D tương tác, hiệu năng cao, chạy mượt mà trên trình duyệt web.
+
+Những kiến thức nền tảng này tạo cơ sở vững chắc cho việc phân tích yêu cầu hệ thống (Chương 4), thiết kế chi tiết (Chương 5), và triển khai xây dựng (Chương 6) sẽ được trình bày trong các chương tiếp theo của báo cáo.

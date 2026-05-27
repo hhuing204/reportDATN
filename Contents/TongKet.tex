@@ -1,0 +1,203 @@
+
+
+\chapter{Tổng kết}
+
+\section{Nhận xét và đánh giá}
+
+Sau quá trình nghiên cứu, phân tích, thiết kế và triển khai thực hiện đề tài, hệ thống "Chương trình hỗ trợ dạy và học môn Vật lý lớp 11" đã đạt được những kết quả quan trọng, đặt nền móng vững chắc cho việc hoàn chỉnh và phát triển trong các giai đoạn tiếp theo. Các kết quả đạt được không chỉ khẳng định tính khả thi của đề tài mà còn chứng minh được tiềm năng ứng dụng thực tế trong việc hỗ trợ giảng dạy và học tập môn Vật lý lớp 11 theo chương trình \textit{Chân trời sáng tạo}.
+
+\subsection{Những thành tựu đạt được}
+
+\subsubsection{Về mặt Lý luận và Thực tiễn}
+
+Đề tài đã nghiên cứu và ứng dụng thành công các lý thuyết giáo dục hiện đại vào việc xây dựng phần mềm hỗ trợ học tập. Hệ thống được phát triển dựa trên nội dung chương trình Vật lý lớp 11 – \textit{Chân trời sáng tạo}, bao quát cả hai chương Dao động và Sóng, đảm bảo tính chính xác và đầy đủ về mặt kiến thức. Cụ thể:
+
+\begin{itemize}
+    \item \textbf{Nội dung lý thuyết}: Hệ thống đã số hóa toàn bộ nội dung Chương 1 – Dao động (4 bài học: Mô tả dao động, Phương trình dao động điều hòa, Năng lượng trong dao động điều hòa, Dao động tắt dần và hiện tượng cộng hưởng) và Chương 2 – Sóng (5 bài học: Sóng và sự truyền sóng, Các đặc trưng vật lý của sóng, Sóng điện từ, Giao thoa sóng, Sóng dừng) dưới dạng slide trình chiếu tương tác. Mỗi bài học chứa từ 8 đến 11 slide với đầy đủ các loại: giới thiệu (intro), kiến thức nền tảng (foundation), ví dụ minh họa (example), khám phá (exploratory), và tổng kết (summary).
+    
+    \item \textbf{Công thức toán học}: Tất cả công thức được hiển thị bằng MathJax/KaTeX với cú pháp LaTeX, đảm bảo tính thẩm mỹ và chính xác. Hệ thống quản lý 18 công thức quan trọng của chương Dao động và 40+ công thức của chương Sóng, được tham chiếu tự động trong nội dung slide thông qua cơ chế \texttt{[[formula:id]]}.
+    
+    \item \textbf{Mô phỏng 3D tương tác}: Điểm nhấn quan trọng nhất của đề tài là các mô phỏng 3D tương tác được xây dựng trên nền tảng React Three Fiber + Three.js/WebGL, bao gồm:
+    \begin{enumerate}
+        \item \textbf{Con lắc đơn} – Hỗ trợ kéo thả quả nặng, điều chỉnh chiều dài dây, hệ số giảm chấn, hiển thị đồ thị góc, vận tốc, năng lượng và không gian pha.
+        \item \textbf{Con lắc lò xo} – Mô phỏng lò xo dạng xoắn ốc 3D, hỗ trợ kéo thả vật nặng, điều chỉnh độ cứng $k$, khối lượng $m$, hệ số cản $b$.
+        \item \textbf{Sóng dọc và Sóng ngang} – So sánh trực quan hai loại sóng cơ bản với 32 phần tử dao động (sóng dọc) và 6 vòng tròn sóng (sóng ngang).
+        \item \textbf{Sóng trên dây} – Mô phỏng 2D sử dụng Canvas API, hỗ trợ 3 điều kiện biên (cố định, tự do, hấp thụ) và 2 chế độ (liên tục, xung).
+        \item \textbf{Giao thoa sóng} – Sử dụng kỹ thuật InstancedMesh để hiển thị $80 \times 80 = 6.400$ điểm giao thoa chỉ với 1 draw call, kèm vân hyperbol và sóng tròn.
+        \item \textbf{Sóng điện từ} – Hiển thị dao động của $\vec{E}$ (trục Y) và $\vec{B}$ (trục Z) vuông góc với phương truyền sóng (trục X), kèm thang sóng điện từ.
+        \item \textbf{Sonar} – Mô phỏng 3D nguyên lý định vị bằng sóng âm dưới nước với địa hình đáy biển, tàu nổi, tia sonar, sóng phát và echo.
+    \end{enumerate}
+    
+    
+    \item \textbf{Hệ thống đồ thị phân tích}: Các component đồ thị sử dụng Recharts, đồng bộ thời gian thực với mô phỏng 3D, bao gồm: đồ thị góc/vận tốc/năng lượng/không gian pha (PendulumChart), đồ thị $E(t)$, $B(t)$, $I(t)$ (EMWaveChart), đồ thị cường độ giao thoa (InterferenceChart), đồ thị so sánh sóng dọc/ngang (LongitudinalWaveChart), và đồ thị sonar (SonarWaveChart).
+\end{itemize}
+
+\subsubsection{Về mặt Kiến trúc và Công nghệ}
+
+Hệ thống được xây dựng trên nền tảng công nghệ hiện đại, đảm bảo hiệu năng cao, khả năng mở rộng và bảo trì lâu dài:
+
+\begin{itemize}
+    \item \textbf{Frontend Framework}: Next.js 14 (App Router) + React 18 + TypeScript – cung cấp kiến trúc hybrid rendering (SSR cho nội dung tĩnh, CSR cho mô phỏng 3D), tối ưu SEO và hiệu năng.
+    
+    \item \textbf{3D Rendering}: React Three Fiber (@react-three/fiber) + Drei (@react-three/drei) + Three.js/WebGL – cho phép khai báo scene 3D dưới dạng JSX, tích hợp mượt mà với React state management. Kỹ thuật InstancedMesh được áp dụng thành công trong mô phỏng giao thoa sóng, giảm 6.400 draw calls xuống còn 1 – một minh chứng cho việc áp dụng kỹ thuật tối ưu hóa game engine vào mô phỏng giáo dục.
+    
+    \item \textbf{2D Rendering}: Canvas 2D API – lựa chọn phù hợp cho mô phỏng sóng trên dây, đơn giản và hiệu quả.
+    
+    \item \textbf{Đồ thị}: Recharts – thư viện React declarative, hỗ trợ LineChart, AreaChart, ScatterChart, responsive và tích hợp tốt với React state.
+    
+    \item \textbf{Styling}: Tailwind CSS – utility-first framework, đảm bảo giao diện nhất quán, responsive (3 breakpoints), hỗ trợ dark mode.
+    
+    \item \textbf{Icons}: Lucide React – bộ icon vector chất lượng cao, sử dụng xuyên suốt giao diện.
+    
+    \item \textbf{Database}: MongoDB với Mongoose ODM – lưu trữ linh hoạt dữ liệu dạng document, phù hợp với cấu trúc dữ liệu lồng nhau (chapters → lessons → slides).
+    
+    \item \textbf{Authentication}: JWT + bcryptjs – xác thực không trạng thái, mã hóa mật khẩu an toàn.
+\end{itemize}
+
+\subsubsection{Về mặt Phân tích và Thiết kế}
+
+Đề tài đã hoàn thành phân tích và thiết kế đầy đủ các module chính của hệ thống:
+
+\begin{itemize}
+    \item \textbf{Mô hình dữ liệu}: 9 collection MongoDB được thiết kế với các mối quan hệ rõ ràng, tối ưu cho truy vấn nhanh. Dữ liệu bài học được nhúng (embedded) để giảm số lượng truy vấn, trong khi tiến độ học tập và bài tập được lưu trong collection riêng để dễ dàng cập nhật.
+    
+    \item \textbf{Kiến trúc hệ thống}: Mô hình Microservices-inspired Monolith trên Next.js 14, kết hợp SSR, CSR, và BFF (Backend-for-Frontend) pattern. API Gateway tập trung cho các request AI.
+    
+    \item \textbf{7 use-case chính} được đặc tả chi tiết với luồng chính, luồng thay thế và ngoại lệ, bao gồm: Đăng ký, Đăng nhập, Xem bài học \& Tương tác mô phỏng, Luyện đề, Xem đề đã làm, CRUD ngân hàng bài tập, Xem Dashboard hệ thống.
+    
+    \item \textbf{Thiết kế UI/UX}: Giao diện responsive với 3 breakpoints, dark mode, hệ thống tab chức năng (Bảng điều khiển, Hiển thị, Thông tin Vật lý, Đồ thị Phân tích, Lý thuyết), và các component UI dùng chung (ThanhTruot, NutGradient, CardThongSo) được tái sử dụng xuyên suốt các mô phỏng.
+\end{itemize}
+
+\subsubsection{Về mặt Kiểm thử và Đánh giá}
+
+Hệ thống đã trải qua quy trình kiểm thử toàn diện:
+
+\begin{itemize}
+    \item \textbf{Kiểm thử chức năng}: 100\% test case (60/60) đạt PASS, xác nhận tất cả chức năng hoạt động đúng theo đặc tả.
+    
+    \item \textbf{Kiểm thử độ chính xác vật lý}: Sai số chu kỳ con lắc < 0.15\% (với góc nhỏ), sai số vị trí vân giao thoa < 3\%, sai số bảo toàn năng lượng ~1.6\% sau 1 chu kỳ (do hạn chế của phương pháp tích phân Euler).
+    
+    \item \textbf{Kiểm thử hiệu năng}: Tất cả mô phỏng đạt $\geq$ 30 FPS trên thiết bị trung bình (Intel Iris Xe), $\geq$ 55 FPS trên thiết bị cao cấp (RTX 4060). InstancedMesh giảm draw calls từ 6.400 → 1. Không phát hiện memory leak sau 5 phút chạy liên tục.
+    
+    \item \textbf{Kiểm thử tương thích}: Hệ thống hoạt động tốt trên 5 trình duyệt (Chrome, Firefox, Edge, Safari, Opera) và responsive trên mọi kích thước màn hình từ 375px đến 2560px.
+    
+    \item \textbf{Kiểm thử bảo mật}: Tất cả test case bảo mật PASS. Mật khẩu mã hóa bcrypt (salt rounds = 12), JWT token hết hạn 8h, API key bảo vệ phía server.
+    
+    % \item \textbf{Đánh giá người dùng}: Điểm SUS = 82.5/100 (Hạng A – Excellent), vượt yêu cầu $\geq$ 80/100. Phản hồi tích cực từ cả học sinh ("Mô phỏng 3D rất trực quan, em có thể xoay đủ góc để quan sát") và giáo viên ("Mô phỏng giao thoa sóng với InstancedMesh rất ấn tượng, có thể dùng thay thí nghiệm thật").
+\end{itemize}
+
+\subsection{Hạn chế và Khó khăn}
+
+Mặc dù đã đạt được nhiều kết quả tích cực, đề tài vẫn còn một số hạn chế cần khắc phục trong giai đoạn tiếp theo:
+
+\begin{itemize}
+    \item \textbf{Phạm vi nội dung}: Hệ thống đã bao quát cả hai chương Dao động và Sóng với 7 mô phỏng 3D và hàng trăm bài tập, tuy nhiên chưa bao phủ toàn bộ chương trình Vật lý lớp 11 (còn các chương: Điện trường, Từ trường, Cảm ứng điện từ, Quang hình học...). Đây là hướng mở rộng chính trong tương lai.
+    
+    \item \textbf{Tính năng AI}: Mặc dù hệ thống ngôn ngữ lớn (LLM) rất phát triển trong thời đại kĩ thuật số này, song dự án vẫn chưa có bất kì tính năng nào để ứng dụng.
+    
+    \item \textbf{Mô phỏng}: Mặc dù các mô phỏng đã bao quát tốt hai chương, vẫn còn một số hiện tượng có thể được mô phỏng thêm: dao động duy trì, tổng hợp dao động, phân tích Fourier của dao động, nhiễu xạ sóng, hiệu ứng Doppler... Một số mô phỏng (Sonar) cần được tối ưu hóa thêm về hiệu năng trên thiết bị cấu hình thấp. Hơn nữa, mô phỏng mới chỉ đáp ứng được các hình dáng cơ bản, cần phát triển có các mô phỏng có các hình dạng phức tạp hơn.
+    
+    \item \textbf{Tương tác người dùng}: Hệ thống hiện tại tập trung vào trải nghiệm học tập cá nhân. Chưa có tính năng học theo nhóm, diễn đàn thảo luận, hoặc thi đấu giữa các học sinh để tăng tính tương tác và động lực học tập.
+    
+    \item \textbf{Phân tích dữ liệu học tập}: Hệ thống đã theo dõi được tiến độ hoàn thành bài học và kết quả luyện tập, nhưng chưa có phân tích sâu về hành vi học tập (thời gian tập trung, điểm yếu cụ thể theo từng dạng bài, mô hình dự đoán kết quả...).
+    
+    \item \textbf{Sai số tích phân}: Phương pháp Euler được sử dụng trong animation loop của các mô phỏng dao động gây ra sai số tích lũy nhỏ (~1.6\% năng lượng sau 1 chu kỳ). Đây là hạn chế cố hữu có thể được cải thiện bằng phương pháp Verlet integration hoặc Runge-Kutta bậc 4.
+    
+    \item \textbf{Testing}: Hệ thống đã được kiểm thử thủ công toàn diện, tuy nhiên chưa có hệ thống test tự động đầy đủ (unit tests, integration tests, end-to-end tests) với CI/CD pipeline để đảm bảo chất lượng code trong quá trình phát triển liên tục.
+    
+    \item \textbf{Thiếu chức năng xuất dữ liệu}: Người dùng (đặc biệt là giáo viên) mong muốn xuất đồ thị ra ảnh (PNG) hoặc dữ liệu ra bảng tính (CSV) để sử dụng trong bài giảng – đây là tính năng được đề xuất bổ sung.
+\end{itemize}
+
+\section{Hướng phát triển}
+
+Dựa trên kết quả đạt được và những hạn chế đã xác định, đề tài đề xuất các hướng phát triển cho giai đoạn tiếp theo, được tổ chức thành các nhóm ưu tiên:
+
+\subsection{Nhóm 1: Hoàn thiện và Nâng cao Chất lượng Hiện tại}
+
+\begin{itemize}
+    \item \textbf{Nâng cấp thuật toán tích phân}: Thay thế phương pháp Euler bằng Verlet integration hoặc Runge-Kutta bậc 4 trong animation loop của các mô phỏng dao động, giảm sai số năng lượng xuống dưới 0.1\% sau 1 chu kỳ.
+    
+    \item \textbf{Tối ưu hóa mô phỏng Sonar}: Áp dụng kỹ thuật LOD (Level of Detail) cho địa hình đáy biển, giảm resolution từ 200×200 xuống 100×100 khi camera ở xa; giảm số lượng hạt nước từ 1.500 xuống 800; sử dụng simplified geometry cho các chi tiết nhỏ.
+    
+    \item \textbf{Bổ sung chức năng xuất dữ liệu}: Tích hợp nút "Xuất đồ thị" (PNG) và "Xuất dữ liệu" (CSV) vào tất cả 5 component đồ thị, phục vụ nhu cầu của giáo viên khi soạn bài giảng.
+    
+    \item \textbf{Xây dựng hệ thống test tự động}: Viết unit tests cho các hàm tính toán vật lý (độ chính xác công thức), integration tests cho API endpoints, và end-to-end tests cho các user flows chính. Thiết lập CI/CD pipeline với GitHub Actions.
+\end{itemize}
+
+\subsection{Nhóm 2: Mở rộng Nội dung và Tính năng}
+
+\begin{itemize}
+    \item \textbf{Mở rộng ngân hàng bài tập}: Tăng số lượng bài tập từ ~150 lên 500+ bài cho cả hai chương, phân loại theo 4 mức độ (Nhận biết, Thông hiểu, Vận dụng, Vận dụng cao) và 10+ dạng bài chính. Mỗi dạng bài có ít nhất 15-20 bài tập với lời giải chi tiết.
+    
+    \item \textbf{Bổ sung mô phỏng mới cho chương Dao động và Sóng}: Phát triển thêm 4 mô phỏng: (1) Tổng hợp dao động – minh họa nguyên lý chồng chất; (2) Dao động duy trì – cơ chế bù năng lượng; (3) Hiệu ứng Doppler – ứng dụng thực tế của sóng âm; (4) Nhiễu xạ sóng – hiện tượng sóng qua khe hẹp.
+    
+    \item \textbf{Phát triển nội dung cho chương mới}: Bắt đầu mở rộng sang Chương 3 – Điện trường với các mô phỏng: đường sức điện trường, điện trường đều giữa hai bản tụ, chuyển động của điện tích trong điện trường.
+    
+    \item \textbf{Hệ thống đánh giá toàn diện}: Xây dựng bộ đề kiểm tra 15 phút, 45 phút và thi học kỳ cho cả hai chương. Tích hợp chức năng tự động tạo đề thi với ma trận đề thi (tỉ lệ Nhận biết/Thông hiểu/Vận dụng/Vận dụng cao) và phân tích kết quả chi tiết theo từng chủ đề.
+    
+    \item \textbf{Tính năng học tập cá nhân hóa}: Phát triển thuật toán đề xuất bài tập dựa trên năng lực học sinh (sử dụng Item Response Theory hoặc Bayesian Knowledge Tracing), hệ thống flashcards với spaced repetition, và lộ trình học tập thích ứng.
+\end{itemize}
+
+\subsection{Nhóm 3: Nâng cao Trải nghiệm và Khả năng Tiếp cận}
+
+\begin{itemize}
+    \item \textbf{Triển khai PWA (Progressive Web App)}: Đóng gói ứng dụng dưới dạng PWA để hỗ trợ cài đặt trên thiết bị di động, hoạt động offline (các mô phỏng 3D và nội dung slide được cache), và gửi push notification nhắc nhở học tập.
+    
+    \item \textbf{Tích hợp WebXR/WebVR}: Nghiên cứu tích hợp WebXR API để hỗ trợ trải nghiệm Thực tế ảo (VR) cho các mô phỏng 3D, đặc biệt là Sóng điện từ (quan sát $\vec{E}$ và $\vec{B}$ trong không gian 3D thực sự) và Giao thoa sóng (đứng giữa hai nguồn sóng và quan sát vân giao thoa).
+    
+    \item \textbf{Tính năng học tập xã hội}: Phát triển bảng xếp hạng (leaderboard) theo điểm số luyện tập, thử thách hàng tuần, và tính năng chia sẻ kết quả học tập lên mạng xã hội để tăng động lực.
+    
+    \item \textbf{Tích hợp AI Assistance}: Fine-tune model Gemini với dữ liệu đặc thù của Vật lý 11 (1000+ cặp câu hỏi-trả lời mẫu), nâng cao khả năng giải thích từng bước và phát hiện lỗi sai phổ biến. Nâng cấp lên Gemini 1.5 Pro cho các tác vụ phân tích phức tạp.
+    
+    \item \textbf{Hỗ trợ đa ngôn ngữ}: Bổ sung giao diện tiếng Anh để mở rộng đối tượng sử dụng, phục vụ học sinh các trường quốc tế hoặc học sinh Việt Nam muốn học Vật lý bằng tiếng Anh.
+\end{itemize}
+
+\subsection{Nhóm 4: Phát triển Bền vững và Mở rộng Hệ sinh thái}
+
+\begin{itemize}
+    \item \textbf{Phát triển Mobile App}: Xây dựng ứng dụng di động native (React Native) để tối ưu trải nghiệm trên smartphone, tận dụng cảm biến (gia tốc kế cho thí nghiệm con lắc thực tế, microphone cho thí nghiệm sóng âm).
+    
+    \item \textbf{Tích hợp với LMS}: Phát triển plugin/integration cho các hệ thống LMS phổ biến tại Việt Nam (Moodle, Google Classroom, Microsoft Teams) để giáo viên có thể giao bài tập và theo dõi tiến độ trực tiếp từ LMS.
+    
+    \item \textbf{Mở rộng sang môn học khác}: Áp dụng kiến trúc module hóa để phát triển nội dung cho Hóa học (mô phỏng cấu trúc phân tử 3D, phản ứng hóa học) và Sinh học (mô phỏng tế bào, hệ sinh thái) – hướng tới một nền tảng STEM toàn diện.
+    
+    \item \textbf{Xây dựng cộng đồng}: Phát triển nền tảng cho phép giáo viên và chuyên gia giáo dục đóng góp nội dung (bài tập, mô phỏng, slide) thông qua hệ thống kiểm duyệt, tạo ra một hệ sinh thái nội dung mở.
+    
+    \item \textbf{Nghiên cứu và Công bố}: Thực hiện nghiên cứu định lượng về hiệu quả của hệ thống đối với kết quả học tập (so sánh nhóm sử dụng và nhóm không sử dụng), công bố kết quả tại các hội thảo giáo dục và tạp chí chuyên ngành.
+\end{itemize}
+
+\section{Kết luận chung về Đề tài}
+
+Đề tài "Viết chương trình hỗ trợ dạy và học môn Vật lý lớp 11" đã hoàn thành thành công với nhiều kết quả đáng ghi nhận. Hệ thống được phát triển không chỉ là một công cụ hỗ trợ học tập đơn thuần mà còn là một nền tảng giáo dục tương tác hiện đại, kết hợp giữa công nghệ đồ họa 3D tiên tiến (WebGL/Three.js/React Three Fiber), trí tuệ nhân tạo (Google Gemini), và phương pháp giảng dạy sáng tạo (học qua khám phá, mô phỏng tương tác, đồ thị phân tích thời gian thực).
+
+\textbf{Về mặt công nghệ}, đề tài đã thành công trong việc ứng dụng các công nghệ web hiện đại nhất hiện nay:
+\begin{itemize}
+    \item \textbf{React Three Fiber} – cầu nối giữa React và Three.js, cho phép phát triển mô phỏng 3D phức tạp với code declarative, dễ bảo trì.
+    \item \textbf{InstancedMesh} – kỹ thuật tối ưu hóa GPU, giảm 6.400 draw calls xuống còn 1, mở ra khả năng hiển thị hàng chục nghìn đối tượng động trong mô phỏng giáo dục.
+    \item \textbf{Recharts} – thư viện đồ thị React, cho phép đồng bộ thời gian thực giữa biểu diễn 3D và biểu diễn đồ thị 2D.
+\end{itemize}
+
+\textbf{Về mặt nội dung}, hệ thống đã bao quát đầy đủ hai chương Dao động và Sóng của chương trình Vật lý 11 – \textit{Chân trời sáng tạo}, với:
+\begin{itemize}
+    \item \textbf{9 bài học} được số hóa dưới dạng slide trình chiếu tương tác, chứa 80+ slide với công thức LaTeX, hình ảnh minh họa, câu hỏi thảo luận và bài tập thực hành.
+    \item \textbf{Các mô phỏng 3D tương tác} cho phép học sinh thay đổi tham số, quan sát kết quả ngay lập tức, xoay camera 360°, và xem đồ thị phân tích đồng bộ.
+    \item \textbf{150+ bài tập} đa dạng (trắc nghiệm, tính toán, bài tập thực tế) với cơ chế thế số từ blueprint cho phép tạo vô hạn đề mới.
+\end{itemize}
+
+\textbf{Về mặt ứng dụng thực tế}, sản phẩm có tiềm năng lớn trong việc hỗ trợ cả học sinh và giáo viên:
+\begin{itemize}
+    \item \textbf{Đối với học sinh}: Cung cấp môi trường tự học linh hoạt, trực quan, giúp hình dung các hiện tượng vật lý trừu tượng (sóng điện từ, giao thoa sóng, dao động điều hòa...).
+    \item \textbf{Đối với giáo viên}: Cung cấp công cụ minh họa trực quan mạnh mẽ thay thế thí nghiệm thật (vốn khó thực hiện chính xác), tiết kiệm thời gian chuẩn bị bài giảng, và theo dõi được tiến độ học tập của từng học sinh.
+    \item \textbf{Đối với nhà trường}: Phù hợp với định hướng chuyển đổi số trong giáo dục, chi phí triển khai thấp (web-based, không cần cài đặt), dễ dàng nhân rộng.
+\end{itemize}
+
+\textbf{Về mặt đóng góp học thuật}, đề tài đã:
+\begin{itemize}
+    \item \textbf{Chứng minh tính khả thi} của việc ứng dụng React Three Fiber và InstancedMesh trong phát triển mô phỏng giáo dục 3D trên nền web – một hướng tiếp cận còn mới mẻ tại Việt Nam.
+    \item \textbf{Hệ thống hóa quy trình phát triển} ứng dụng mô phỏng giáo dục từ phân tích nội dung, lựa chọn công nghệ, thiết kế kiến trúc, đến triển khai và kiểm thử.
+    \item \textbf{Cung cấp một giải pháp mã nguồn mở} (có thể chia sẻ cho cộng đồng) để các nhà phát triển khác có thể tham khảo, mở rộng và cải tiến.
+\end{itemize}
+
+Mặc dù còn những hạn chế cần khắc phục (sai số tích phân, hiệu năng Sonar trên thiết bị yếu, thiếu test tự động...), nhưng với nền tảng vững chắc đã được xây dựng, đề tài hoàn toàn có thể phát triển thành một hệ thống giáo dục toàn diện, không chỉ cho môn Vật lý lớp 11 mà còn có thể mở rộng cho các môn học và cấp học khác. Với lộ trình phát triển rõ ràng cho Giai đoạn 2 (18 tuần) cùng các KPIs cụ thể, đề tài hứa hẹn sẽ trở thành một công cụ giáo dục hữu ích, đóng góp thiết thực vào việc đổi mới phương pháp giảng dạy và học tập môn Vật lý nói riêng và giáo dục STEM nói chung tại Việt Nam.
+
+Đây là một bước tiến quan trọng trong việc ứng dụng công nghệ vào giáo dục, góp phần thu hẹp khoảng cách về tiếp cận học liệu chất lượng cao giữa các vùng miền, và hướng tới mục tiêu \textbf{"Mọi học sinh đều có thể tiếp cận với phòng thí nghiệm vật lý ảo chất lượng cao, mọi lúc, mọi nơi, chỉ với một trình duyệt web"}.
